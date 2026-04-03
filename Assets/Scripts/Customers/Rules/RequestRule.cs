@@ -1,21 +1,13 @@
-﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Assets.Scripts.Customers
 {
-    public class NewMonoBehaviour : MonoBehaviour
+    /*
+     * Define what every rule should be 
+     */
+    public abstract class RequestRule : ScriptableObject
     {
-
-        // Use this for initialization
-        void Start()
-        {
-
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-
-        }
+        public abstract bool IsSatisfied(List<Item> items, Customer customer);
     }
 }

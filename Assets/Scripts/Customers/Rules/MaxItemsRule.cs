@@ -1,0 +1,17 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+namespace Assets.Scripts.Customers.Rules
+{
+    [CreateAssetMenu(menuName = "Requests/MaxItemsRule")]
+    public class MaxItemsRule : RequestRule
+    {
+        public int maxItems;
+
+        public override bool IsSatisfied(List<Item> items, Customer customer)
+        {
+            return items.Count <= maxItems;
+        }
+    }
+}
