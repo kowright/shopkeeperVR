@@ -14,4 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Customers.CustomerRequest
   requiredItems:
   - {fileID: 11400000, guid: db46e26000a23664585577b91ffad722, type: 2}
-  extraRules: []
+  extraRules:
+  - {fileID: 11400000, guid: 2c03a82b64104aa45aafcda076d1dfe1, type: 2}

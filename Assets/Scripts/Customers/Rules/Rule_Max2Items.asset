@@ -9,11 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fc04be9d58e7577479e5de74af7b05f6, type: 3}
-  m_Name: Item_Rotten_Apple
-  m_EditorClassIdentifier: Assembly-CSharp::Item
-  displayName: Rotten Apple
-  description: It went bad
-  cost: 1
-  itemQuality: 0
-  itemType: 0
+  m_Script: {fileID: 11500000, guid: 21c295cdf5623424aaaf03b256ae5ff8, type: 3}
+  m_Name: Rule_Max2Items
+  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Customers.Rules.MaxItemsRule
+  maxItems: 2
