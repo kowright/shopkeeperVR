@@ -25,8 +25,11 @@ namespace Assets.Scripts.SubmitTable
         {
             var customer = other.GetComponent<CustomerComponent>();
 
-            currentCustomer = null ;
-            Debug.Log("Bye: " + currentCustomer.customerName); 
+            if (customer != null && currentCustomer != null)
+            {
+                Debug.Log("Bye: " + currentCustomer.customerName);
+                currentCustomer = null;
+            }
         }
     }
 }
