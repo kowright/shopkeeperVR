@@ -17,3 +17,4 @@ MonoBehaviour:
   cost: 2
   itemQuality: 2
   itemType: 0
+  mesh: {fileID: 1865056248366311061, guid: 9a13b94cace2a4d78ac94a0ed0a88843, type: 3}

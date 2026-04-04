@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -17,6 +18,7 @@ namespace Assets.Scripts.Items
         {
             InitializeOutline();
             UpdateVisuals();
+
             //text.text = itemData.displayName;
             //Color outlineColor = outlineColorManager.GetOutlineColorForQuality(itemData.itemQuality);
             //Transform outlineTransform = transform.Find("Outline");
@@ -50,7 +52,9 @@ namespace Assets.Scripts.Items
         {
             if (outlineMeshRenderer == null)
             {
-                Transform outlineTransform = transform.Find("Outline");
+                Transform visualsTransform = transform.Find("Visuals");
+                Transform outlineTransform = visualsTransform.Find("Outline");
+
                 if (outlineTransform != null)
                     outlineMeshRenderer = outlineTransform.GetComponent<MeshRenderer>();
                 else
