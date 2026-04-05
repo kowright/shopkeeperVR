@@ -11,7 +11,7 @@ namespace Assets.Scripts.Items
         Great = 3,
         Top = 4,
     }
-    public class ItemOutlineColorManager
+    public class ItemOutlineColorManager //TODO: rename
     {
         private Dictionary<ItemQuality, Color> itemQualityOutlineColorMap = new Dictionary<ItemQuality, Color>()
         {
