@@ -10,5 +10,6 @@ public class Item : ScriptableObject
     public int cost;
     public ItemQuality itemQuality;
     public ItemType itemType;
+    public GameObject itemPrefab;
 
 }

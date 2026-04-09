@@ -1,3 +1,4 @@
+using Assets.Scripts.Items;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,6 +9,6 @@ namespace Assets.Scripts.Customers
      */
     public abstract class RequestRule : ScriptableObject
     {
-        public abstract bool IsSatisfied(List<Item> items, Customer customer);
+        public abstract bool IsSatisfied(List<ItemComponent> items, Customer customer);
     }
 }

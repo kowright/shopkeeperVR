@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Assets.Scripts.Items;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,7 +10,7 @@ namespace Assets.Scripts.Customers.Rules
     {
         public int maxItems;
 
-        public override bool IsSatisfied(List<Item> items, Customer customer)
+        public override bool IsSatisfied(List<ItemComponent> items, Customer customer)
         {
             return items.Count <= maxItems;
         }

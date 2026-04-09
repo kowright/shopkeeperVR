@@ -8,8 +8,10 @@ namespace Assets.Scripts.Items
 {
     public class ItemSpawner : MonoBehaviour
     {
-        [SerializeField] private GameObject itemPrefab;
-        private ItemComponent item => itemPrefab.GetComponent<ItemComponent>();
+
+        private GameObject itemPrefab;
+        //public ItemComponent item; // doing it this way since every item scriptable object will use the same model 
+        public Item item;
         public TextMeshProUGUI nameText;
         public TextMeshProUGUI typeTextLeft;
         public TextMeshProUGUI typeTextRight;
@@ -21,40 +23,64 @@ namespace Assets.Scripts.Items
 
         private void OnValidate()
         {
-            nameText.text = item.itemData.displayName;
-            typeTextLeft.text = typeTextLeft.text = item.itemData.itemType.ToString();
-            costText.text = '$' + item.itemData.cost.ToString();
-            descriptionText.text = item.itemData.description;
-            //Instantiate(item, itemSpawnLocation);
+            if (item == null) return;
 
-            Color materialColor = outlineColorManager.GetOutlineColorForQuality(item.itemData.itemQuality);
+            // Only update text if the references exist
+            if (nameText != null)
+                nameText.text = item.displayName;
 
+            if (typeTextLeft != null && typeTextRight != null)
+                typeTextLeft.text = typeTextRight.text = item.itemType.ToString();
 
-            Debug.Log("renderer", meshRenderer);
-      
-            Material mat = new Material(meshRenderer.sharedMaterials[0]);
-            Debug.Log("mat", mat);
-            mat.color = materialColor;
-            Color color = mat.color;
-            color.a = 0.5f;
-            mat.color = color;
+            if (costText != null)
+                costText.text = "$" + item.cost.ToString();
 
-            //mat.SetColor("_BaseColor", materialColor); // for URP
-
-
-#if UNITY_EDITOR
-            meshRenderer.sharedMaterial = mat;
-#else
-    meshRenderer.material = mat;
-#endif
+            if (descriptionText != null)
+                descriptionText.text = item.description;
         }
+        //        private void OnValidate()
+        //        {
+        //            //item = itemPrefab.GetComponent<ItemComponent>();
+
+        //            Debug.Log("item" +  item.itemPrefab);
+        //            itemPrefab = item.itemPrefab;
+        //            nameText.text = item.displayName;
+        //            typeTextLeft.text = typeTextRight.text = item.itemType.ToString();
+        //            costText.text = '$' + item.cost.ToString();
+        //            descriptionText.text = item.description;
+        //            //Instantiate(item, itemSpawnLocation);
+
+        //            Color materialColor = outlineColorManager.GetOutlineColorForQuality(item.itemQuality);
+
+
+        //            Debug.Log("renderer", meshRenderer);
+
+        //            Material mat = new Material(meshRenderer.sharedMaterials[0]);
+        //            Debug.Log("mat", mat);
+        //            mat.color = materialColor;
+        //            Color color = mat.color;
+        //            color.a = 0.5f;
+        //            mat.color = color;
+
+        //            //mat.SetColor("_BaseColor", materialColor); // for URP
+
+
+        //#if UNITY_EDITOR
+        //            meshRenderer.sharedMaterial = mat;
+        //#else
+        //    meshRenderer.material = mat;
+        //#endif
+        //        }
 
         private void Awake()
         {
-            nameText.text = item.itemData.displayName;
-            typeTextLeft.text = typeTextRight.text = item.itemData.itemType.ToString();
-            costText.text = '$' + item.itemData.cost.ToString();
-            descriptionText.text = item.itemData.description;
+            //item = itemPrefab.GetComponent<ItemComponent>();
+            itemPrefab = item.itemPrefab;
+            nameText.text = item.displayName;
+            typeTextLeft.text = typeTextRight.text = item.itemType.ToString();
+            costText.text = '$' + item.cost.ToString();
+            descriptionText.text = item.description;
+            itemPrefab = item?.itemPrefab;
             //Instantiate(item, itemSpawnLocation);
         }
 
@@ -82,6 +108,20 @@ namespace Assets.Scripts.Items
             spawnedItem.transform.localPosition = Vector3.zero;
             spawnedItem.transform.localRotation = Quaternion.identity;
             spawnedItem.transform.localScale = Vector3.one;
+
+            MonoBehaviour[] scripts = spawnedItem.GetComponents<MonoBehaviour>();
+
+            foreach (var script in scripts)
+            {
+                Debug.Log(script.GetType().Name);
+            }
+
+            ItemComponent itemC = spawnedItem.GetComponent<ItemComponent>();
+            if( itemC == null)
+            {
+                Debug.Log("NO ITEM COMPONENT");
+            }
+            itemC.itemData = item;
 
             Debug.Log("Spawned Item" + spawnedItem.transform.localPosition.y);
             Debug.Log("Spawned Item" + spawnedItem.transform.position.y);

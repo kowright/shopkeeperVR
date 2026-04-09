@@ -39,8 +39,8 @@ namespace Assets.Scripts.Items
         // editor only
         private void OnValidate()
         {
-            InitializeOutline();
-            UpdateVisuals();
+            //InitializeOutline();
+            //UpdateVisuals();
             //text.text = itemData.displayName;
             //Color outlineColor = outlineColorManager.GetOutlineColorForQuality(itemData.itemQuality);
 

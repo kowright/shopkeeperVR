@@ -4,12 +4,12 @@ using System;
 using System.Collections.Generic;
 using TMPro;
 using Unity.Mathematics;
+using UnityEditor.PackageManager.Requests;
 using UnityEngine;
 
 public class SubmitTable: MonoBehaviour
 {
-
-    [SerializeField] private List<Item> itemsOnTable = new List<Item>();
+    [SerializeField] private List<ItemComponent> itemsOnTable = new List<ItemComponent>();
     public TextMeshProUGUI results;
     public CustomerTriggerZone customerZone;
 
@@ -18,7 +18,7 @@ public class SubmitTable: MonoBehaviour
         var item = other.GetComponentInParent<ItemComponent>();
         if (item != null)
         {
-            itemsOnTable.Add(item.itemData);
+            itemsOnTable.Add(item);
             Debug.Log("Adding " + item.itemData.displayName);
             
         }
@@ -30,45 +30,34 @@ public class SubmitTable: MonoBehaviour
         Debug.Log($"Leaving {other.name}");
         if (item != null)
         {
-            itemsOnTable.Remove(item.itemData);
+            itemsOnTable.Remove(item);
             Debug.Log("removing " + item.itemData.displayName);
         }
     }
 
-    public List<Item> GetItems() => itemsOnTable;
+    public List<ItemComponent> GetItems() => itemsOnTable;
 
     public void SubmitItemsForValidation()
     {
-        Debug.Log("SUBMIT");
+        Debug.Log("SUBMIT" + itemsOnTable[0].itemData.displayName);
         string result; 
-        ValidateSubmission(itemsOnTable, customerZone.currentCustomer, out result);
+        bool submission = ValidateSubmission(itemsOnTable, customerZone.currentCustomer, out result);
         results.text = result;
+        foreach (var item in itemsOnTable)
+        {
+           Destroy(item.gameObject);
+            //maybe a sound or effect when destroyed
+        }
+     
+        itemsOnTable.Clear();
 
+        // process Customer happiness
 
-        //if (customerZone.currentCustomer.request.requiredItems != null)
-        //{
-        //    foreach (Item item in customerZone.currentCustomer.request.requiredItems)
-        //    {
-        //        Debug.Log("requested " + customerZone.currentCustomer.request.requiredItems[0].displayName);
-        //        Debug.Log("table" + item.displayName);
-        //        if (!itemsOnTable.Find(i => i == item))
-        //        {
-        //            result = "THERE IS NO " + item.displayName;
-        //            results.text = result;
-        //            return;
-        //        }
+        // process store profit!
 
-        //    }
-        //    Debug.Log("no return");
-        //    result = "GOOD JOB";
-        //    results.text = result;
-        //}
-        
-
-       
     }
 
-    public bool ValidateSubmission(List<Item> items, Customer customer, out string result)
+    public bool ValidateSubmission(List<ItemComponent> items, Customer customer, out string result)
     {
         var request = customerZone.currentCustomer.request;
         // 1. Required specific items
@@ -76,7 +65,7 @@ public class SubmitTable: MonoBehaviour
         {
             foreach (var reqItem in request.requiredItems)
             {
-                if (!items.Exists(i => i == reqItem))
+                if (!items.Exists(i => i.itemData == reqItem))
                 {
                     result = $"Missing {reqItem.displayName}";
                     return false;
@@ -87,7 +76,7 @@ public class SubmitTable: MonoBehaviour
         // 2. Required type
         if (request.requiredType.HasValue)
         {
-            if (items.Exists(i => i.itemType != request.requiredType.Value))
+            if (items.Exists(i => i.itemData.itemType != request.requiredType.Value))
             {
                 result = $"All items must be {request.requiredType}";
                 return false;
@@ -97,7 +86,7 @@ public class SubmitTable: MonoBehaviour
         // 3. Minimum quality
         if (request.minimumQuality.HasValue)
         {
-            if (items.Exists(i => i.itemQuality < request.minimumQuality.Value))
+            if (items.Exists(i => i.itemData.itemQuality < request.minimumQuality.Value))
             {
                 result = $"All items must be at least {request.minimumQuality}";
                 return false;
