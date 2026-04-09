@@ -37,6 +37,8 @@ namespace Assets.Scripts.Items
 
             if (descriptionText != null)
                 descriptionText.text = item.description;
+
+
         }
         //        private void OnValidate()
         //        {
@@ -81,23 +83,30 @@ namespace Assets.Scripts.Items
             costText.text = '$' + item.cost.ToString();
             descriptionText.text = item.description;
             itemPrefab = item?.itemPrefab;
+            Color materialColor = outlineColorManager.GetOutlineColorForQuality(item.itemQuality);
+
+
+            Debug.Log("renderer", meshRenderer);
+
+            Material mat = new Material(meshRenderer.sharedMaterials[0]);
+            Debug.Log("mat", mat);
+            mat.color = materialColor;
+            Color color = mat.color;
+            color.a = 0.5f;
+            mat.color = color;
+            meshRenderer.material = mat;
             //Instantiate(item, itemSpawnLocation);
         }
 
         private void Start()
         {
-            //GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            ItemComponent itemC = itemPrefab.GetComponent<ItemComponent>();
+            if (itemC == null)
+            {
+                Debug.Log("NO ITEM COMPONENT");
+            }
+            itemC.itemData = item;
 
-            //cube.transform.position = itemSpawnLocation.position;
-            //cube.transform.rotation = itemSpawnLocation.rotation;
-            //GameObject item = itemPrefab;
-            //Rigidbody rb = item.GetComponent<Rigidbody>();
-            //rb.useGravity = false;
-
-            //item.transform.SetParent(itemSpawnLocation);
-
-            //Instantiate(item, itemSpawnLocation.position, itemSpawnLocation.rotation);
-            //Instantiate(item);
 
             GameObject spawnedItem = Instantiate(
                  itemPrefab,
@@ -116,12 +125,12 @@ namespace Assets.Scripts.Items
                 Debug.Log(script.GetType().Name);
             }
 
-            ItemComponent itemC = spawnedItem.GetComponent<ItemComponent>();
-            if( itemC == null)
-            {
-                Debug.Log("NO ITEM COMPONENT");
-            }
-            itemC.itemData = item;
+            //ItemComponent itemC = spawnedItem.GetComponent<ItemComponent>();
+            //if (itemC == null)
+            //{
+            //    Debug.Log("NO ITEM COMPONENT");
+            //}
+            //itemC.itemData = item;
 
             Debug.Log("Spawned Item" + spawnedItem.transform.localPosition.y);
             Debug.Log("Spawned Item" + spawnedItem.transform.position.y);

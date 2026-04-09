@@ -15,11 +15,11 @@ namespace Assets.Scripts.Items
     {
         private Dictionary<ItemQuality, Color> itemQualityOutlineColorMap = new Dictionary<ItemQuality, Color>()
         {
-            { ItemQuality.Bad, Color.darkRed },
-            { ItemQuality.Low, Color.red },
-            { ItemQuality.Good, Color.lightGreen },
-            { ItemQuality.Great, Color.green },
-            { ItemQuality.Top, Color.magenta }
+            { ItemQuality.Bad, Color.indianRed },
+            { ItemQuality.Low, Color.orange },
+            { ItemQuality.Good, Color.green },
+            { ItemQuality.Great, Color.blue },
+            { ItemQuality.Top, Color.deepPink }
         };
         public Color GetOutlineColorForQuality(ItemQuality quality)
         {
