@@ -3,6 +3,8 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UIElements;
 using UnityEngine.XR.ARFoundation;
+using UnityEngine.XR.Interaction.Toolkit;
+using UnityEngine.XR.Interaction.Toolkit.Interactables;
 
 namespace Assets.Scripts.Items
 {
@@ -20,7 +22,7 @@ namespace Assets.Scripts.Items
         public Transform itemSpawnLocation;
         public MeshRenderer meshRenderer;
         private ItemOutlineColorManager outlineColorManager = new ItemOutlineColorManager();
-
+        private ItemRespawnManager respawnManager = new ItemRespawnManager();
         private void OnValidate()
         {
             if (item == null) return;
@@ -40,39 +42,6 @@ namespace Assets.Scripts.Items
 
 
         }
-        //        private void OnValidate()
-        //        {
-        //            //item = itemPrefab.GetComponent<ItemComponent>();
-
-        //            Debug.Log("item" +  item.itemPrefab);
-        //            itemPrefab = item.itemPrefab;
-        //            nameText.text = item.displayName;
-        //            typeTextLeft.text = typeTextRight.text = item.itemType.ToString();
-        //            costText.text = '$' + item.cost.ToString();
-        //            descriptionText.text = item.description;
-        //            //Instantiate(item, itemSpawnLocation);
-
-        //            Color materialColor = outlineColorManager.GetOutlineColorForQuality(item.itemQuality);
-
-
-        //            Debug.Log("renderer", meshRenderer);
-
-        //            Material mat = new Material(meshRenderer.sharedMaterials[0]);
-        //            Debug.Log("mat", mat);
-        //            mat.color = materialColor;
-        //            Color color = mat.color;
-        //            color.a = 0.5f;
-        //            mat.color = color;
-
-        //            //mat.SetColor("_BaseColor", materialColor); // for URP
-
-
-        //#if UNITY_EDITOR
-        //            meshRenderer.sharedMaterial = mat;
-        //#else
-        //    meshRenderer.material = mat;
-        //#endif
-        //        }
 
         private void Awake()
         {
@@ -100,12 +69,17 @@ namespace Assets.Scripts.Items
 
         private void Start()
         {
-            ItemComponent itemC = itemPrefab.GetComponent<ItemComponent>();
-            if (itemC == null)
-            {
-                Debug.Log("NO ITEM COMPONENT");
-            }
-            itemC.itemData = item;
+            InstantiateItem();
+        }
+
+        public void InstantiateItem()
+        {
+            //ItemComponent itemC = itemPrefab.GetComponent<ItemComponent>();
+            //if (itemC == null)
+            //{
+            //    Debug.Log("NO ITEM COMPONENT");
+            //}
+            //itemC.itemData = item;
 
 
             GameObject spawnedItem = Instantiate(
@@ -120,17 +94,24 @@ namespace Assets.Scripts.Items
 
             MonoBehaviour[] scripts = spawnedItem.GetComponents<MonoBehaviour>();
 
-            foreach (var script in scripts)
+            //foreach (var script in scripts)
+            //{
+            //    Debug.Log(script.GetType().Name);
+            //}
+
+            XRGrabInteractable grab = spawnedItem.GetComponent<XRGrabInteractable>();
+            if (grab != null)
             {
-                Debug.Log(script.GetType().Name);
+                grab.selectEntered.AddListener(OnItemGrabbed);
             }
 
-            //ItemComponent itemC = spawnedItem.GetComponent<ItemComponent>();
-            //if (itemC == null)
-            //{
-            //    Debug.Log("NO ITEM COMPONENT");
-            //}
-            //itemC.itemData = item;
+            ItemComponent itemC = spawnedItem.GetComponent<ItemComponent>();
+            if (itemC == null)
+            {
+                Debug.Log("NO ITEM COMPONENT");
+            }
+            itemC.itemData = item;
+            itemC.RefreshVisuals();
 
             Debug.Log("Spawned Item" + spawnedItem.transform.localPosition.y);
             Debug.Log("Spawned Item" + spawnedItem.transform.position.y);
@@ -139,6 +120,37 @@ namespace Assets.Scripts.Items
             Rigidbody rb = spawnedItem.GetComponent<Rigidbody>();
             if (rb != null)
                 rb.useGravity = false;
+        }
+
+        private bool isRespawning = false;
+
+
+
+        private void OnItemGrabbed(SelectEnterEventArgs args)
+        {
+            if (isRespawning) return;
+
+            isRespawning = true;
+
+            Debug.Log("Item grabbed, starting respawn timer");
+
+            ItemComponent item = args.interactableObject.transform.GetComponent<ItemComponent>();
+            if (item)
+            {
+                float time = respawnManager.GetRespawnTimeForQuality(item.itemData.itemQuality);
+                StartCoroutine(RespawnAfterDelay(time));
+            }
+
+          
+        }
+
+        private System.Collections.IEnumerator RespawnAfterDelay(float delay)
+        {
+            yield return new WaitForSeconds(delay);
+
+            InstantiateItem();
+
+            isRespawning = false;
         }
     }
 }

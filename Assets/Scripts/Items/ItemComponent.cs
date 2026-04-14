@@ -88,5 +88,11 @@ namespace Assets.Scripts.Items
 #endif
             }
         }
+
+        public void RefreshVisuals()
+        {
+            InitializeOutline();
+            UpdateVisuals();
+        }
     }
 }

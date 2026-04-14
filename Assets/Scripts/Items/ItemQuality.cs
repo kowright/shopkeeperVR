@@ -31,5 +31,24 @@ namespace Assets.Scripts.Items
         }
     }
 
+    public class ItemRespawnManager
+    {
+        private Dictionary<ItemQuality, float> itemQualityRespawnTimeMap = new Dictionary<ItemQuality, float>()
+        {
+            { ItemQuality.Bad, 1},
+            { ItemQuality.Low, 3 },
+            { ItemQuality.Good, 5},
+            { ItemQuality.Great, 10 },
+            { ItemQuality.Top, 60 }
+        };
+        public float GetRespawnTimeForQuality(ItemQuality quality)
+        {
+            if (itemQualityRespawnTimeMap.TryGetValue(quality, out float time))
+            {
+                return time;
+            }
+            return 0;
+        }
+    }
 
 }
