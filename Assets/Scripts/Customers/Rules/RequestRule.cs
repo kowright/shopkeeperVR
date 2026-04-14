@@ -10,5 +10,6 @@ namespace Assets.Scripts.Customers
     public abstract class RequestRule : ScriptableObject
     {
         public abstract bool IsSatisfied(List<ItemComponent> items, Customer customer);
+        public abstract string RequestString { get; }
     }
 }

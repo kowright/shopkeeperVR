@@ -17,6 +17,7 @@ namespace Assets.Scripts.SubmitTable
             {
                 currentCustomer = customer.customer; 
                 Debug.Log("Servicing: " + currentCustomer.customerName);
+                //turn on request ask
 
             }
         }

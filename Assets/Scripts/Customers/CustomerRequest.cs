@@ -15,5 +15,32 @@ namespace Assets.Scripts.Customers
 
         // custom rules from other scriptable objects
         public List<RequestRule> extraRules;
+
+        public List<string> requestString()
+        {
+            List<string> requestStrings = new List<string>();
+            if (extraRules != null)
+            {
+                foreach (var rule in extraRules)
+                {
+                    requestStrings.Add(rule.RequestString);
+                    Debug.Log(rule.RequestString);
+                }
+            }
+
+            if (requiredItems != null)
+            {
+                foreach (var requiredItem in requiredItems)
+                {
+                    requestStrings.Add("Required: " + requiredItem.displayName);
+                    Debug.Log("required");
+                }
+            }
+            foreach(var s in requestStrings){
+                Debug.Log("string " +  s);
+            }
+            return requestStrings;
+          
+        }
     }
 }

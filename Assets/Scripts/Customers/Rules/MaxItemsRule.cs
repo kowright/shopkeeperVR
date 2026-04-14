@@ -10,9 +10,15 @@ namespace Assets.Scripts.Customers.Rules
     {
         public int maxItems;
 
+        public override string RequestString => "Up to " + maxItems;
+
         public override bool IsSatisfied(List<ItemComponent> items, Customer customer)
         {
             return items.Count <= maxItems;
         }
+
+
+
+      
     }
 }
