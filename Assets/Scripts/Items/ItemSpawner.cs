@@ -19,6 +19,7 @@ namespace Assets.Scripts.Items
         public TextMeshProUGUI typeTextRight;
         public TextMeshProUGUI costText;
         public TextMeshProUGUI descriptionText;
+        public TextMeshProUGUI respawnTimerText;
         public Transform itemSpawnLocation;
         public MeshRenderer meshRenderer;
         private ItemOutlineColorManager outlineColorManager = new ItemOutlineColorManager();
@@ -52,6 +53,7 @@ namespace Assets.Scripts.Items
             costText.text = '$' + item.cost.ToString();
             descriptionText.text = item.description;
             itemPrefab = item?.itemPrefab;
+            respawnTimerText.text = "";
             Color materialColor = outlineColorManager.GetOutlineColorForQuality(item.itemQuality);
 
 
@@ -139,6 +141,7 @@ namespace Assets.Scripts.Items
             {
                 float time = respawnManager.GetRespawnTimeForQuality(item.itemData.itemQuality);
                 StartCoroutine(RespawnAfterDelay(time));
+                StartCoroutine(RespawnTimerDisplay(time));
             }
 
           
@@ -151,6 +154,22 @@ namespace Assets.Scripts.Items
             InstantiateItem();
 
             isRespawning = false;
+        }
+
+        private System.Collections.IEnumerator RespawnTimerDisplay(float wait)
+        {
+            
+            while (wait > 0)
+            {
+                yield return new WaitForSeconds(1f);
+
+                wait -= 1;
+
+                respawnTimerText.text = wait.ToString();
+            }
+
+            respawnTimerText.text = "";
+
         }
     }
 }

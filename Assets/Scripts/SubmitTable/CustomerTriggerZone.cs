@@ -8,17 +8,17 @@ namespace Assets.Scripts.SubmitTable
 	public class CustomerTriggerZone: MonoBehaviour
 	{
         public Customer currentCustomer;
-    
+
 
         private void OnTriggerEnter(Collider other)
         {
             var customer = other.GetComponent<CustomerComponent>();
             if (customer != null)
             {
-                currentCustomer = customer.customer; 
+                currentCustomer = customer.customer;
                 Debug.Log("Servicing: " + currentCustomer.customerName);
                 //turn on request ask
-
+                customer.StartPatienceTimer();
             }
         }
 

@@ -13,6 +13,10 @@ public class Customer : ScriptableObject
     // public Item[] items; // use when customers can give stuff
     public List<CustomerRequest> possibleRequests;
     public CustomerRequest request;
-    public int happiness; // tied to patience
+    public float happiness; // starting patience; out of highest is 1.0
+    public float lowFineHappiness;
+    public float highFineHappiness;
     // something about conversation
+
 }
+
