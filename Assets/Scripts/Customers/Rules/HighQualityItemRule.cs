@@ -19,6 +19,7 @@ namespace Assets.Scripts.Customers.Rules
 
         public override string FailureString => "No high-quality item";
         public override float FailureDeduction => -0.3f;
+
     }
-    
+
 }

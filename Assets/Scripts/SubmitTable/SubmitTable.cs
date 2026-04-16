@@ -83,7 +83,11 @@ public class SubmitTable: MonoBehaviour
         {
             totalCost += item.itemData.cost;
         }
+        int paid = Mathf.Min(totalCost, customer.budget); // DO SOMETHING HERE
+        int loss = Mathf.Max(0, totalCost - customer.budget);
+
         int customerMoneyLeft = customer.budget - totalCost;
+
         Debug.Log("customer budget is now " + customerMoneyLeft);
         List<string> results = new();
         if (customerMoneyLeft < 0)
@@ -99,7 +103,7 @@ public class SubmitTable: MonoBehaviour
     
         float happinessReduction = 0f;
 
-        var request = customerZone.currentCustomer.request;
+        var request = customerZone.currentCustomerComponent.request;
         // 1. Required specific items
         if (request.requiredItems != null)
         {

@@ -24,6 +24,8 @@ namespace Assets.Scripts.Customers.Rules
 
         public override string FailureString => "Not enough variety";
         public override float FailureDeduction => -0.3f;
+
+
     }
-    
+
 }

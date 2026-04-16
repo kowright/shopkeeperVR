@@ -12,8 +12,7 @@ public class Customer : ScriptableObject
     public int patience;
     public CustomerType customerType;
     // public Item[] items; // use when customers can give stuff
-    public List<CustomerRequest> possibleRequests;
-    public CustomerRequest request;
+    //public CustomerRequest request;
     public float happiness; // starting patience; out of highest is 1.0
 
     // something about conversation

@@ -1,7 +1,9 @@
 using Assets.Scripts.Customers;
+using Assets.Scripts.Customers.Rules;
 using Assets.Scripts.Items;
 using System.Runtime.CompilerServices;
 using TMPro;
+using UnityEditor.PackageManager.Requests;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -21,18 +23,53 @@ public class CustomerComponent : MonoBehaviour
     [SerializeField] private float happinessFloat;
     private Coroutine patienceCoroutine;
     private CustomerHappinessManager happinessManager;
+    public RequestManager requestManager;
+    public CustomerRequest request;
 
+    //private void OnEnable()
+    //{
+    //    ProfitBoard.OnDayStarted += AssignRequest;
+    //    Debug.Log("DAY STARTED sub");
+    //    nameText.text = customer.customerName;
+    //    budgetText.text = "$" + customer.budget.ToString();
+    //    typeText.text = customer.customerType.ToString();
+    //    Debug.Log("Request here?" + request.name);
+    //    itemQualityText.text = request.minimumQuality.ToString();
+    //    itemTypeText.text = request.requiredType.ToString();
+
+    //    //requestText.text = customer.request.requestString()[0]; //make new text mesh for each one?
+    //    requestText.text = string.Join("\n", request.requestString());
+    //    Debug.Log("PATIENCE START AT" + customer.patience);
+    //    patience = customer.patience;
+    //    patienceText.text = "Patience " + customer.patience.ToString();
+    //    happinessFloat = customer.happiness;
+    //    happinessManager = new CustomerHappinessManager(customer.lowFineHappiness, customer.highFineHappiness);
+    //    CustomerHappiness initialHappiness = happinessManager.GetHapinessFromPatience(customer.happiness);
+    //    happinessText.text = initialHappiness.ToString();
+    //}
+
+
+    //private void OnDisable()
+    //{
+
+    //    ProfitBoard.OnDayStarted -= AssignRequest;
+    //}
     private void Start()
     {
+
+        Debug.Log("Customer getting request for day " + ProfitBoard.day);
+        request = requestManager.GetRequest(customer, ProfitBoard.day);
+        Debug.Log("GOT REQUEST" + request.name);
+
         nameText.text = customer.customerName;
         budgetText.text = "$" + customer.budget.ToString();
         typeText.text = customer.customerType.ToString();
 
-        itemQualityText.text = customer.request.minimumQuality.ToString();
-        itemTypeText.text = customer.request.requiredType.ToString();
+        itemQualityText.text = request.minimumQuality.ToString();
+        itemTypeText.text = request.requiredType.ToString();
 
         //requestText.text = customer.request.requestString()[0]; //make new text mesh for each one?
-        requestText.text = string.Join("\n", customer.request.requestString());
+        requestText.text = string.Join("\n", request.requestString());
         Debug.Log("PATIENCE START AT" + customer.patience);
         patience = customer.patience;
         patienceText.text = "Patience " + customer.patience.ToString();
@@ -40,6 +77,8 @@ public class CustomerComponent : MonoBehaviour
         happinessManager = new CustomerHappinessManager(customer.lowFineHappiness, customer.highFineHappiness);
         CustomerHappiness initialHappiness = happinessManager.GetHapinessFromPatience(customer.happiness);
         happinessText.text = initialHappiness.ToString();
+
+
 
     }
 
@@ -86,6 +125,13 @@ public class CustomerComponent : MonoBehaviour
             StopCoroutine(patienceCoroutine);
             patienceCoroutine = null;
         }
+    }
+
+    private void AssignRequest(int day)
+    {
+        Debug.Log("Customer getting request for day " +  day);
+        request = requestManager.GetRequest(customer, ProfitBoard.day);
+        Debug.Log("GOT REQUEST" + request.name);
     }
 
 }

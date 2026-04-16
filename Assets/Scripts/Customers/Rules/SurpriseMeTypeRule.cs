@@ -19,6 +19,8 @@ namespace Assets.Scripts.Customers.Rules
 
         public override string FailureString => "I didn't like that...";
         public override float FailureDeduction => -0.2f;
+
+
     }
 
 }

@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 576e2cd0ee088ea438d828ed64a916e9, type: 3}
   m_Name: CustomerRequest2
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Customers.CustomerRequest
+  difficulty: 1
   requiredItems:
   - {fileID: 11400000, guid: ff4dfe1a2c994fb4f80b2d7861b4f80a, type: 2}
   - {fileID: 11400000, guid: 6be337472b0aebc40bf405fb2d4dda77, type: 2}
@@ -20,3 +21,4 @@ MonoBehaviour:
   hasRequiredQuality: 0
   minimumQuality: 0
   extraRules: []
+  Tags: 07000000

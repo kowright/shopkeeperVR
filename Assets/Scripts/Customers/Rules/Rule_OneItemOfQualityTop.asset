@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c75a13f52251b96428040d23e1ea2286, type: 3}
   m_Name: Rule_OneItemOfQualityTop
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Customers.Rules.HighQualityRequiredRule
-  requiredQuality: 0
+  requiredQuality: 4

@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d080adb22395a194493900b2c685ed7b, type: 3}
   m_Name: Rule_FastService75
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Customers.Rules.FastServiceRule
-  requiredPatiencePercent: 0.5
+  requiredPatiencePercent: 0.75

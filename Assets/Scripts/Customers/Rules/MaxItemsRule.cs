@@ -21,5 +21,7 @@ namespace Assets.Scripts.Customers.Rules
 
         public override float FailureDeduction => -0.3f;
 
+
+
     }
 }

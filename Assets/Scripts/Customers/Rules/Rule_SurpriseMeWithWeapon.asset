@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1dba0b0585c7374a9463bb10e006764, type: 3}
   m_Name: Rule_SurpriseMeWithWeapon
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Customers.Rules.SurpriseMeTypeRule
-  preferredType: 0
+  preferredType: 1

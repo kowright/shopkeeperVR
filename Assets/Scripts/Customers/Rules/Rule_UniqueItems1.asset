@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04b21d3455795f7469069f4e5aa5e921, type: 3}
   m_Name: Rule_UniqueItems1
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Customers.Rules.UniqueItemsRule
-  minUnique: 0
+  minUnique: 1

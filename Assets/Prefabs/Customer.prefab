@@ -288,6 +288,7 @@ GameObject:
   - component: {fileID: 6066436428748407861}
   - component: {fileID: 7125005877028803948}
   - component: {fileID: 3766989382729685555}
+  - component: {fileID: 3586418174255868674}
   m_Layer: 0
   m_Name: Customer
   m_TagString: Untagged
@@ -410,6 +411,9 @@ MonoBehaviour:
   patienceText: {fileID: 7769644502738388452}
   itemQualityText: {fileID: 3554349623311388744}
   itemTypeText: {fileID: 8638980704318788563}
+  happinessFloat: 0
+  requestManager: {fileID: 3586418174255868674}
+  request: {fileID: 0}
 --- !u!54 &3766989382729685555
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -437,6 +441,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &3586418174255868674
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3865190216801035662}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2be9c86b89d13d43bfc71f0c8bd7844, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Customers.Rules.RequestManager
+  database: {fileID: 11400000, guid: 7bc80fc569d62be43b494420855cea64, type: 2}
 --- !u!1 &5792809166825724337
 GameObject:
   m_ObjectHideFlags: 0

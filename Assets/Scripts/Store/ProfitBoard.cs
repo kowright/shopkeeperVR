@@ -1,4 +1,5 @@
 using NUnit.Framework;
+using System;
 using System.Collections.Generic;
 using TMPro;
 using Unity.Hierarchy;
@@ -8,9 +9,12 @@ public class ProfitBoard : MonoBehaviour
 {
 
     public TextMeshProUGUI text;
+    public static int day { get; private set; }
+
     private float dayTime;
     [SerializeField] private List<SubmitTable> stations;
     private float storeProfit;
+    public static Action<int> OnDayStarted;
 
     void OnEnable()
     {
@@ -30,26 +34,11 @@ public class ProfitBoard : MonoBehaviour
         text.text = $"Profit: ${storeProfit}";
     }
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public void StartNewDay() // TODO make private again
     {
-        
-    }
+        day++;
+        Debug.Log("START THE DAY" + day);
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    public void AddStation(SubmitTable newTable)
-    {
-        Debug.Log("NEW TABLE");
-        stations.Add(newTable);
-    }
-
-    public void RemoveStation(SubmitTable newTable)
-    {
-        stations.Remove(newTable);
+        OnDayStarted?.Invoke(day);
     }
 }
