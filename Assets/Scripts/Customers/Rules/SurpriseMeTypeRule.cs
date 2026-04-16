@@ -5,6 +5,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.Customers.Rules
 {
+    [CreateAssetMenu(menuName = "Requests/SurpriseMeTypeRule")]
     public class SurpriseMeTypeRule : RequestRule
     {
         public ItemType preferredType;

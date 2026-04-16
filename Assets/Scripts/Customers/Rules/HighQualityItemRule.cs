@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.Customers.Rules
 {
-
+    [CreateAssetMenu(menuName = "Requests/HighQualityRequiredRule")]
     public class HighQualityRequiredRule : RequestRule
     {
         public ItemQuality requiredQuality;

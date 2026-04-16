@@ -5,6 +5,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.Customers.Rules
 {
+    [CreateAssetMenu(menuName = "Requests/NoDuplicateItemsRule")]
     public class NoDuplicateItemsRule : RequestRule
     {
         public override string RequestString => "No duplicate items";

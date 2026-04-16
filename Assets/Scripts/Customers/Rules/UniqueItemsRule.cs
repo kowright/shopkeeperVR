@@ -1,21 +1,29 @@
-﻿using System.Collections;
+﻿using Assets.Scripts.Items;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Assets.Scripts.Customers.Rules
 {
-    public class NewMonoBehaviour : MonoBehaviour
+    [CreateAssetMenu(menuName = "Requests/UniqueItemsRule")]
+
+    public class UniqueItemsRule : RequestRule
     {
+        public int minUnique;
 
-        // Use this for initialization
-        void Start()
+        public override string RequestString => $"At least {minUnique} unique items";
+
+        public override bool IsSatisfied(List<ItemComponent> items, Customer customer)
         {
+            var unique = new HashSet<Item>();
+            foreach (var item in items)
+                unique.Add(item.itemData);
 
+            return unique.Count >= minUnique;
         }
 
-        // Update is called once per frame
-        void Update()
-        {
-
-        }
+        public override string FailureString => "Not enough variety";
+        public override float FailureDeduction => -0.3f;
     }
+    
 }

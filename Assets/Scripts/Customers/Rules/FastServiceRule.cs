@@ -5,7 +5,8 @@ using Assets.Scripts.Items;
 
 namespace Assets.Scripts.Customers.Rules
 {
-	public class FastServiceRule: RequestRule
+    [CreateAssetMenu(menuName = "Requests/FastServiceRule")]
+    public class FastServiceRule: RequestRule
 	{
         public float requiredPatiencePercent = 0.5f;
 
