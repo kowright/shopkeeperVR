@@ -1,4 +1,5 @@
 using Assets.Scripts.Customers;
+using NaughtyAttributes;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -14,9 +15,15 @@ public class Customer : ScriptableObject
     public List<CustomerRequest> possibleRequests;
     public CustomerRequest request;
     public float happiness; // starting patience; out of highest is 1.0
-    public float lowFineHappiness;
-    public float highFineHappiness;
+
     // something about conversation
+
+    [MinMaxSlider(0.0f, 1.0f)]
+    public Vector2 minMaxFineHappinessSlider = new Vector2(0.25f, 0.75f);
+
+    public float lowFineHappiness => minMaxFineHappinessSlider.x;
+    public float highFineHappiness => minMaxFineHappinessSlider.y;
+
 
 }
 

@@ -8,6 +8,7 @@ namespace Assets.Scripts.SubmitTable
 	public class CustomerTriggerZone: MonoBehaviour
 	{
         public Customer currentCustomer;
+        public CustomerComponent currentCustomerComponent;
 
 
         private void OnTriggerEnter(Collider other)
@@ -16,6 +17,7 @@ namespace Assets.Scripts.SubmitTable
             if (customer != null)
             {
                 currentCustomer = customer.customer;
+                currentCustomerComponent = customer;
                 Debug.Log("Servicing: " + currentCustomer.customerName);
                 //turn on request ask
                 customer.StartPatienceTimer();
@@ -30,6 +32,7 @@ namespace Assets.Scripts.SubmitTable
             {
                 Debug.Log("Bye: " + currentCustomer.customerName);
                 currentCustomer = null;
+                currentCustomerComponent = null;
             }
         }
     }

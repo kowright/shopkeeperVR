@@ -18,7 +18,8 @@ public class CustomerComponent : MonoBehaviour
     public TextMeshProUGUI itemTypeText;
     private float patience;
     private CustomerHappiness happiness;
-    private float happinessFloat;
+    [SerializeField] private float happinessFloat;
+    private Coroutine patienceCoroutine;
     private CustomerHappinessManager happinessManager;
 
     private void Start()
@@ -44,7 +45,7 @@ public class CustomerComponent : MonoBehaviour
 
     public void StartPatienceTimer()
     {
-        StartCoroutine(ReducePatience());
+        patienceCoroutine = StartCoroutine(ReducePatience());
     }
 
     private System.Collections.IEnumerator ReducePatience()
@@ -59,13 +60,32 @@ public class CustomerComponent : MonoBehaviour
 
             float timeLeft = patience / customer.patience;
             happiness = happinessManager.GetHapinessFromPatience(timeLeft);
-
+            happinessFloat = timeLeft;
             happinessText.text = happiness.ToString();
-         
+
         }
 
         Debug.Log("Customer ran out of patience!");
+    }
+
+    public void ReduceHappiness(float reduction)
+    {
+        Debug.Log("REduce happiness by " +  reduction);
+        happinessFloat += reduction;
+        happiness = happinessManager.GetHapinessFromPatience(happinessFloat);
+        Debug.Log("happiness" + happinessFloat);
+        Debug.Log("official happiness" + happiness.ToString());
+        happinessText.text = happiness.ToString();
 
     }
-}
 
+    public void StopPatienceTimer()
+    {
+        if (patienceCoroutine != null)
+        {
+            StopCoroutine(patienceCoroutine);
+            patienceCoroutine = null;
+        }
+    }
+
+}

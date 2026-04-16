@@ -15,9 +15,10 @@ MonoBehaviour:
   customerID: 1
   customerName: Benjamin
   budget: 10
-  patience: 60
+  patience: 120
   customerType: 0
   possibleRequests:
   - {fileID: 11400000, guid: 1639001d0347b1344a0a92fb16599a87, type: 2}
   request: {fileID: 11400000, guid: 1639001d0347b1344a0a92fb16599a87, type: 2}
-  happiness: 100
+  happiness: 1
+  minMaxFineHappinessSlider: {x: 0.2, y: 0.3}

@@ -17,8 +17,9 @@ namespace Assets.Scripts.Customers.Rules
             return items.Count <= maxItems;
         }
 
+        public override string FailureString => $"Over {maxItems} were submitted";
 
+        public override float FailureDeduction => -0.3f;
 
-      
     }
 }

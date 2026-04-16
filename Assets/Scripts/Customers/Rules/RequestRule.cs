@@ -11,5 +11,9 @@ namespace Assets.Scripts.Customers
     {
         public abstract bool IsSatisfied(List<ItemComponent> items, Customer customer);
         public abstract string RequestString { get; }
+
+        public abstract string FailureString {get; }
+
+        public abstract float FailureDeduction { get; }
     }
 }

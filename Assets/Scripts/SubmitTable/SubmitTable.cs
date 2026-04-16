@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.Mathematics;
 using UnityEditor.PackageManager.Requests;
+using UnityEditorInternal.Profiling.Memory.Experimental;
 using UnityEngine;
 
 public class SubmitTable: MonoBehaviour
@@ -12,6 +13,13 @@ public class SubmitTable: MonoBehaviour
     [SerializeField] private List<ItemComponent> itemsOnTable = new List<ItemComponent>();
     public TextMeshProUGUI results;
     public CustomerTriggerZone customerZone;
+    private int tableRevenue; // how much table has made today
+    public static Action<int> OnTableSubmitted;
+
+    void Start()
+    {
+
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -40,9 +48,12 @@ public class SubmitTable: MonoBehaviour
     public void SubmitItemsForValidation()
     {
         Debug.Log("SUBMIT" + itemsOnTable[0].itemData.displayName);
-        string result; 
-        bool submission = ValidateSubmission(itemsOnTable, customerZone.currentCustomer, out result);
-        results.text = result;
+        customerZone.currentCustomerComponent.StopPatienceTimer();
+        var ( result, happinessReduction) = ValidateSubmission(itemsOnTable, customerZone.currentCustomer);
+        if (result.Count > 0)
+        {
+            results.text = result[0];
+        }
         foreach (var item in itemsOnTable)
         {
            Destroy(item.gameObject);
@@ -51,14 +62,43 @@ public class SubmitTable: MonoBehaviour
      
         itemsOnTable.Clear();
 
-        // process Customer happiness
+        customerZone.currentCustomerComponent.ReduceHappiness(happinessReduction);
+
+
 
         // process store profit!
 
     }
 
-    public bool ValidateSubmission(List<ItemComponent> items, Customer customer, out string result)
+    public (List<string> result, float happinessReduction)  ValidateSubmission(List<ItemComponent> items, Customer customer)
     {
+        // can reward for how much money left the person has
+        // ALLOW MISTAKES TO GO THROUGH
+
+       
+
+        // 0. Cost
+        int totalCost = 0;
+        foreach (var item in items)
+        {
+            totalCost += item.itemData.cost;
+        }
+        int customerMoneyLeft = customer.budget - totalCost;
+        Debug.Log("customer budget is now " + customerMoneyLeft);
+        List<string> results = new();
+        if (customerMoneyLeft < 0)
+        {
+            string result = $"Overbudget by -{customerMoneyLeft}";
+            results.Add(result);
+            return (results, -1.0f);
+            
+        }
+        tableRevenue += totalCost;
+        OnTableSubmitted?.Invoke(totalCost);
+        Debug.Log("Submit table check rules");
+    
+        float happinessReduction = 0f;
+
         var request = customerZone.currentCustomer.request;
         // 1. Required specific items
         if (request.requiredItems != null)
@@ -67,29 +107,36 @@ public class SubmitTable: MonoBehaviour
             {
                 if (!items.Exists(i => i.itemData == reqItem))
                 {
-                    result = $"Missing {reqItem.displayName}";
-                    return false;
+                    //string result = $"Missing {reqItem.displayName}";
+
+                    //return (result, -0.5f);
+                    results.Add($"Missing {reqItem.displayName}");
+                    happinessReduction += -0.5f;
                 }
             }
         }
 
         // 2. Required type
-        if (request.requiredType.HasValue)
+        if (request.hasRequiredType)
         {
-            if (items.Exists(i => i.itemData.itemType != request.requiredType.Value))
+            if (items.Exists(i => i.itemData.itemType != request.requiredType))
             {
-                result = $"All items must be {request.requiredType}";
-                return false;
+                //string result = $"All items must be {request.requiredType}";
+                //return (result, -0.2f);
+                results.Add($"All items must be {request.requiredType}");
+                happinessReduction += -0.2f;
             }
         }
 
         // 3. Minimum quality
-        if (request.minimumQuality.HasValue)
+        if (request.hasRequiredQuality)
         {
-            if (items.Exists(i => i.itemData.itemQuality < request.minimumQuality.Value))
+            if (items.Exists(i => i.itemData.itemQuality < request.minimumQuality))
             {
-                result = $"All items must be at least {request.minimumQuality}";
-                return false;
+                //string result = $"All items must be at least {request.minimumQuality}";
+                //return (result, -0.2f);
+                results.Add($"All items must be at least {request.minimumQuality}");
+                happinessReduction += -0.2f;
             }
         }
 
@@ -100,14 +147,15 @@ public class SubmitTable: MonoBehaviour
             {
                 if (!rule.IsSatisfied(items, customer))
                 {
-                    result = $"Failed rule: {rule.name}";
-                    return false;
+                    //string result = $"Failed rule: {rule.name}";
+                    //return (result, -0.2f);
+                    results.Add(rule.FailureString);
+                    happinessReduction += rule.FailureDeduction;
                 }
             }
         }
 
-        result = "Success!";
-        return true;
+        return (results, happinessReduction);
     }
 }
 

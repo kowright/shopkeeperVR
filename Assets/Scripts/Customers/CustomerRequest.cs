@@ -1,7 +1,8 @@
-﻿using UnityEngine;
+﻿using Assets.Scripts.Items;
+using NaughtyAttributes;
 using System.Collections;
-using Assets.Scripts.Items;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace Assets.Scripts.Customers
 {
@@ -10,8 +11,16 @@ namespace Assets.Scripts.Customers
     {
         // basic rules
         public List<Item> requiredItems;
-        public ItemType? requiredType;
-        public ItemQuality? minimumQuality;
+    
+        public bool hasRequiredType;
+    
+        [ShowIf(nameof(hasRequiredType))]
+        public ItemType requiredType;
+
+        public bool hasRequiredQuality;
+
+        [ShowIf(nameof(hasRequiredQuality))]
+        public ItemQuality minimumQuality;
 
         // custom rules from other scriptable objects
         public List<RequestRule> extraRules;
