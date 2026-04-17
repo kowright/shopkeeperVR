@@ -7,18 +7,26 @@ using UnityEngine;
 
 public class ProfitBoard : MonoBehaviour
 {
+   
 
-    public TextMeshProUGUI text;
+    public TextMeshProUGUI profitText;
+    public TextMeshProUGUI countdownText;
     public static int day { get; private set; }
 
-    private float dayTime;
+    /// <summary>
+    /// Get time in seconds of how long the day countdown is
+    /// </summary>
+    private float dayTime => (day * 60) + 120; // 2 mins to start, every exyra day gives an extra minute
+
     [SerializeField] private List<SubmitTable> stations;
     private float storeProfit;
+    private bool isStoreOpen = false; // TODO should there be a specific number of customers each day or do as many customers as you can in the day? 
     public static Action<int> OnDayStarted;
+    private Coroutine openForBusinessCoroutine;
 
     void OnEnable()
     {
-        Debug.Log("Profit board subscribe");
+        countdownText.text = "Store closed";
         SubmitTable.OnTableSubmitted += AddProfit;
     }
 
@@ -31,14 +39,39 @@ public class ProfitBoard : MonoBehaviour
     {
         Debug.Log("ADD PROFIT");
         storeProfit += amount;
-        text.text = $"Profit: ${storeProfit}";
+        profitText.text = $"Profit: ${storeProfit}";
     }
 
+    // is called on Open For Business button
     public void StartNewDay() // TODO make private again
     {
         day++;
         Debug.Log("START THE DAY" + day);
-
+        isStoreOpen = true;
         OnDayStarted?.Invoke(day);
+        StartOpenBusinessTimer();
+    }
+
+    public void StartOpenBusinessTimer()
+    {
+        openForBusinessCoroutine = StartCoroutine(OpenForBusinessCountdown());
+    }
+
+    private System.Collections.IEnumerator OpenForBusinessCountdown()
+    {
+        float time = dayTime;
+
+        while (time > 0)
+        {
+            yield return new WaitForSeconds(1f);
+
+            time -= 1;
+
+            countdownText.text = "Store closes in: " + time.ToString();
+
+        }
+
+        isStoreOpen = false;
+        countdownText.text = "Store closed!";
     }
 }

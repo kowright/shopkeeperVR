@@ -37,7 +37,7 @@ namespace Assets.Scripts.Customers.Rules
                     Debug.Log(validRequestsSoft.Count + " to choose from");
 
                     int randomNumber = Random.Range(0, validRequestsSoft.Count);
-                    Debug.Log("random number " + randomNumber);
+                
                     return validRequestsSoft[randomNumber];
 
                 }

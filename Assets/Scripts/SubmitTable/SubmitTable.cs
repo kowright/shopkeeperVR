@@ -85,6 +85,8 @@ public class SubmitTable: MonoBehaviour
         }
         int paid = Mathf.Min(totalCost, customer.budget); // DO SOMETHING HERE
         int loss = Mathf.Max(0, totalCost - customer.budget);
+        int profit = paid - loss;
+        Debug.Log("Table made " + profit);
 
         int customerMoneyLeft = customer.budget - totalCost;
 
@@ -97,8 +99,11 @@ public class SubmitTable: MonoBehaviour
             return (results, -1.0f);
             
         }
-        tableRevenue += totalCost;
-        OnTableSubmitted?.Invoke(totalCost);
+        //tableRevenue += totalCost;
+        tableRevenue += profit;
+        //OnTableSubmitted.Invoke(totalCost)
+        OnTableSubmitted?.Invoke(profit);
+
         Debug.Log("Submit table check rules");
     
         float happinessReduction = 0f;
