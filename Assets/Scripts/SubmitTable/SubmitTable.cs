@@ -1,3 +1,4 @@
+using Assets.Scripts.Customers;
 using Assets.Scripts.Items;
 using Assets.Scripts.SubmitTable;
 using System;
@@ -13,12 +14,21 @@ public class SubmitTable: MonoBehaviour
     [SerializeField] private List<ItemComponent> itemsOnTable = new List<ItemComponent>();
     public TextMeshProUGUI results;
     public CustomerTriggerZone customerZone;
-    private int tableRevenue; // how much table has made today
-    public static Action<int> OnTableSubmitted;
+    private float tableRevenue; // how much table has made today
+    public static Action<float> OnTableSubmitted;
+    private Coroutine clearResultsCountdown;
+    private int customersServed = 0;
+    private int customersMadeHappy = 0;
 
     void Start()
     {
+        ProfitBoard.OnDayEnded += ResetTable;
 
+    }
+
+    private void OnDestroy()
+    {
+        ProfitBoard.OnDayEnded -= ResetTable;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -49,7 +59,7 @@ public class SubmitTable: MonoBehaviour
     {
         Debug.Log("SUBMIT" + itemsOnTable[0].itemData.displayName);
         customerZone.currentCustomerComponent.StopPatienceTimer();
-        var ( result, happinessReduction) = ValidateSubmission(itemsOnTable, customerZone.currentCustomer);
+        var ( result, happinessReduction, moneyPaid) = ValidateSubmission(itemsOnTable, customerZone.currentCustomer);
         if (result.Count > 0)
         {
             results.text = result[0];
@@ -62,15 +72,31 @@ public class SubmitTable: MonoBehaviour
      
         itemsOnTable.Clear();
 
-        customerZone.currentCustomerComponent.ReduceHappiness(happinessReduction);
+        CustomerHappiness finalHappiness = customerZone.currentCustomerComponent.ReduceHappiness(happinessReduction);
 
+        float storeTip = 0;
+        if(finalHappiness == CustomerHappiness.Fine)
+        {
+            storeTip = moneyPaid * 0.1f;
+            // maybe tip sound
+        }
+        else if (finalHappiness == CustomerHappiness.Happy)
+        {
+            storeTip = moneyPaid * 0.25f;
+            customersMadeHappy += 1;
+            // maybe tip sound
+        }
+        Debug.Log("Tip is " +  storeTip);
+        tableRevenue += storeTip;
+        customersServed += 1;
 
+        OnTableSubmitted?.Invoke(storeTip);
+        StartClearResultsCountdown();
 
-        // process store profit!
 
     }
 
-    public (List<string> result, float happinessReduction)  ValidateSubmission(List<ItemComponent> items, Customer customer)
+    public (List<string> result, float happinessReduction, int moneyPaid)  ValidateSubmission(List<ItemComponent> items, Customer customer)
     {
         // can reward for how much money left the person has
         // ALLOW MISTAKES TO GO THROUGH
@@ -83,7 +109,7 @@ public class SubmitTable: MonoBehaviour
         {
             totalCost += item.itemData.cost;
         }
-        int paid = Mathf.Min(totalCost, customer.budget); // DO SOMETHING HERE
+        int paid = Mathf.Min(totalCost, customer.budget);
         int loss = Mathf.Max(0, totalCost - customer.budget);
         int profit = paid - loss;
         Debug.Log("Table made " + profit);
@@ -96,7 +122,7 @@ public class SubmitTable: MonoBehaviour
         {
             string result = $"Overbudget by -{customerMoneyLeft}";
             results.Add(result);
-            return (results, -1.0f);
+            return (results, -1.0f, 0);
             
         }
         //tableRevenue += totalCost;
@@ -164,7 +190,30 @@ public class SubmitTable: MonoBehaviour
             }
         }
 
-        return (results, happinessReduction);
+        return (results, happinessReduction, paid);
+    }
+
+    private void ResetTable()
+    {
+        Debug.Log("DAY IS DONE");
+
+        itemsOnTable.Clear();
+        results.text = $"This station: profit {tableRevenue} customers served: {customersServed} customers made happy: {customersMadeHappy}";
+
+    }
+
+    public void StartClearResultsCountdown()
+    {
+        clearResultsCountdown = StartCoroutine(ClearResultsText());
+    }
+
+    private System.Collections.IEnumerator ClearResultsText()
+    {
+        Debug.Log("start countdown");
+        yield return new WaitForSeconds(5f);
+
+        results.text = "";
+        Debug.Log("end countdown");
     }
 }
 

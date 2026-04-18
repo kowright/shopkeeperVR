@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fc04be9d58e7577479e5de74af7b05f6, type: 3}
-  m_Name: Item_Master_Axe
+  m_Name: Item_Rotten_Banana
   m_EditorClassIdentifier: Assembly-CSharp::Item
-  displayName: Master's Axe
-  description: an axe fit for a pro
-  cost: 50
-  itemQuality: 4
-  itemType: 1
-  itemPrefab: {fileID: 3119356908110327140, guid: 19871de0af828eb41a70eace6008edf9, type: 3}
+  displayName: Rotten Banana
+  description: that went bad
+  cost: 1
+  itemQuality: 0
+  itemType: 0
+  itemPrefab: {fileID: 3119356908110327140, guid: af7f52483fd79f94682a722cb247b7d1, type: 3}

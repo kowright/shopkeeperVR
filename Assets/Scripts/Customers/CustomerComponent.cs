@@ -107,7 +107,7 @@ public class CustomerComponent : MonoBehaviour
         Debug.Log("Customer ran out of patience!");
     }
 
-    public void ReduceHappiness(float reduction)
+    public CustomerHappiness ReduceHappiness(float reduction)
     {
         Debug.Log("REduce happiness by " +  reduction);
         happinessFloat += reduction;
@@ -115,7 +115,7 @@ public class CustomerComponent : MonoBehaviour
         Debug.Log("happiness" + happinessFloat);
         Debug.Log("official happiness" + happiness.ToString());
         happinessText.text = happiness.ToString();
-
+        return happiness;
     }
 
     public void StopPatienceTimer()
@@ -126,12 +126,4 @@ public class CustomerComponent : MonoBehaviour
             patienceCoroutine = null;
         }
     }
-
-    private void AssignRequest(int day)
-    {
-        Debug.Log("Customer getting request for day " +  day);
-        request = requestManager.GetRequest(customer, ProfitBoard.day);
-        Debug.Log("GOT REQUEST" + request.name);
-    }
-
 }
