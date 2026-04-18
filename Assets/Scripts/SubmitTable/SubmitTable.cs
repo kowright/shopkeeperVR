@@ -19,7 +19,8 @@ public class SubmitTable: MonoBehaviour
     private Coroutine clearResultsCountdown;
     private int customersServed = 0;
     private int customersMadeHappy = 0;
-
+    private int currentTableCost = 0;
+    public TextMeshProUGUI priceCountText;
     void Start()
     {
         ProfitBoard.OnDayEnded += ResetTable;
@@ -38,7 +39,25 @@ public class SubmitTable: MonoBehaviour
         {
             itemsOnTable.Add(item);
             Debug.Log("Adding " + item.itemData.displayName);
-            
+            currentTableCost += item.itemData.cost;
+        
+            SetTableCostText(currentTableCost);
+        }
+    }
+
+    private void SetTableCostText(float cost)
+    {
+        priceCountText.text = "Current cost of items on table:" + cost.ToString();
+        if (customerZone.currentCustomer != null)
+        {
+            if (customerZone.currentCustomer.budget > currentTableCost)
+            {
+                priceCountText.color = Color.green;
+            }
+            else
+            {
+                priceCountText.color = Color.red;
+            }
         }
     }
 
@@ -50,6 +69,10 @@ public class SubmitTable: MonoBehaviour
         {
             itemsOnTable.Remove(item);
             Debug.Log("removing " + item.itemData.displayName);
+            currentTableCost -= item.itemData.cost;
+            SetTableCostText(currentTableCost);
+          
+         
         }
     }
 
@@ -60,10 +83,7 @@ public class SubmitTable: MonoBehaviour
         Debug.Log("SUBMIT" + itemsOnTable[0].itemData.displayName);
         customerZone.currentCustomerComponent.StopPatienceTimer();
         var ( result, happinessReduction, moneyPaid) = ValidateSubmission(itemsOnTable, customerZone.currentCustomer);
-        if (result.Count > 0)
-        {
-            results.text = result[0];
-        }
+      
         foreach (var item in itemsOnTable)
         {
            Destroy(item.gameObject);
@@ -86,12 +106,27 @@ public class SubmitTable: MonoBehaviour
             customersMadeHappy += 1;
             // maybe tip sound
         }
+
+        if (result.Count > 0)
+        {
+            results.text = result[0];
+            //TODO: show all result text and add tip text
+        }
+        else
+        {
+            results.text = "Tip: $" + storeTip;
+
+        }
+
         Debug.Log("Tip is " +  storeTip);
         tableRevenue += storeTip;
         customersServed += 1;
+        priceCountText.color = Color.white;
+        priceCountText.text = "";
 
         OnTableSubmitted?.Invoke(storeTip);
         StartClearResultsCountdown();
+
 
 
     }
@@ -199,7 +234,8 @@ public class SubmitTable: MonoBehaviour
 
         itemsOnTable.Clear();
         results.text = $"This station: profit {tableRevenue} customers served: {customersServed} customers made happy: {customersMadeHappy}";
-
+        currentTableCost = 0;
+        priceCountText.text = "";
     }
 
     public void StartClearResultsCountdown()

@@ -121,7 +121,11 @@ namespace Assets.Scripts.Items
 
             Rigidbody rb = spawnedItem.GetComponent<Rigidbody>();
             if (rb != null)
+            {
                 rb.useGravity = false;
+                rb.isKinematic = true;
+            }
+        
         }
 
         private bool isRespawning = false;
@@ -133,6 +137,12 @@ namespace Assets.Scripts.Items
             if (isRespawning) return;
 
             isRespawning = true;
+
+
+            Transform itemTransform = args.interactableObject.transform;
+
+            
+            itemTransform.SetParent(null);
 
             Debug.Log("Item grabbed, starting respawn timer");
 

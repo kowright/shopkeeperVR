@@ -39,13 +39,16 @@ namespace Assets.Scripts.Items
         private void OnGrab(SelectEnterEventArgs args)
         {
             rb.useGravity = true;
+            rb.isKinematic = false;
         }
 
         private void OnRelease(SelectExitEventArgs args)
         {
+            Debug.Log("Rleasing Item");
             // Optional behavior:
             // keep gravity ON after letting go (most realistic)
             rb.useGravity = true;
+            rb.isKinematic = false;
 
             // OR if you want it to float again after release:
             // rb.useGravity = false;
