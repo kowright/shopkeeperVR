@@ -36,6 +36,9 @@ namespace Assets.Scripts.Customers
         public List<string> requestString()
         {
             List<string> requestStrings = new List<string>();
+
+            //TODO: should there be request strings for quality? like the customer has a minimum quality on their customer component, 
+            // but they have no required quality- should the user be rewarded if they give above the quality even though it isn't required?
             if (extraRules != null)
             {
                 foreach (var rule in extraRules)

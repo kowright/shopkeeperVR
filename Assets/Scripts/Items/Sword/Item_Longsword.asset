@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Item_Longsword
   m_EditorClassIdentifier: Assembly-CSharp::Item
   displayName: Longsword
-  description: it's pretty long
-  cost: 1000
-  itemQuality: 4
+  description: it's a little too long
+  cost: 200
+  itemQuality: 1
   itemType: 1
   itemPrefab: {fileID: 3119356908110327140, guid: 56f3d9c3cbb92fc45b404fc3080746c1, type: 3}

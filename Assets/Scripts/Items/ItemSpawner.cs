@@ -24,6 +24,13 @@ namespace Assets.Scripts.Items
         public MeshRenderer meshRenderer;
         private ItemOutlineColorManager outlineColorManager = new ItemOutlineColorManager();
         private ItemRespawnManager respawnManager = new ItemRespawnManager();
+      
+
+        // TODO: subscribe to ProfitBoard to stop allowing spawner to be moved
+        public int SpawnerCost => item.cost * 10;
+
+        public bool IsPaid { get; private set; } = false;
+
         private void OnValidate()
         {
             if (item == null) return;
@@ -180,6 +187,12 @@ namespace Assets.Scripts.Items
 
             respawnTimerText.text = "";
 
+        }
+
+        public void SetSpawnerAsPaid()
+        {
+            Debug.Log("Spawner for " + item.displayName + " is paid");
+            IsPaid = true;
         }
     }
 }

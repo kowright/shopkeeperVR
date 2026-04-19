@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc04be9d58e7577479e5de74af7b05f6, type: 3}
   m_Name: Item_Sabre
   m_EditorClassIdentifier: Assembly-CSharp::Item
-  displayName: Gladius Sword
-  description: Rome's bloodiest sword
-  cost: 1000
-  itemQuality: 4
+  displayName: Fencing Sabre
+  description: not good in real combat
+  cost: 50
+  itemQuality: 0
   itemType: 1
   itemPrefab: {fileID: 3119356908110327140, guid: 56f3d9c3cbb92fc45b404fc3080746c1, type: 3}

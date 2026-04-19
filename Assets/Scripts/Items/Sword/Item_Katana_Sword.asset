@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Item
   displayName: Katana
   description: swift
-  cost: 1000
-  itemQuality: 4
+  cost: 500
+  itemQuality: 2
   itemType: 1
   itemPrefab: {fileID: 3119356908110327140, guid: 56f3d9c3cbb92fc45b404fc3080746c1, type: 3}

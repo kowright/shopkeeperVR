@@ -23,13 +23,16 @@ public class SubmitTable: MonoBehaviour
     public TextMeshProUGUI priceCountText;
     void Start()
     {
-        ProfitBoard.OnDayEnded += ResetTable;
+        ProfitBoard.OnDayEnded += SetBusinessClosedTable;
+        ProfitBoard.OnNextDay += OnNextDay;
 
     }
 
     private void OnDestroy()
     {
-        ProfitBoard.OnDayEnded -= ResetTable;
+        ProfitBoard.OnDayEnded -= SetBusinessClosedTable;
+        ProfitBoard.OnNextDay -= OnNextDay;
+
     }
 
     private void OnTriggerEnter(Collider other)
@@ -109,7 +112,10 @@ public class SubmitTable: MonoBehaviour
 
         if (result.Count > 0)
         {
-            results.text = result[0];
+            //results.text = result[0];
+            Debug.Log("results", results);
+            results.text =  string.Join("\n", result);
+
             //TODO: show all result text and add tip text
         }
         else
@@ -208,6 +214,28 @@ public class SubmitTable: MonoBehaviour
                 results.Add($"All items must be at least {request.minimumQuality}");
                 happinessReduction += -0.2f;
             }
+            float totalBonus = 0f;
+
+            foreach (var item in items)
+            {
+                int diff = item.itemData.itemQuality - request.minimumQuality;
+
+                if (diff > 0)
+                {
+                    totalBonus += diff * 0.05f;
+                }
+            }
+
+            // cap the bonus so it doesn't get crazy
+            totalBonus = Mathf.Clamp(totalBonus, 0f, 0.3f);
+
+            if (totalBonus > 0)
+            {
+                Debug.Log("quality bonus!");
+                results.Add("Customer is impressed by the quality!");
+                happinessReduction += totalBonus;
+            }
+
         }
 
         // 4. Extra rules (modular system)
@@ -228,7 +256,7 @@ public class SubmitTable: MonoBehaviour
         return (results, happinessReduction, paid);
     }
 
-    private void ResetTable()
+    private void SetBusinessClosedTable()
     {
         Debug.Log("DAY IS DONE");
 
@@ -250,6 +278,14 @@ public class SubmitTable: MonoBehaviour
 
         results.text = "";
         Debug.Log("end countdown");
+    }
+
+    private void OnNextDay()
+    {
+        results.text = "";
+        customersMadeHappy = 0;
+        customersServed = 0;
+        currentTableCost = 0;
     }
 }
 

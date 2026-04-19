@@ -1,3 +1,5 @@
+using Assets.Scripts.Items;
+using Assets.Scripts.Store;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -7,37 +9,55 @@ using UnityEngine;
 
 public class ProfitBoard : MonoBehaviour
 {
-   
 
+    public TextMeshProUGUI dayProfitText;
     public TextMeshProUGUI profitText;
     public TextMeshProUGUI countdownText;
-    public static int day { get; private set; }
+    public TextMeshProUGUI dayText;
+    public static int day => DayManager.day;
 
     /// <summary>
     /// Get time in seconds of how long the day countdown is
     /// </summary>
-    private int dayTime => (day * 60) + 120; // 2 mins to start, every exyra day gives an extra minute
+    private int dayTime => dayManager.daytime;  // 2 mins to start, every exyra day gives an extra minute
     //private int dayTime => 30; // testing
 
     [SerializeField] private List<SubmitTable> stations;
-    private float storeProfit;
-    private bool isStoreOpen = false; // TODO should there be a specific number of customers each day or do as many customers as you can in the day? 
-    //public static Action<int> OnDayStarted;
+    private float storeProfit = 0;
+    private float todayProfit = 0;
+    private bool isStoreOpen = false;
+    public static Action OnBusinessDayStarted;
+    public static Action OnNextDay;
     public static Action OnDayEnded;
     private Coroutine openForBusinessCoroutine;
+    private DayManager dayManager = new DayManager();
 
     void OnEnable()
     {
         countdownText.text = "Store closed";
-        SubmitTable.OnTableSubmitted += AddProfit;
+        SubmitTable.OnTableSubmitted += AddDuringBusinessHoursProfit;
+        ShelfTrigger.OnSpawnerPlaced += AddOutsideBusinessHoursProfit;
+        dayText.text = "Day: " + day.ToString();
+
+
     }
 
     void OnDisable()
     {
-        SubmitTable.OnTableSubmitted -= AddProfit;
+        SubmitTable.OnTableSubmitted -= AddDuringBusinessHoursProfit;
+        ShelfTrigger.OnSpawnerPlaced -= AddOutsideBusinessHoursProfit;
+
     }
 
-    private void AddProfit(float amount)
+    private void Start()
+    {
+        isStoreOpen = false;
+        storeProfit -= dayManager.rent;
+        dayProfitText.text = $"Today's Profit: ${storeProfit.ToString()}";
+
+    }
+
+    private void AddDuringBusinessHoursProfit(float amount)
     {
         if (!isStoreOpen)
         {
@@ -46,11 +66,24 @@ public class ProfitBoard : MonoBehaviour
         }
 
         Debug.Log("ADD PROFIT");
-        storeProfit += amount;
-        profitText.text = $"Profit: ${storeProfit}";
+        todayProfit += amount;
+        dayProfitText.text = $"Today's Profit: ${todayProfit}";
     }
 
-    // is called on Open For Business button
+    private void AddOutsideBusinessHoursProfit(int amount)
+    {
+        if (isStoreOpen)
+        {
+            Debug.Log("Can only add spawners outside work hours");
+            return;
+        }
+
+        Debug.Log("ADD SPAWNER COST");
+        storeProfit += amount;
+        profitText.text = $"Store Profit: ${storeProfit}";
+    }
+
+    // is called on New Day Button- just allows stats to reset
     public void StartNewDay() // TODO make private again
     {
         if (isStoreOpen)
@@ -58,10 +91,22 @@ public class ProfitBoard : MonoBehaviour
             Debug.Log("Day is already started");
             return;
         }
-        day++;
+        //day++;
+        dayManager.SetNextDay();
+        OnNextDay?.Invoke();
+        dayText.text = "Day: " + day.ToString();
+        dayProfitText.text = "";
+        //Debug.Log("START THE DAY" + day);
+        //isStoreOpen = true;
+        //OnDayStarted?.Invoke();
+        //StartOpenBusinessTimer();
+    }
+
+    public void OpenForBusiness()
+    {
         Debug.Log("START THE DAY" + day);
         isStoreOpen = true;
-        //OnDayStarted?.Invoke(day);
+        OnBusinessDayStarted?.Invoke();
         StartOpenBusinessTimer();
     }
 
@@ -84,8 +129,18 @@ public class ProfitBoard : MonoBehaviour
             time -= 1;
         }
 
+        //isStoreOpen = false;
+        //countdownText.text = "Store closed!";
+        //OnDayEnded?.Invoke();
+        EndDay();
+    }
+
+    private void EndDay()
+    {
         isStoreOpen = false;
         countdownText.text = "Store closed!";
+        storeProfit += todayProfit;
+        profitText.text = "Store Profit: $" + storeProfit.ToString();
         OnDayEnded?.Invoke();
     }
 }
