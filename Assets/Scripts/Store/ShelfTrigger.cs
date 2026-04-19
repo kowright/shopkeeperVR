@@ -16,7 +16,7 @@ namespace Assets.Scripts.Store
         public TextMeshProUGUI shelfCostText;
         private bool hideShelfCostText = false;
         public static Action<int> OnSpawnerPlaced;
-
+        
 
         public List<ItemSpawner> GetItemSpawners() => shelfSpawners;
 
@@ -47,26 +47,29 @@ namespace Assets.Scripts.Store
                 if (!spawner.IsPaid)
                 {
                     unpaidShelfCost += spawner.SpawnerCost;
-                    OnSpawnerPlaced?.Invoke(-spawner.SpawnerCost);
+                    OnSpawnerPlaced?.Invoke(-1 * spawner.SpawnerCost);
                 }
 
-                shelfCostText.text = "Shelf Unpaid Shelves: $" + unpaidShelfCost.ToString();
+                shelfCostText.text = "Shelf Unpaid Cost: $" + unpaidShelfCost.ToString();
             }
         }
 
         private void OnTriggerExit(Collider other)
         {
             var spawner = other.GetComponentInParent<ItemSpawner>();
-            if (spawner != null)
+            if (shelfSpawners.Contains(spawner))
             {
                 shelfSpawners.Remove(spawner);
                 Debug.Log("Removing spawner for item " + spawner.item.displayName);
                 if (!spawner.IsPaid)
                 {
                     unpaidShelfCost -= spawner.SpawnerCost;
+                    OnSpawnerPlaced?.Invoke(spawner.SpawnerCost);
+
                 }
 
-                shelfCostText.text = unpaidShelfCost.ToString();
+                shelfCostText.text = "Shelf Unpaid Cost: $" + unpaidShelfCost.ToString();
+
             }
         }
 

@@ -52,6 +52,7 @@ public class ProfitBoard : MonoBehaviour
     private void Start()
     {
         isStoreOpen = false;
+        Debug.Log("rent: " + dayManager.rent);
         storeProfit -= dayManager.rent;
         dayProfitText.text = $"Today's Profit: ${storeProfit.ToString()}";
 
@@ -78,7 +79,8 @@ public class ProfitBoard : MonoBehaviour
             return;
         }
 
-        Debug.Log("ADD SPAWNER COST");
+        Debug.Log("ADD SPAWNER COST:" + amount);
+        Debug.Log("previous store profit: " + storeProfit);
         storeProfit += amount;
         profitText.text = $"Store Profit: ${storeProfit}";
     }

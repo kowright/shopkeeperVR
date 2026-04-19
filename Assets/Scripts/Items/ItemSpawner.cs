@@ -64,10 +64,8 @@ namespace Assets.Scripts.Items
             Color materialColor = outlineColorManager.GetOutlineColorForQuality(item.itemQuality);
 
 
-            Debug.Log("renderer", meshRenderer);
 
             Material mat = new Material(meshRenderer.sharedMaterials[0]);
-            Debug.Log("mat", mat);
             mat.color = materialColor;
             Color color = mat.color;
             color.a = 0.5f;
@@ -121,9 +119,6 @@ namespace Assets.Scripts.Items
             }
             itemC.itemData = item;
             itemC.RefreshVisuals();
-
-            Debug.Log("Spawned Item" + spawnedItem.transform.localPosition.y);
-            Debug.Log("Spawned Item" + spawnedItem.transform.position.y);
 
 
             Rigidbody rb = spawnedItem.GetComponent<Rigidbody>();
