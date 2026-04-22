@@ -30,7 +30,7 @@ public class ProfitBoard : MonoBehaviour
     public static Action OnNextDay;
     public static Action OnDayEnded;
     private Coroutine openForBusinessCoroutine;
-    private DayManager dayManager = new DayManager();
+    private DayManager dayManager;
 
     void OnEnable()
     {
@@ -51,6 +51,7 @@ public class ProfitBoard : MonoBehaviour
 
     private void Start()
     {
+        dayManager = new();
         isStoreOpen = false;
         Debug.Log("rent: " + dayManager.rent);
         storeProfit -= dayManager.rent;

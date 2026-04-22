@@ -14,9 +14,9 @@ namespace Assets.Scripts.Store
         [SerializeField] private List<ItemSpawner> shelfSpawners = new List<ItemSpawner>();
         private float unpaidShelfCost;
         public TextMeshProUGUI shelfCostText;
-        private bool hideShelfCostText = false;
         public static Action<int> OnSpawnerPlaced;
-        
+
+        [SerializeField] private bool forPurchase;
 
         public List<ItemSpawner> GetItemSpawners() => shelfSpawners;
 
@@ -43,6 +43,9 @@ namespace Assets.Scripts.Store
                     return;
                 }
                 shelfSpawners.Add(spawner);
+
+                if (forPurchase) return;
+
                 Debug.Log("Adding spawner for item " + spawner.item.displayName);
                 if (!spawner.IsPaid)
                 {
@@ -61,6 +64,9 @@ namespace Assets.Scripts.Store
             {
                 shelfSpawners.Remove(spawner);
                 Debug.Log("Removing spawner for item " + spawner.item.displayName);
+
+                if (forPurchase) return;
+
                 if (!spawner.IsPaid)
                 {
                     unpaidShelfCost -= spawner.SpawnerCost;
@@ -75,22 +81,24 @@ namespace Assets.Scripts.Store
 
         private void DayStarted()
         {
-            hideShelfCostText = true;
+            if (forPurchase) return;
+
             shelfCostText.enabled = false;
             shelfCostText.text = "";
         }
 
         private void DayEnded()
         {
-            hideShelfCostText = false;
-            shelfCostText.enabled = true;
+            if (forPurchase) return;
 
+            shelfCostText.enabled = true;
         }
 
         public void SetSpawnersToPaid()
         {
             foreach (ItemSpawner spawner in shelfSpawners)
             {
+
                 spawner.SetSpawnerAsPaid();
             }
         }

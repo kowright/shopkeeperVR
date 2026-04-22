@@ -1,4 +1,5 @@
 using Assets.Scripts.Items;
+using Assets.Scripts.Store;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -24,12 +25,15 @@ namespace Assets.Scripts.Items
         public MeshRenderer meshRenderer;
         private ItemOutlineColorManager outlineColorManager = new ItemOutlineColorManager();
         private ItemRespawnManager respawnManager = new ItemRespawnManager();
-      
+        public BoxCollider baseSpawnerCollider;
+        [SerializeField] private bool isOutofPlace = false;
+        [SerializeField] private XRGrabInteractable grabInteractable;
 
-        // TODO: subscribe to ProfitBoard to stop allowing spawner to be moved
         public int SpawnerCost => item.cost * 10;
 
         public bool IsPaid { get; private set; } = false;
+
+        //TODO: do not allow spawners to spawn items not during business day or allow it and delete all of them 
 
         private void OnValidate()
         {
@@ -51,19 +55,28 @@ namespace Assets.Scripts.Items
 
         }
 
-        private void Awake()
+        public void Initialize(Item newItem)
         {
+            item = newItem;
             //item = itemPrefab.GetComponent<ItemComponent>();
+            if (item == null)
+            {
+                Debug.LogWarning("ItemSpawner has no item assigned yet.");
+                return;
+            }
+
             itemPrefab = item.itemPrefab;
             nameText.text = item.displayName;
             typeTextLeft.text = typeTextRight.text = item.itemType.ToString();
             costText.text = '$' + item.cost.ToString();
             descriptionText.text = item.description;
-            itemPrefab = item?.itemPrefab;
+            //itemPrefab = item?.itemPrefab;
             respawnTimerText.text = "";
+            ItemComponent itemComponent = itemPrefab.GetComponent<ItemComponent>();
+            Debug.Log("item c " +  itemComponent);
             Color materialColor = outlineColorManager.GetOutlineColorForQuality(item.itemQuality);
 
-
+            Debug.Log("mesh renderer" + meshRenderer);
 
             Material mat = new Material(meshRenderer.sharedMaterials[0]);
             mat.color = materialColor;
@@ -71,12 +84,70 @@ namespace Assets.Scripts.Items
             color.a = 0.5f;
             mat.color = color;
             meshRenderer.material = mat;
-            //Instantiate(item, itemSpawnLocation);
+
+            InstantiateItem();
+        }
+
+        //private void Awake()
+        //{
+        //    //item = itemPrefab.GetComponent<ItemComponent>();
+        //    if (item == null)
+        //    {
+        //        Debug.LogWarning("ItemSpawner has no item assigned yet.");
+        //        return;
+        //    }
+
+        //    itemPrefab = item.itemPrefab;
+        //    nameText.text = item.displayName;
+        //    typeTextLeft.text = typeTextRight.text = item.itemType.ToString();
+        //    costText.text = '$' + item.cost.ToString();
+        //    descriptionText.text = item.description;
+        //    itemPrefab = item?.itemPrefab;
+        //    respawnTimerText.text = "";
+        //    Color materialColor = outlineColorManager.GetOutlineColorForQuality(item.itemQuality);
+
+
+
+        //    Material mat = new Material(meshRenderer.sharedMaterials[0]);
+        //    mat.color = materialColor;
+        //    Color color = mat.color;
+        //    color.a = 0.5f;
+        //    mat.color = color;
+        //    meshRenderer.material = mat;
+        //    //Instantiate(item, itemSpawnLocation);
+        //}
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.GetComponent<ShelfTrigger>())
+            {
+                Debug.Log("Entered trigger");
+                isOutofPlace = false;
+                
+            }
+        }
+        private void OnTriggerExit(Collider other)
+        {
+            if (other.GetComponent<ShelfTrigger>())
+            {
+                Debug.Log("Left trigger");
+                isOutofPlace = true;
+
+            }
         }
 
         private void Start()
         {
-            InstantiateItem();
+            //InstantiateItem();
+            ProfitBoard.OnBusinessDayStarted += DayStarted;
+            ProfitBoard.OnDayEnded += ToggleGrabInteractivity;
+        }
+
+        private void OnDestroy()
+        {
+            ProfitBoard.OnBusinessDayStarted -= DayStarted;
+            ProfitBoard.OnDayEnded -= ToggleGrabInteractivity;
+
         }
 
         public void InstantiateItem()
@@ -106,10 +177,11 @@ namespace Assets.Scripts.Items
             //    Debug.Log(script.GetType().Name);
             //}
 
-            XRGrabInteractable grab = spawnedItem.GetComponent<XRGrabInteractable>();
-            if (grab != null)
+            XRGrabInteractable itemGrab = spawnedItem.GetComponent<XRGrabInteractable>();
+
+            if (itemGrab != null)
             {
-                grab.selectEntered.AddListener(OnItemGrabbed);
+                itemGrab.selectEntered.AddListener(OnItemGrabbed);
             }
 
             ItemComponent itemC = spawnedItem.GetComponent<ItemComponent>();
@@ -137,7 +209,7 @@ namespace Assets.Scripts.Items
         private void OnItemGrabbed(SelectEnterEventArgs args)
         {
             if (isRespawning) return;
-
+          
             isRespawning = true;
 
 
@@ -149,8 +221,10 @@ namespace Assets.Scripts.Items
             Debug.Log("Item grabbed, starting respawn timer");
 
             ItemComponent item = args.interactableObject.transform.GetComponent<ItemComponent>();
+            Debug.Log("Item " +  item);
             if (item)
             {
+                
                 float time = respawnManager.GetRespawnTimeForQuality(item.itemData.itemQuality);
                 StartCoroutine(RespawnAfterDelay(time));
                 StartCoroutine(RespawnTimerDisplay(time));
@@ -166,11 +240,12 @@ namespace Assets.Scripts.Items
             InstantiateItem();
 
             isRespawning = false;
+            Debug.Log("respawn");
         }
 
         private System.Collections.IEnumerator RespawnTimerDisplay(float wait)
         {
-            
+            Debug.Log("timer");
             while (wait > 0)
             {
                 yield return new WaitForSeconds(1f);
@@ -188,6 +263,32 @@ namespace Assets.Scripts.Items
         {
             Debug.Log("Spawner for " + item.displayName + " is paid");
             IsPaid = true;
+         
+        }
+
+        private void DayStarted()
+        {
+            ToggleGrabInteractivity();
+            if (isOutofPlace)
+            {
+                Debug.Log("not in the right place " + item.displayName);
+                // took spawner off shelf and didn't pay/put it on usable shelf - TODO: so will this item never come back??
+                Destroy(gameObject);
+            }
+        }
+
+        private void ToggleGrabInteractivity()
+        {
+            Debug.Log(" grab for " + item.displayName + " as " + !baseSpawnerCollider.enabled);
+            if (grabInteractable.interactionLayers == InteractionLayerMask.GetMask("None"))
+            {
+                grabInteractable.interactionLayers = InteractionLayerMask.GetMask("Default");
+            }
+            else
+            {
+                grabInteractable.interactionLayers = InteractionLayerMask.GetMask("None");
+            }
+
         }
     }
 }
