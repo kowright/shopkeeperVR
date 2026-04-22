@@ -18,6 +18,7 @@ namespace Assets.Scripts.Store
 
         [SerializeField] private bool forPurchase;
 
+
         public List<ItemSpawner> GetItemSpawners() => shelfSpawners;
 
         void Start()

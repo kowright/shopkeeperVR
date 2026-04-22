@@ -28,10 +28,12 @@ namespace Assets.Scripts.Items
         public BoxCollider baseSpawnerCollider;
         [SerializeField] private bool isOutofPlace = false;
         [SerializeField] private XRGrabInteractable grabInteractable;
+        private ItemComponent currentItem;
+        private bool openForBusiness;
 
         public int SpawnerCost => item.cost * 10;
 
-        public bool IsPaid { get; private set; } = false;
+         public bool IsPaid { get; private set; } = false;
 
         //TODO: do not allow spawners to spawn items not during business day or allow it and delete all of them 
 
@@ -140,13 +142,13 @@ namespace Assets.Scripts.Items
         {
             //InstantiateItem();
             ProfitBoard.OnBusinessDayStarted += DayStarted;
-            ProfitBoard.OnDayEnded += ToggleGrabInteractivity;
+            ProfitBoard.OnDayEnded += OnDayEnded;
         }
 
         private void OnDestroy()
         {
             ProfitBoard.OnBusinessDayStarted -= DayStarted;
-            ProfitBoard.OnDayEnded -= ToggleGrabInteractivity;
+            ProfitBoard.OnDayEnded -= OnDayEnded;
 
         }
 
@@ -190,6 +192,12 @@ namespace Assets.Scripts.Items
                 Debug.Log("NO ITEM COMPONENT");
             }
             itemC.itemData = item;
+            currentItem = itemC;
+            XRGrabInteractable grab = currentItem.GetComponent<XRGrabInteractable>();
+
+            //grab.interactionLayers = InteractionLayerMask.GetMask("None");
+            ToggleInteractionLayer(grab, openForBusiness, false);
+
             itemC.RefreshVisuals();
 
 
@@ -217,7 +225,7 @@ namespace Assets.Scripts.Items
 
             
             itemTransform.SetParent(null);
-
+            currentItem = null;
             Debug.Log("Item grabbed, starting respawn timer");
 
             ItemComponent item = args.interactableObject.transform.GetComponent<ItemComponent>();
@@ -263,11 +271,15 @@ namespace Assets.Scripts.Items
         {
             Debug.Log("Spawner for " + item.displayName + " is paid");
             IsPaid = true;
-         
+            //XRGrabInteractable grab = currentItem.GetComponent<XRGrabInteractable>();
+            //grab.interactionLayers = InteractionLayerMask.GetMask("Default");
+            ToggleInteractionLayer(currentItem.GetComponent<XRGrabInteractable>(), true, false);
+
         }
 
         private void DayStarted()
         {
+            openForBusiness = true;
             ToggleGrabInteractivity();
             if (isOutofPlace)
             {
@@ -275,20 +287,69 @@ namespace Assets.Scripts.Items
                 // took spawner off shelf and didn't pay/put it on usable shelf - TODO: so will this item never come back??
                 Destroy(gameObject);
             }
+            XRGrabInteractable grab = currentItem.GetComponent<XRGrabInteractable>();
+
+            if (!IsPaid && grab != null)
+            {
+                Debug.Log(item.displayName + " is now uninteractable");
+
+                //grab.interactionLayers = InteractionLayerMask.GetMask("None");
+                ToggleInteractionLayer(grab, false, false);
+            }
+            else
+            {
+                grab.interactionLayers = InteractionLayerMask.GetMask("Default");
+                ToggleInteractionLayer(grab, true, false);
+            }
+        }
+
+        private void OnDayEnded()
+        {
+            openForBusiness = false;
+            ToggleInteractionLayer(grabInteractable, false, true);
+
+            
         }
 
         private void ToggleGrabInteractivity()
         {
             Debug.Log(" grab for " + item.displayName + " as " + !baseSpawnerCollider.enabled);
-            if (grabInteractable.interactionLayers == InteractionLayerMask.GetMask("None"))
+            ToggleInteractionLayer(grabInteractable, false, true);
+            //if (grabInteractable.interactionLayers == InteractionLayerMask.GetMask("None"))
+            //{
+            //    grabInteractable.interactionLayers = InteractionLayerMask.GetMask("Default");
+            //}
+            //else
+            //{
+            //    grabInteractable.interactionLayers = InteractionLayerMask.GetMask("None");
+            //}
+
+        }
+
+        private void ToggleInteractionLayer(XRGrabInteractable interactable, bool toDefault = false, bool invert = false)
+        {
+            if (invert)
             {
-                grabInteractable.interactionLayers = InteractionLayerMask.GetMask("Default");
+                if (interactable.interactionLayers == InteractionLayerMask.GetMask("None"))
+                {
+                    interactable.interactionLayers = InteractionLayerMask.GetMask("Default");
+                }
+                else
+                {
+                    interactable.interactionLayers = InteractionLayerMask.GetMask("None");
+                }
+                return;
+            }
+
+            
+            if (toDefault)
+            {
+                interactable.interactionLayers = InteractionLayerMask.GetMask("Default");
             }
             else
             {
-                grabInteractable.interactionLayers = InteractionLayerMask.GetMask("None");
+                interactable.interactionLayers = InteractionLayerMask.GetMask("None");
             }
-
         }
     }
 }

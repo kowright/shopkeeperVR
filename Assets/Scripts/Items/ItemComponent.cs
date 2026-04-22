@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.XR.Interaction.Toolkit;
+using UnityEngine.XR.Interaction.Toolkit.Interactables;
 
 namespace Assets.Scripts.Items
 {
@@ -11,29 +13,25 @@ namespace Assets.Scripts.Items
         public Item itemData;
         public TextMeshProUGUI text;
         private MeshRenderer outlineMeshRenderer;
-
+        private XRGrabInteractable grabInteractable;
         private ItemOutlineColorManager outlineColorManager = new ItemOutlineColorManager();
 
         private void Awake()
         {
             InitializeOutline();
             UpdateVisuals();
+        }
 
-            //text.text = itemData.displayName;
-            //Color outlineColor = outlineColorManager.GetOutlineColorForQuality(itemData.itemQuality);
-            //Transform outlineTransform = transform.Find("Outline");
-            //if (outlineTransform != null)
-            //{
-            //    outlineMeshRenderer = outlineTransform.GetComponent<MeshRenderer>();
-            //    outlineMeshRenderer.material = new Material(outlineMeshRenderer.sharedMaterial);
-            //    outlineMeshRenderer.material.SetColor("_OutlineColor", outlineColor);
-            //    //outlineMeshRenderer.material.SetColor("_OutlineColor", outlineColor);
-
-            //}
-            //else
-            //{
-            //    Debug.LogWarning("Outline child not found!");
-            //}
+        public void ToggleInteractionLayer()
+        {
+            if (grabInteractable.interactionLayers == InteractionLayerMask.GetMask("None"))
+            {
+                grabInteractable.interactionLayers = InteractionLayerMask.GetMask("Default");
+            }
+            else
+            {
+                grabInteractable.interactionLayers = InteractionLayerMask.GetMask("None");
+            }
         }
 
         // editor only
