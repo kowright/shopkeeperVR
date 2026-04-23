@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.ProjectAuditor.Editor;
 using UnityEngine;
 
 namespace Assets.Scripts.Items
@@ -15,11 +16,11 @@ namespace Assets.Scripts.Items
     {
         private Dictionary<ItemQuality, Color> itemQualityOutlineColorMap = new Dictionary<ItemQuality, Color>()
         {
-            { ItemQuality.Bad, Color.indianRed },
-            { ItemQuality.Low, Color.orange },
-            { ItemQuality.Good, Color.green },
-            { ItemQuality.Great, Color.blue },
-            { ItemQuality.Top, Color.deepPink }
+            { ItemQuality.Bad, Color.gray },
+            { ItemQuality.Low,  Color.Lerp(Color.green, Color.darkGreen, 0.5f)},
+            { ItemQuality.Good, Color.blue },
+            { ItemQuality.Great, new Color(0.85f, 0.2f, 0.6f) },
+            { ItemQuality.Top, new Color(1.0f, 0.78f, 0.2f) }
         };
         public Color GetOutlineColorForQuality(ItemQuality quality)
         {
