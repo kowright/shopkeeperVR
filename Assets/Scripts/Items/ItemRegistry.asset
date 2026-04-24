@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Items.ItemRegistry
   Items:
   - {fileID: 11400000, guid: 6be337472b0aebc40bf405fb2d4dda77, type: 2}
-  - {fileID: 11400000, guid: db46e26000a23664585577b91ffad722, type: 2}
+  - {fileID: 11400000, guid: 98a6d94ce82d6494c8971c3fa5ad10a1, type: 2}
   - {fileID: 11400000, guid: 973ab0de7715a954d9b65c05039b9e6b, type: 2}
   - {fileID: 11400000, guid: aadca69daf4aa2a469d60841fbed1410, type: 2}
   - {fileID: 11400000, guid: ff4dfe1a2c994fb4f80b2d7861b4f80a, type: 2}
