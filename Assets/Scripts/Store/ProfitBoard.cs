@@ -1,3 +1,4 @@
+using Assets.Scripts.Customers;
 using Assets.Scripts.Items;
 using Assets.Scripts.Store;
 using NUnit.Framework;
@@ -16,6 +17,7 @@ public class ProfitBoard : MonoBehaviour
     public TextMeshProUGUI dayText;
     public static int day => DayManager.day;
 
+
     /// <summary>
     /// Get time in seconds of how long the day countdown is
     /// </summary>
@@ -31,12 +33,14 @@ public class ProfitBoard : MonoBehaviour
     public static Action OnDayEnded;
     private Coroutine openForBusinessCoroutine;
     private DayManager dayManager;
+    private Station currentStation;
 
     void OnEnable()
     {
         countdownText.text = "Store closed";
         SubmitTable.OnTableSubmitted += AddDuringBusinessHoursProfit;
         ShelfTrigger.OnSpawnerPlaced += AddOutsideBusinessHoursProfit;
+        Station.OnStationEnabled += StationChange;
         dayText.text = "Day: " + day.ToString();
 
 
@@ -46,11 +50,14 @@ public class ProfitBoard : MonoBehaviour
     {
         SubmitTable.OnTableSubmitted -= AddDuringBusinessHoursProfit;
         ShelfTrigger.OnSpawnerPlaced -= AddOutsideBusinessHoursProfit;
+        Station.OnStationEnabled -= StationChange;
+
 
     }
 
     private void Start()
     {
+
         dayManager = new();
         isStoreOpen = false;
         Debug.Log("rent: " + dayManager.rent);
@@ -94,7 +101,7 @@ public class ProfitBoard : MonoBehaviour
             Debug.Log("Day is already started");
             return;
         }
-        //day++;
+
         dayManager.SetNextDay();
         OnNextDay?.Invoke();
         dayText.text = "Day: " + day.ToString();
@@ -111,6 +118,10 @@ public class ProfitBoard : MonoBehaviour
         isStoreOpen = true;
         OnBusinessDayStarted?.Invoke();
         StartOpenBusinessTimer();
+
+        //create customer timer 
+        //Customer data = customerManager.CreateCustomerData();
+        //station.SpawnCustomer(data);
     }
 
     public void StartOpenBusinessTimer()
@@ -145,5 +156,11 @@ public class ProfitBoard : MonoBehaviour
         storeProfit += todayProfit;
         profitText.text = "Store Profit: $" + storeProfit.ToString();
         OnDayEnded?.Invoke();
+    }
+
+    private void StationChange(Station newStation)
+    {
+        Debug.Log("Station Change");
+        currentStation = newStation;
     }
 }

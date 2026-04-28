@@ -24,7 +24,8 @@ namespace Assets.Scripts.Store
             [SerializeField] private Transform TopShelfLeft;
             [SerializeField] private Transform TopShelfRight;
             [SerializeField] private ItemSpawner itemSpawnerPrefab;
-            [SerializeField] private ItemRegistry itemRegistry;
+            [SerializeField] private Station station;
+            private ItemRegistry itemRegistry => station.ItemRegistry;
 
             private int itemRegistryIndex = 0;
 
@@ -43,24 +44,29 @@ namespace Assets.Scripts.Store
                     TopShelfRight
                 };
 
-                for (int i = 0; i < allPlacements.Count; i++ ) 
-                {
-                    ItemSpawner spawner = Instantiate(
-                         itemSpawnerPrefab,
-                         allPlacements[i].position,
-                         allPlacements[i].rotation
-                  
-                     );
-
-                    // Assign item AFTER spawning
-                    spawner.Initialize(itemRegistry.Items[i]);
-                    itemRegistryIndex++;
-                }
             }
 
             // Use this for initialization
             void Start()
             {
+
+                for (int i = 0; i < allPlacements.Count; i++)
+                {
+                    ItemSpawner spawner = Instantiate(
+                         itemSpawnerPrefab,
+                         allPlacements[i].position,
+                         allPlacements[i].rotation
+
+                     );
+                    Debug.Log("spawner " + spawner);
+                    Debug.Log("Station " + station);
+                    Debug.Log("registry " + itemRegistry);
+                    Debug.Log("registry " + itemRegistry.Items);
+                    // Assign item AFTER spawning
+                    spawner.Initialize(itemRegistry.Items[i]);
+                    itemRegistryIndex++;
+                }
+
                 Debug.Log("registry index" + itemRegistryIndex);
          
                 ProfitBoard.OnBusinessDayStarted += DayStarted;

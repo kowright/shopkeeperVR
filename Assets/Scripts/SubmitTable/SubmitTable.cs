@@ -84,7 +84,7 @@ public class SubmitTable: MonoBehaviour
     public void SubmitItemsForValidation()
     {
         Debug.Log("SUBMIT" + itemsOnTable[0].itemData.displayName);
-        customerZone.currentCustomerComponent.StopPatienceTimer();
+        customerZone.currentCustomerComponent.RequestFulfilled();
         var ( result, happinessReduction, moneyPaid) = ValidateSubmission(itemsOnTable, customerZone.currentCustomer);
       
         foreach (var item in itemsOnTable)

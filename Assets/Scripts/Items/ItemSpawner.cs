@@ -313,7 +313,7 @@ namespace Assets.Scripts.Items
 
         private void ToggleGrabInteractivity()
         {
-            Debug.Log(" grab for " + item.displayName + " as " + !baseSpawnerCollider.enabled);
+            //Debug.Log(" grab for " + item.displayName + " as " + !baseSpawnerCollider.enabled);
             ToggleInteractionLayer(grabInteractable, false, true);
             //if (grabInteractable.interactionLayers == InteractionLayerMask.GetMask("None"))
             //{

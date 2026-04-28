@@ -9,7 +9,7 @@ namespace Assets.Scripts.SubmitTable
 	{
         public Customer currentCustomer;
         public CustomerComponent currentCustomerComponent;
-
+        [SerializeField] private Station station;
 
         private void OnTriggerEnter(Collider other)
         {

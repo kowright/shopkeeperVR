@@ -12,9 +12,9 @@ namespace Assets.Scripts.Store
 		/// <summary>
 		/// Get time in seconds of how long the day countdown is
 		/// </summary>
-		//public int dayTime => (day * 60) + 120; // 2 mins to start, every exyra day gives an extra minute
+		public int dayTime => (day * 60) + 120; // 2 mins to start, every exyra day gives an extra minute
 
-		public int daytime => 30;
+		//public int daytime => 30; //debug
         public static Action OnDayEnded;
 
 
