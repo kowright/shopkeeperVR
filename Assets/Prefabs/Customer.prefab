@@ -517,6 +517,7 @@ MonoBehaviour:
   happinessFloat: 0
   requestManager: {fileID: 3586418174255868674}
   request: {fileID: 0}
+  nameRegistry: {fileID: 11400000, guid: eaca23d6f64bb0b4aa6abbee857d2598, type: 2}
   textCanvas: {fileID: 1574014255303108244}
 --- !u!54 &3766989382729685555
 Rigidbody:

@@ -102,6 +102,7 @@ public class Station : MonoBehaviour
         CustomerComponent customerComponent = prefab.GetComponent<CustomerComponent>();
         if (customerComponent != null)
         {
+    
             customerComponent.Initialize(customerData);
         }
 

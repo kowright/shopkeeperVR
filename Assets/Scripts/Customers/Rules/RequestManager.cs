@@ -11,6 +11,7 @@ namespace Assets.Scripts.Customers.Rules
 
         public CustomerRequest GetRequest(Customer customer, int day)
         {
+            Debug.Log("get request " + customer);
             Debug.Log("GET REQUEST for " + customer.customerName);
             List<RequestTag> customerTags = CustomerTypes.GetPreferredTags(customer);
             Debug.Log("Tags to match " + customerTags);

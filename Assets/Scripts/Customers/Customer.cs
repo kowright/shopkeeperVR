@@ -13,8 +13,6 @@ public class Customer
     public float lowFineHappiness;
     public float highFineHappiness;
 
-    // TODO name generator
-
     // something about conversation later
     // somethign about customers giving you stuff maybe
 

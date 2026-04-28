@@ -21,7 +21,7 @@ public class ProfitBoard : MonoBehaviour
     /// <summary>
     /// Get time in seconds of how long the day countdown is
     /// </summary>
-    private int dayTime => dayManager.daytime;  // 2 mins to start, every exyra day gives an extra minute
+    private int dayTime => dayManager.dayTime; // 2 mins to start, every exyra day gives an extra minute
     //private int dayTime => 30; // testing
 
     [SerializeField] private List<SubmitTable> stations;
