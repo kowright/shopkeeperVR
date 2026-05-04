@@ -1,5 +1,6 @@
 using Assets.Scripts.Items;
 using Assets.Scripts.Store;
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -30,12 +31,16 @@ namespace Assets.Scripts.Items
         [SerializeField] private XRGrabInteractable grabInteractable;
         private ItemComponent currentItem;
         private bool openForBusiness;
+        private Coroutine removalCoroutine;
+        private float removalDelay = 5f;
+        public Action OnSpawnerConfirmedRemoval;
+        public Action<float> OnSpawnerRemoved;
+        public Action OnSpawnerStopRemoval;
 
         public int SpawnerCost => item.cost * 10;
 
          public bool IsPaid { get; private set; } = false;
 
-        //TODO: do not allow spawners to spawn items not during business day or allow it and delete all of them 
 
         private void OnValidate()
         {
@@ -125,7 +130,14 @@ namespace Assets.Scripts.Items
             {
                 Debug.Log("Entered trigger");
                 isOutofPlace = false;
-                
+
+                if (removalCoroutine != null)
+                {
+                    StopCoroutine(removalCoroutine);
+                    removalCoroutine = null;
+                    OnSpawnerStopRemoval?.Invoke();
+                }
+
             }
         }
         private void OnTriggerExit(Collider other)
@@ -134,6 +146,8 @@ namespace Assets.Scripts.Items
             {
                 Debug.Log("Left trigger");
                 isOutofPlace = true;
+
+                removalCoroutine = StartCoroutine(RemovalCheck());
 
             }
         }
@@ -284,7 +298,6 @@ namespace Assets.Scripts.Items
             if (isOutofPlace)
             {
                 Debug.Log("not in the right place " + item.displayName);
-                // took spawner off shelf and didn't pay/put it on usable shelf - TODO: so will this item never come back??
                 Destroy(gameObject);
             }
             XRGrabInteractable grab = currentItem.GetComponent<XRGrabInteractable>();
@@ -350,6 +363,29 @@ namespace Assets.Scripts.Items
             {
                 interactable.interactionLayers = InteractionLayerMask.GetMask("None");
             }
+        }
+        private System.Collections.IEnumerator RemovalCheck()
+        {
+            // yield return new WaitForSeconds(removalDelay);
+            float wait = removalDelay;
+            while (wait > 0)
+            {
+                yield return new WaitForSeconds(1f);
+
+                wait -= 1;
+
+                OnSpawnerRemoved?.Invoke(wait);
+            }
+            
+            // If STILL out of place after delay → confirm removal
+            if (isOutofPlace)
+            {
+                Debug.Log("Spawner confirmed removed after delay");
+
+                OnSpawnerConfirmedRemoval?.Invoke();
+            }
+
+            removalCoroutine = null;
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Assets.Scripts.Items;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -11,13 +12,17 @@ namespace Assets.Scripts.Customers.Rules
 
         public CustomerRequest GetRequest(Customer customer, int day)
         {
-            Debug.Log("get request " + customer);
             Debug.Log("GET REQUEST for " + customer.customerName);
             List<RequestTag> customerTags = CustomerTypes.GetPreferredTags(customer);
-            Debug.Log("Tags to match " + customerTags);
+            foreach (RequestTag tag in customerTags)
+            {
+                Debug.Log("Preferred tag: " + tag);
+            }
+
             var validRequests = database.allRequests.FindAll(r =>
                 r.difficulty <= GetTargetDifficulty(day) &&
                 MatchesCustomer(r, customerTags, strictMatch: true)
+
             );
 
             if (validRequests.Count == 0)
@@ -26,6 +31,7 @@ namespace Assets.Scripts.Customers.Rules
                 var validRequestsSoft = database.allRequests.FindAll(r =>
                         r.difficulty <= GetTargetDifficulty(day) &&
                         MatchesCustomer(r, customerTags, strictMatch: false)
+
                 );
 
                 if (validRequestsSoft.Count == 0)
@@ -35,7 +41,7 @@ namespace Assets.Scripts.Customers.Rules
                 }
                 else
                 {
-                    Debug.Log(validRequestsSoft.Count + " to choose from");
+                    Debug.Log(validRequestsSoft.Count + " to choose from [NOT STRICT]");
 
                     int randomNumber = Random.Range(0, validRequestsSoft.Count);
                 
@@ -45,7 +51,7 @@ namespace Assets.Scripts.Customers.Rules
             }
             else
             {
-                Debug.Log(validRequests.Count + " to choose from");
+                Debug.Log(validRequests.Count + " to choose from [STRICT]");
                 return validRequests[Random.Range(0, validRequests.Count)];
 
             }

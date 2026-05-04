@@ -11,5 +11,6 @@ public class Item : ScriptableObject
     public ItemQuality itemQuality;
     public ItemType itemType;
     public GameObject itemPrefab;
+    public ItemGroup itemGroup;
 
 }

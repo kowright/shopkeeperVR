@@ -9,6 +9,7 @@ namespace Assets.Scripts.Items
     public class ItemRegistry : ScriptableObject
     {
         public List<Item> Items;
+        public int unlockDay = 0;
     }
 
 }

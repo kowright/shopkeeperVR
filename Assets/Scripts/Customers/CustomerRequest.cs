@@ -16,12 +16,14 @@ namespace Assets.Scripts.Customers
         public int difficulty;
 
         // basic rules
+
         public List<Item> requiredItems;
-    
+
         public bool hasRequiredType;
     
         [ShowIf(nameof(hasRequiredType))]
         public ItemType requiredType;
+
 
         public bool hasRequiredQuality;
 

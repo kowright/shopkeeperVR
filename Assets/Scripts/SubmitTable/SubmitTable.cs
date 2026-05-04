@@ -192,7 +192,7 @@ public class SubmitTable: MonoBehaviour
             }
         }
 
-        // 2. Required type
+        // 2. Required type 
         if (request.hasRequiredType)
         {
             if (items.Exists(i => i.itemData.itemType != request.requiredType))

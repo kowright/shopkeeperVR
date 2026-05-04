@@ -5,6 +5,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.Customers.Rules
 {
+    [CreateAssetMenu(menuName = "Requests/BudgetEfficiency")]
     public class BudgetEfficiencyRule : RequestRule
     {
         public float maxBudgetUsage = 0.8f;

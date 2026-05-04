@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5563b1b28c7d8e14e8de89f2920991da, type: 3}
+  m_Name: SwordRegistry
+  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Items.ItemRegistry
+  Items:
+  - {fileID: 11400000, guid: 1db5f4b9c56cc274194960a656b77da3, type: 2}
+  - {fileID: 11400000, guid: 2aaec2a8d7e076749b7308b5ba7fae92, type: 2}
+  - {fileID: 11400000, guid: edd2b8dfc53c0d248b060e2cd2b4dbfb, type: 2}
+  - {fileID: 11400000, guid: 5fa9898ecf7de864a8335c715908b696, type: 2}
+  - {fileID: 11400000, guid: 5c06924b945841743aaa94251f8417d1, type: 2}
+  unlockDay: 5

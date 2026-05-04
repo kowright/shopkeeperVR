@@ -29,16 +29,69 @@ namespace Assets.Scripts.Store
 			day++;
 		}
 
-        // Use this for initialization
-        void Start()
-		{
+        // Day Plan
 
-		}
+        // DAY 1: 
+        // - description: people will want low-mid tier fruit 
+        // - customer type: 1 type customers, no picky, cheap
+        // - items: +apples & bananas
+        // - quality: low-good
+        // - requests: certain quality, max items, unique items available
 
-		// Update is called once per frame
-		void Update()
-		{
+        // DAY 2:
+        // - description: people will want higher tier food
+        // - customer type: 1-2 type customers, average
+        // - items: +donuts
+        // - quality: all qualities food
+        // - requests: no duplicate items, certain item group
 
-		}
-	}
+        // DAY 3:
+        // - description: people will want basic accessories
+        // - customer type: 2 type customers
+        // - items: +accessories
+        // - quality: low-good 
+        // - store: can buy a second shelf 
+
+        // DAY 4:
+        // - description: people will want higher tier accesories & might be in a bad mood
+        // - customer type: 2 type customers, bitter customers come
+        // - items: 
+        // - quality: all qualities accessories
+        // - request: surprise me quality, surprise me group
+
+        // DAY 5: 
+        // - description: people know about the store! some people might have money to blow and people want weapons
+        // - customer type: 2-3 type customers, big spenders come
+        // - items: weapons
+        // - quality: low-good 
+        // - requests: no duplicate types, surprise me type available
+
+        // DAY 6:
+        // - description: everyone is demanding
+        // - customer type: 2-3 types
+        // - items: all qualities weapons
+        // - requests: fast service
+        // - store: can buy a third shelf 
+
+        // DAY 7:
+        // - description: people want various types of items for their quests! 
+        // - customer type: 3 types
+        // - requests: description quests available
+        // - quality: low-good
+        // - store: can buy a fourth shelf 
+
+        // DAY 8:
+        // - dscription: 
+        // - customer type: 3-4 types
+        // - quality: all qualities
+        // - store: can buy a fifth shelf 
+
+        // DAY 9:
+        // - description: 
+        // - customer type: 4 types
+
+        // DAY 10:
+        // - description: 
+        // - customer type: 4+ types
+    }
 }

@@ -6,17 +6,66 @@ using UnityEngine;
 
 namespace Assets.Scripts.Customers
 {
-	public enum CustomerType
-	{
-		Cheap, // under $20
-		Average, // under $100
-		BigSpender,
+    /// <summary>
+    /// Personality types for a customer.
+    /// </summary>
+    /// <summary>
+    /// Personality types for a customer.
+    /// </summary>
+    public enum CustomerType
+    {
+
+        /// <summary>Spends under $20.</summary>
+        Cheap,
+
+        /// <summary>Spends under $100.</summary>
+        Average,
+
+        /// <summary>High spending customer.</summary>
+        BigSpender,
+
+        /// <summary>Prefers high-quality items. Equals RequestTag HighQuality.</summary>
         Picky,
-        Impatient, // under 30 seconds
-        Patient, // under 120 seconds
+
+        /// <summary>Prefers mid-quality, practical items.</summary>
+        Practical,
+
+        /// <summary>Wants results in under 30 seconds.</summary>
+        Impatient,
+
+        /// <summary>Willing to wait up to 120 seconds.</summary>
+        Patient,
+
+        /// <summary>Prefers 1 item.  Equals RequestTag SingleItem.</summary>
         Minimalist,
+
+        /// <summary>Prefers 1+ items.  Equals RequestTag MultipleItems.</summary>
         Maximalist,
-	}
+
+        /// <summary>Prefers a variety of unique items, whether variety in type or group etc.  Equals RequestTag Variety.</summary>
+        Diverse,
+
+        /// <summary>Likes surprise items. Equals RequestTag Risky.</summary>
+        Spontaneous,
+
+        /// <summary>Prefers a specific group of items like Donut or Axe.  Equals RequestTag Group.</summary>
+        Specific,
+
+        /// <summary>Starts with fine happiness level.</summary>
+        DebbyDowner,
+
+        /// <summary>Starts at an upset happiness level.</summary>
+        Bitter,
+
+        /// <summary>Has a short but high range of acceptable happiness.</summary>
+        Demanding,
+
+        /// <summary>Has a wide range of acceptable happiness.</summary>
+        Forgiving,
+
+        /// <summary>Has a short and low range of acceptable happiness.</summary>
+        Indifferent
+    }
 
     public static class CustomerTypes
     {
@@ -66,6 +115,23 @@ namespace Assets.Scripts.Customers
                     case CustomerType.Patient:
                         tags.Add(RequestTag.Slow);
                         break;
+                    case CustomerType.Diverse:
+                        tags.Add(RequestTag.Variety);
+                        break;
+                    case CustomerType.Spontaneous:
+                        tags.Add(RequestTag.Risky);
+                        break;
+                    case CustomerType.Practical:
+                        tags.Add(RequestTag.MidQuality);
+                        break;
+                    case CustomerType.Specific:
+                        tags.Add(RequestTag.Group);
+                        break;
+                    case CustomerType.Average:
+                        tags.Add(RequestTag.MidRange);
+                        break;
+
+
                 }
 
      

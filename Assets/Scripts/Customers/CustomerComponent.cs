@@ -26,8 +26,7 @@ public class CustomerComponent : MonoBehaviour
     private CustomerHappinessManager happinessManager;
     public RequestManager requestManager;
     public CustomerRequest request;
-    private ItemType itemType;
-    [SerializeField] private NameRegistry nameRegistry;
+
     [SerializeField] private Canvas textCanvas;
 
     private void Start()
@@ -100,10 +99,8 @@ public class CustomerComponent : MonoBehaviour
 
     public void Initialize(Customer data)
     {
-
         customer = data;
-        customer.customerName = nameRegistry.GetRandomName();
-        Debug.Log("custoemr name initialize " + customer.customerName);
+        Debug.Log("customer name initialize " + customer.customerName);
     }
 
     public void StartPatienceTimer()

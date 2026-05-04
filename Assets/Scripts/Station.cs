@@ -8,7 +8,7 @@ using UnityEngine;
 
 public class Station : MonoBehaviour
 {
-    [SerializeField] private ItemType itemType;
+
     [SerializeField] private ItemRegistry foodRegistry;
     [SerializeField] private ItemRegistry weaponRegistry;
     [SerializeField] private ItemRegistry accessoryRegistry;
@@ -34,20 +34,14 @@ public class Station : MonoBehaviour
         SpawnPoint = customerSpawnPoint;
         CounterPoint = customerCounterTriggerPoint;
 
-        switch (itemType)
-        {
-            case ItemType.Food: itemRegistry = foodRegistry; break;
-            case ItemType.Weapon: itemRegistry = weaponRegistry; break;
-            case ItemType.Accessory: itemRegistry = accessoryRegistry; break;
-            default: break;
-        }
-        Debug.Log("station registry is " + itemRegistry);
+
+        
     }
 
     private void OnEnable()
     {
         OnStationEnabled?.Invoke(this);
-        customerManager = new(itemType);
+        customerManager = new CustomerManager();
         ProfitBoard.OnBusinessDayStarted += DayStarted;
         ProfitBoard.OnDayEnded += DayEnded;
     }
@@ -80,8 +74,8 @@ public class Station : MonoBehaviour
     private System.Collections.IEnumerator SpawnCustomers()
     {
         SpawnCustomer();
-        while (openForBusiness) { 
-            yield return new WaitForSeconds(15f);
+        while (openForBusiness) {  
+            yield return new WaitForSeconds(30f); // TODO: reduce spawn rate with higher levels
 
 
             SpawnCustomer();

@@ -11,11 +11,14 @@ namespace Assets.Scripts.Customers.Rules
             Slow,
             Combo,
             HighQuality,
+            MidQuality, // personality Practical
             Risky,
             Expensive,
             MultipleItems,
             SingleItem,
-            Variety,
+            Variety, // personality Diverse
+            Group,
+            MidRange, // personality Average
         }
     
 }

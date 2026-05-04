@@ -12,4 +12,43 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5cd27a46b7965ad4592e2e14db9f6631, type: 3}
   m_Name: Names
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Customers.NameRegistry
-  Names: []
+  Names:
+  - John
+  - Mary
+  - Stephanie
+  - Brooklyn
+  - Steve
+  - Courtney
+  - Aaliyah
+  - Roger
+  - Tina
+  - Caleb
+  - Raven
+  - Sheila
+  - Danny
+  - Rodney
+  - Kelsey
+  - Peach
+  - Mario
+  - Eren
+  - Mikasa
+  - Armin
+  - Nathan
+  - Sora
+  - Brittany
+  - Ezio
+  - Connor
+  - Arno
+  - Evie
+  - Jacob
+  - Talia
+  - Cassandra
+  - Alexios
+  - Eivor
+  - Basim
+  - Altair
+  - Naoe
+  - Yasuke
+  - Layla
+  - Kairi
+  - Riku

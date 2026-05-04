@@ -18,3 +18,4 @@ MonoBehaviour:
   itemQuality: 2
   itemType: 2
   itemPrefab: {fileID: 3119356908110327140, guid: 78b814f9e4435464ab77897daa5141cf, type: 3}
+  itemGroup: 8
