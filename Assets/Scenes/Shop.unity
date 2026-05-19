@@ -2306,12 +2306,17 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 2008003487}
+    - target: {fileID: 8748446167377887117, guid: 7cb391fb366bbd941950bb7b4ead6379, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8782561982702862493, guid: 7cb391fb366bbd941950bb7b4ead6379, type: 3}
       propertyPath: m_Name
       value: Station
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 1460449909363125113, guid: 7cb391fb366bbd941950bb7b4ead6379, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7cb391fb366bbd941950bb7b4ead6379, type: 3}

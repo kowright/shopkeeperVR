@@ -34,18 +34,6 @@ namespace Assets.Scripts.Items
             }
         }
 
-        // editor only
-        private void OnValidate()
-        {
-            //InitializeOutline();
-            //UpdateVisuals();
-            //text.text = itemData.displayName;
-            //Color outlineColor = outlineColorManager.GetOutlineColorForQuality(itemData.itemQuality);
-
-            //outlineMeshRenderer.material = new Material(outlineMeshRenderer.sharedMaterial);
-            //outlineMeshRenderer.material.SetColor("_OutlineColor", outlineColor);
-        }
-
         private void InitializeOutline()
         {
             if (outlineMeshRenderer == null)

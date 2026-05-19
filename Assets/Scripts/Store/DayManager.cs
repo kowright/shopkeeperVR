@@ -4,15 +4,15 @@ using System;
 
 namespace Assets.Scripts.Store
 {
-	public class DayManager : MonoBehaviour
+	public class DayManager
 	{
-        public static int day { get; private set; }
+        public static int day { get; private set; } = 1;
 		public int rent => SetRent();
 
 		/// <summary>
 		/// Get time in seconds of how long the day countdown is
 		/// </summary>
-		public int dayTime => (day * 60) + 120; // 2 mins to start, every exyra day gives an extra minute
+		public int dayTime => (day * 60) + 180; // 2 mins to start, every extra day gives an extra minute
 
 		//public int daytime => 30; //debug
         public static Action OnDayEnded;

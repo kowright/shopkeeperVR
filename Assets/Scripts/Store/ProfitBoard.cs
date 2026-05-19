@@ -90,7 +90,7 @@ public class ProfitBoard : MonoBehaviour
         Debug.Log("ADD SPAWNER COST:" + amount);
         Debug.Log("previous store profit: " + storeProfit);
         storeProfit += amount;
-        profitText.text = $"Store Profit: ${storeProfit}";
+        profitText.text = $"Store Profit from last full day: ${storeProfit}";
     }
 
     // is called on New Day Button- just allows stats to reset
@@ -106,6 +106,7 @@ public class ProfitBoard : MonoBehaviour
         OnNextDay?.Invoke();
         dayText.text = "Day: " + day.ToString();
         dayProfitText.text = "";
+        todayProfit = 0;
         //Debug.Log("START THE DAY" + day);
         //isStoreOpen = true;
         //OnDayStarted?.Invoke();

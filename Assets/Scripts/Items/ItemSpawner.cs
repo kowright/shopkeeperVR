@@ -39,7 +39,19 @@ namespace Assets.Scripts.Items
 
         public int SpawnerCost => item.cost * 10;
 
-         public bool IsPaid { get; private set; } = false;
+        public bool IsPaid { get; private set; } = false;
+        public bool HasBeenPlacedByPlayer { get; private set; }
+
+        public void MarkPlacedByPlayer()
+        {
+            HasBeenPlacedByPlayer = true;
+        }
+
+        public void UnmarkPlacedByPlayer()
+        {
+            HasBeenPlacedByPlayer = false;
+        }
+
 
 
         private void OnValidate()
@@ -80,10 +92,8 @@ namespace Assets.Scripts.Items
             //itemPrefab = item?.itemPrefab;
             respawnTimerText.text = "";
             ItemComponent itemComponent = itemPrefab.GetComponent<ItemComponent>();
-            Debug.Log("item c " +  itemComponent);
             Color materialColor = outlineColorManager.GetOutlineColorForQuality(item.itemQuality);
 
-            Debug.Log("mesh renderer" + meshRenderer);
 
             Material mat = new Material(meshRenderer.sharedMaterials[0]);
             mat.color = materialColor;
@@ -128,15 +138,20 @@ namespace Assets.Scripts.Items
         {
             if (other.GetComponent<ShelfTrigger>())
             {
-                Debug.Log("Entered trigger");
-                isOutofPlace = false;
+                var shelf = other.GetComponent<ShelfTrigger>();
 
-                if (removalCoroutine != null)
+                if (shelf && !shelf.ForPurchase)
                 {
-                    StopCoroutine(removalCoroutine);
-                    removalCoroutine = null;
-                    OnSpawnerStopRemoval?.Invoke();
+                    isOutofPlace = false;
+
+                    if (removalCoroutine != null)
+                    {
+                        //StopCoroutine(removalCoroutine);
+                        removalCoroutine = null;
+                        OnSpawnerStopRemoval?.Invoke();
+                    }
                 }
+       
 
             }
         }
@@ -144,7 +159,6 @@ namespace Assets.Scripts.Items
         {
             if (other.GetComponent<ShelfTrigger>())
             {
-                Debug.Log("Left trigger");
                 isOutofPlace = true;
 
                 removalCoroutine = StartCoroutine(RemovalCheck());
@@ -243,7 +257,6 @@ namespace Assets.Scripts.Items
             Debug.Log("Item grabbed, starting respawn timer");
 
             ItemComponent item = args.interactableObject.transform.GetComponent<ItemComponent>();
-            Debug.Log("Item " +  item);
             if (item)
             {
                 
@@ -267,7 +280,6 @@ namespace Assets.Scripts.Items
 
         private System.Collections.IEnumerator RespawnTimerDisplay(float wait)
         {
-            Debug.Log("timer");
             while (wait > 0)
             {
                 yield return new WaitForSeconds(1f);
@@ -283,7 +295,6 @@ namespace Assets.Scripts.Items
 
         public void SetSpawnerAsPaid()
         {
-            Debug.Log("Spawner for " + item.displayName + " is paid");
             IsPaid = true;
             //XRGrabInteractable grab = currentItem.GetComponent<XRGrabInteractable>();
             //grab.interactionLayers = InteractionLayerMask.GetMask("Default");

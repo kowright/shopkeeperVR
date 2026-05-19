@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor.PackageManager.Requests;
 using UnityEngine;
 
 namespace Assets.Scripts.Customers.Rules
@@ -20,16 +21,39 @@ namespace Assets.Scripts.Customers.Rules
             }
 
             var validRequests = database.allRequests.FindAll(r =>
-                r.difficulty <= GetTargetDifficulty(day) &&
+                r.difficulty <= day &&
                 MatchesCustomer(r, customerTags, strictMatch: true)
 
             );
+
+            foreach (var r in database.allRequests)
+            {
+                bool difficultyPass = r.difficulty <= day;
+                bool tagPass = MatchesCustomer(r, customerTags, true);
+
+                Debug.Log(
+                    $"{r.name} | diff={r.difficulty} pass={difficultyPass} | tags={tagPass}"
+                );
+            }
+
+            foreach (CustomerRequest r in database.allRequests)
+            {
+        
+                foreach(RequestTag rt in r.Tags)
+                {
+                    if(r.difficulty == 2)
+                    {
+                        Debug.Log("request tags " + r.name);
+                        Debug.Log("tag: " + rt);
+                    }
+                }
+            }
 
             if (validRequests.Count == 0)
             {
                 Debug.LogWarning("No valid requests found for " + customer.customerName +", using soft match");
                 var validRequestsSoft = database.allRequests.FindAll(r =>
-                        r.difficulty <= GetTargetDifficulty(day) &&
+                        r.difficulty <= day &&
                         MatchesCustomer(r, customerTags, strictMatch: false)
 
                 );
@@ -57,20 +81,22 @@ namespace Assets.Scripts.Customers.Rules
             }
         }
 
-        private int GetTargetDifficulty(int day)
-        {
-            return Mathf.Clamp(day / 2, 1, 10);
-        }
-
         private bool MatchesCustomer(CustomerRequest request, List<RequestTag> tags, bool strictMatch = false)
         {
 
             // Example: picky customers want high quality
             //if (customer.customerType == CustomerType.Picky)
+
             //    return request.tags.Contains(RequestTag.HighQuality);
+
+            Debug.Log("Customer tags: " + string.Join(", ", tags));
+            Debug.Log("Request tags: " + string.Join(", ", request.Tags));
+            if (request.Tags == null || request.Tags.Count == 0)
+                return false;
 
             return strictMatch ? 
                 request.Tags.All(tag => tags.Contains(tag)) : request.Tags.Any(tag => tags.Contains(tag));
+  
 
             //if (strictMatch)
             //{

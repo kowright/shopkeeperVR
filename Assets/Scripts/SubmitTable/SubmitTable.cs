@@ -120,7 +120,7 @@ public class SubmitTable: MonoBehaviour
         }
         else
         {
-            results.text = "Tip: $" + storeTip;
+            results.text = "$" + moneyPaid + "+ $" + storeTip;
 
         }
 

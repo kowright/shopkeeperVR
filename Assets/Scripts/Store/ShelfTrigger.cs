@@ -15,8 +15,12 @@ namespace Assets.Scripts.Store
         private float unpaidShelfCost;
         public TextMeshProUGUI shelfCostText;
         public static Action<int> OnSpawnerPlaced;
+        public static Action<ItemSpawner> OnPurchaseShelfExit;
+        public static Action<ItemSpawner> OnPurchaseShelfEnter;
+
 
         [SerializeField] private bool forPurchase;
+        public bool ForPurchase => forPurchase;
 
 
         public List<ItemSpawner> GetItemSpawners() => shelfSpawners;
@@ -35,7 +39,7 @@ namespace Assets.Scripts.Store
 
         private void OnTriggerEnter(Collider other)
         {
-            Debug.Log("Got " + other);
+            Debug.Log("ShelfTrigger OnTriggerEnter entered: " + other);
             var spawner = other.GetComponentInParent<ItemSpawner>();
             if (spawner != null)
             {
@@ -45,7 +49,15 @@ namespace Assets.Scripts.Store
                 }
                 shelfSpawners.Add(spawner);
 
-                if (forPurchase) return;
+
+                if (forPurchase)
+                {
+                    if (!spawner.HasBeenPlacedByPlayer) return;
+
+                    Debug.Log("Spawner entered purchase shelf");
+                    OnPurchaseShelfEnter?.Invoke(spawner);
+                    return;
+                }
 
                 Debug.Log("Adding spawner for item " + spawner.item.displayName);
                 if (!spawner.IsPaid)
@@ -60,13 +72,29 @@ namespace Assets.Scripts.Store
 
         private void OnTriggerExit(Collider other)
         {
+            Debug.Log("ShelfTrigger OnTriggerExit");
             var spawner = other.GetComponentInParent<ItemSpawner>();
-            if (shelfSpawners.Contains(spawner))
+            //Debug.Log("Spawner for " + spawner.item.displayName + " is listed? " + shelfSpawners.Contains(spawner));
+            if (spawner != null && shelfSpawners.Contains(spawner))
             {
+                if (!spawner.HasBeenPlacedByPlayer)
+                {
+                    Debug.Log("Spawner " + spawner.nameText + " is not being used by player");
+                    return;
+                }
+
                 shelfSpawners.Remove(spawner);
                 Debug.Log("Removing spawner for item " + spawner.item.displayName);
 
-                if (forPurchase) return;
+                if (forPurchase)
+                {
+                    Debug.Log("Spawner exited purchase shelf");
+                    if (spawner.IsPaid) return;
+                    OnPurchaseShelfExit?.Invoke(spawner);
+                    return;
+                }
+
+                //if (forPurchase) return;
 
                 if (!spawner.IsPaid)
                 {
