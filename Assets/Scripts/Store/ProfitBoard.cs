@@ -15,6 +15,7 @@ public class ProfitBoard : MonoBehaviour
     public TextMeshProUGUI profitText;
     public TextMeshProUGUI countdownText;
     public TextMeshProUGUI dayText;
+    private int shelfCost = 500;
     public static int day => DayManager.day;
 
 
@@ -34,6 +35,10 @@ public class ProfitBoard : MonoBehaviour
     private Coroutine openForBusinessCoroutine;
     private DayManager dayManager;
     private Station currentStation;
+    //[SerializeField] private GameObject anotherShelfTable;
+    //[SerializeField] private Transform anotherShelfTableSecondaryPosition;
+    //private int secondShelfAvailableDay = 3;
+    //private int thirdShelfAvailableDay = 6;
 
     void OnEnable()
     {
@@ -41,7 +46,7 @@ public class ProfitBoard : MonoBehaviour
         SubmitTable.OnTableSubmitted += AddDuringBusinessHoursProfit;
         ShelfTrigger.OnSpawnerPlaced += AddOutsideBusinessHoursProfit;
         Station.OnStationEnabled += StationChange;
-        dayText.text = "Day: " + day.ToString();
+ 
 
 
     }
@@ -59,6 +64,8 @@ public class ProfitBoard : MonoBehaviour
     {
 
         dayManager = new();
+  
+        dayText.text = "Day: " + day.ToString();
         isStoreOpen = false;
         Debug.Log("rent: " + dayManager.rent);
         storeProfit -= dayManager.rent;
@@ -105,6 +112,7 @@ public class ProfitBoard : MonoBehaviour
         dayManager.SetNextDay();
         OnNextDay?.Invoke();
         dayText.text = "Day: " + day.ToString();
+
         dayProfitText.text = "";
         todayProfit = 0;
         //Debug.Log("START THE DAY" + day);
@@ -117,6 +125,7 @@ public class ProfitBoard : MonoBehaviour
     {
         Debug.Log("START THE DAY" + day);
         isStoreOpen = true;
+        countdownText.text = "Store open!";
         OnBusinessDayStarted?.Invoke();
         StartOpenBusinessTimer();
 
@@ -163,5 +172,11 @@ public class ProfitBoard : MonoBehaviour
     {
         Debug.Log("Station Change");
         currentStation = newStation;
+    }
+
+    public void AddShelf()
+    {
+        todayProfit -= shelfCost;
+
     }
 }

@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 21c295cdf5623424aaaf03b256ae5ff8, type: 3}
-  m_Name: Rule_Max3Items 1
-  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Customers.Rules.MaxItemsRule
-  maxItems: 3
+  m_Script: {fileID: 11500000, guid: b1dba0b0585c7374a9463bb10e006764, type: 3}
+  m_Name: Rule_SurpriseMeWithGood
+  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Customers.Rules.SurpriseMeTypeRule
+  preferredQuality: 2

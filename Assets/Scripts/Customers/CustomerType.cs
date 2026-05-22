@@ -15,13 +15,13 @@ namespace Assets.Scripts.Customers
     public enum CustomerType
     {
 
-        /// <summary>Spends under $20.</summary>
+        /// <summary>Spends under $20. Equals Request Tag Cheap.</summary>
         Cheap,
 
-        /// <summary>Spends under $100.</summary>
+        /// <summary>Spends under $100. Equals RequestTag MidRange.</summary>
         Average,
 
-        /// <summary>High spending customer.</summary>
+        /// <summary>High spending customer. Equals Request Tag Expensive.</summary>
         BigSpender,
 
         /// <summary>Prefers high-quality items. Equals RequestTag HighQuality.</summary>

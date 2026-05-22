@@ -61,6 +61,7 @@ namespace Assets.Scripts.Customers
                     new List<CustomerType> { CustomerType.Impatient, CustomerType.Forgiving },
                     new List<CustomerType> { CustomerType.Patient, CustomerType.DebbyDowner },
                     new List<CustomerType> { CustomerType.Spontaneous, CustomerType.Indifferent },
+                    new List<CustomerType> { CustomerType.Cheap, CustomerType.Bitter },
                  }
              },
              // ---

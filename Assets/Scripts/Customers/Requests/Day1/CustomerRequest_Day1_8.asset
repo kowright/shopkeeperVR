@@ -13,8 +13,7 @@ MonoBehaviour:
   m_Name: CustomerRequest_Day1_8
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Customers.CustomerRequest
   difficulty: 1
-  requiredItems:
-  - {fileID: 0}
+  requiredItems: []
   hasRequiredType: 0
   requiredType: 0
   hasRequiredQuality: 0

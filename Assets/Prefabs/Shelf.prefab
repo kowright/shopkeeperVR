@@ -701,8 +701,8 @@ Transform:
   m_GameObject: {fileID: 6472903607293414950}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.763, y: 1.12, z: -0.0040000007}
-  m_LocalScale: {x: 1, y: 0.47158, z: 2.5864}
+  m_LocalPosition: {x: -0.763, y: 1.12, z: -0.046}
+  m_LocalScale: {x: 1, y: 0.47158, z: 2.7803802}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 289483409831079143}
@@ -750,6 +750,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Store.ShelfTrigger
   shelfSpawners: []
   shelfCostText: {fileID: 332847726638870315}
+  forPurchase: 0
 --- !u!1 &6950347005255828638
 GameObject:
   m_ObjectHideFlags: 0
@@ -778,8 +779,8 @@ Transform:
   m_GameObject: {fileID: 6950347005255828638}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.763, y: 0.739, z: -0.0040000007}
-  m_LocalScale: {x: 1, y: 0.47158, z: 2.5864}
+  m_LocalPosition: {x: -0.763, y: 0.739, z: -0.046}
+  m_LocalScale: {x: 1, y: 0.47158, z: 2.7803802}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 289483409831079143}
@@ -827,6 +828,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Store.ShelfTrigger
   shelfSpawners: []
   shelfCostText: {fileID: 2738647614874485516}
+  forPurchase: 0
 --- !u!1 &7636531205772925868
 GameObject:
   m_ObjectHideFlags: 0
@@ -992,8 +994,8 @@ Transform:
   m_GameObject: {fileID: 7974982001933575757}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.763, y: 1.518, z: -0.0040000007}
-  m_LocalScale: {x: 1, y: 0.47158, z: 2.5864}
+  m_LocalPosition: {x: -0.763, y: 1.518, z: -0.046}
+  m_LocalScale: {x: 1, y: 0.47158, z: 2.7803802}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 289483409831079143}
@@ -1041,6 +1043,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Store.ShelfTrigger
   shelfSpawners: []
   shelfCostText: {fileID: 8457259586648779762}
+  forPurchase: 0
 --- !u!1 &9100574301181273536
 GameObject:
   m_ObjectHideFlags: 0
@@ -1145,7 +1148,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 00d212ae81eb9da45adf01e733a8d450, type: 3}
       propertyPath: m_LocalScale.z
-      value: 1.6917
+      value: 1.9243088
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 00d212ae81eb9da45adf01e733a8d450, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1157,7 +1160,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 00d212ae81eb9da45adf01e733a8d450, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.85
+      value: 0.9593
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 00d212ae81eb9da45adf01e733a8d450, type: 3}
       propertyPath: m_LocalRotation.w

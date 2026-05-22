@@ -113,7 +113,9 @@ public class SubmitTable: MonoBehaviour
         if (result.Count > 0)
         {
             //results.text = result[0];
-            Debug.Log("results", results);
+            result.Add("$" + moneyPaid + "+ $" + storeTip);
+            Debug.Log("results have " + result.Count + " strings called " + string.Join("\n", result));
+
             results.text =  string.Join("\n", result);
 
             //TODO: show all result text and add tip text
@@ -168,10 +170,9 @@ public class SubmitTable: MonoBehaviour
         }
         //tableRevenue += totalCost;
         tableRevenue += profit;
+        currentTableCost = 0;
         //OnTableSubmitted.Invoke(totalCost)
         OnTableSubmitted?.Invoke(profit);
-
-        Debug.Log("Submit table check rules");
     
         float happinessReduction = 0f;
 
@@ -232,7 +233,7 @@ public class SubmitTable: MonoBehaviour
             if (totalBonus > 0)
             {
                 Debug.Log("quality bonus!");
-                results.Add("Customer is impressed by the quality!");
+                results.Add(customer.customerName + " is impressed by the quality!");
                 happinessReduction += totalBonus;
             }
 
@@ -261,7 +262,7 @@ public class SubmitTable: MonoBehaviour
         Debug.Log("DAY IS DONE");
 
         itemsOnTable.Clear();
-        results.text = $"This station: profit {tableRevenue} customers served: {customersServed} customers made happy: {customersMadeHappy}";
+        results.text = $"Station made: ${tableRevenue} \nCustomers served: {customersServed} \nCustomers made happy: {customersMadeHappy}";
         currentTableCost = 0;
         priceCountText.text = "";
     }

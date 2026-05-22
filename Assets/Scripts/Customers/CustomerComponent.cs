@@ -124,10 +124,10 @@ public class CustomerComponent : MonoBehaviour
             //patienceText.text = "Patience " + patience.ToString();
             SetPatienceDisplay((int)patience);
             float timeLeft = Mathf.Clamp01((float)patience / customer.patience);
-            Debug.Log("happiness time left " +  timeLeft);
+            //Debug.Log("happiness time left " +  timeLeft);
             happiness = happinessManager.GetHapinessFromPatience(timeLeft);
             happinessFloat = timeLeft;
-            Debug.Log("happiness from patience timer " + happinessFloat);
+            //Debug.Log("happiness from patience timer " + happinessFloat);
             //happinessText.text = happiness.ToString();
             SetHappinessDisplay(happiness);
 

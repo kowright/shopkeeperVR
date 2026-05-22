@@ -21,7 +21,7 @@ namespace Assets.Scripts.Customers.Rules
             }
 
             var validRequests = database.allRequests.FindAll(r =>
-                r.difficulty <= day &&
+                r.difficulty == day &&
                 MatchesCustomer(r, customerTags, strictMatch: true)
 
             );
@@ -31,23 +31,23 @@ namespace Assets.Scripts.Customers.Rules
                 bool difficultyPass = r.difficulty <= day;
                 bool tagPass = MatchesCustomer(r, customerTags, true);
 
-                Debug.Log(
-                    $"{r.name} | diff={r.difficulty} pass={difficultyPass} | tags={tagPass}"
-                );
+                //Debug.Log(
+                //    $"{r.name} | diff={r.difficulty} pass={difficultyPass} | tags={tagPass}"
+                //);
             }
 
-            foreach (CustomerRequest r in database.allRequests)
-            {
+            //foreach (CustomerRequest r in database.allRequests)
+            //{
         
-                foreach(RequestTag rt in r.Tags)
-                {
-                    if(r.difficulty == 2)
-                    {
-                        Debug.Log("request tags " + r.name);
-                        Debug.Log("tag: " + rt);
-                    }
-                }
-            }
+            //    foreach(RequestTag rt in r.Tags)
+            //    {
+            //        if(r.difficulty == 2)
+            //        {
+            //            Debug.Log("request tags " + r.name);
+            //            Debug.Log("tag: " + rt);
+            //        }
+            //    }
+            //}
 
             if (validRequests.Count == 0)
             {
@@ -89,8 +89,8 @@ namespace Assets.Scripts.Customers.Rules
 
             //    return request.tags.Contains(RequestTag.HighQuality);
 
-            Debug.Log("Customer tags: " + string.Join(", ", tags));
-            Debug.Log("Request tags: " + string.Join(", ", request.Tags));
+            //Debug.Log("Customer tags: " + string.Join(", ", tags));
+            //Debug.Log("Request tags: " + string.Join(", ", request.Tags));
             if (request.Tags == null || request.Tags.Count == 0)
                 return false;
 

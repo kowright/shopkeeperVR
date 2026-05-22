@@ -5,6 +5,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.XR.Interaction.Toolkit.Inputs.Interactions;
 
 public class Station : MonoBehaviour
 {
@@ -28,6 +29,15 @@ public class Station : MonoBehaviour
     private bool openForBusiness = false;
     private Coroutine customerCreationCoroutine;
 
+    [SerializeField] private GameObject anotherShelfTable;
+    [SerializeField] private Transform anotherShelfTableSecondaryPosition;
+    [SerializeField] private GameObject secondShelf;
+    [SerializeField] private GameObject thirdShelf;
+    private int secondShelfAvailableDay = 3;
+    private int thirdShelfAvailableDay = 6;
+
+    private int day => ProfitBoard.day;
+
 
     private void Awake()
     {
@@ -44,12 +54,14 @@ public class Station : MonoBehaviour
         customerManager = new CustomerManager();
         ProfitBoard.OnBusinessDayStarted += DayStarted;
         ProfitBoard.OnDayEnded += DayEnded;
+        ProfitBoard.OnNextDay += NextDay;
     }
 
     private void OnDisable()
     {
-        ProfitBoard.OnBusinessDayStarted += DayStarted;
-        ProfitBoard.OnDayEnded += DayEnded;
+        ProfitBoard.OnBusinessDayStarted -= DayStarted;
+        ProfitBoard.OnDayEnded -= DayEnded;
+        ProfitBoard.OnNextDay -= NextDay;
     }
 
     private void DayStarted()
@@ -63,6 +75,19 @@ public class Station : MonoBehaviour
     {
         StopSpawningCustomers();
         openForBusiness = false;
+    }
+
+    private void NextDay()
+    {
+        if (!secondShelf.activeSelf && day >= secondShelfAvailableDay)
+        {
+            anotherShelfTable.SetActive(true);
+        }
+        if (secondShelf.activeSelf && day >= thirdShelfAvailableDay)
+        {
+            anotherShelfTable.SetActive(true);
+        }
+
     }
 
     private void StopSpawningCustomers()
@@ -105,6 +130,20 @@ public class Station : MonoBehaviour
         //    customerCounterTriggerPoint.position,
         //    5f
         //));
+    }
+
+    public void AddNewShelf()
+    {
+        if (!secondShelf.activeSelf)
+        {
+            secondShelf.SetActive(true);
+            anotherShelfTable.transform.position = anotherShelfTableSecondaryPosition.position;
+            anotherShelfTable.SetActive(false);
+            return;
+        }
+        // is third shelf
+        thirdShelf.SetActive(true);
+        anotherShelfTable.SetActive(false);
     }
 
  

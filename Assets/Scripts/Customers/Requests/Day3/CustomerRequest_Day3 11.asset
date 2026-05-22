@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 576e2cd0ee088ea438d828ed64a916e9, type: 3}
-  m_Name: CustomerRequest_Day1_7
+  m_Name: CustomerRequest_Day3 11
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Customers.CustomerRequest
-  difficulty: 1
-  requiredItems: []
+  difficulty: 3
+  requiredItems:
+  - {fileID: 11400000, guid: 542279cefe149db44a013557b6a0a09c, type: 2}
   hasRequiredType: 0
   requiredType: 0
   hasRequiredQuality: 0
-  minimumQuality: 1
-  extraRules:
-  - {fileID: 11400000, guid: 72dee927ddeba004ab5c7a1518cde86f, type: 2}
-  Tags: 0a000000
+  minimumQuality: 0
+  extraRules: []
+  Tags: 0900000000000000

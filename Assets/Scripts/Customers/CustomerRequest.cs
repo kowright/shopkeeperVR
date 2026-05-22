@@ -3,6 +3,7 @@ using Assets.Scripts.Items;
 using NaughtyAttributes;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.PackageManager.Requests;
 using UnityEngine;
 
 namespace Assets.Scripts.Customers
@@ -46,7 +47,7 @@ namespace Assets.Scripts.Customers
                 foreach (var rule in extraRules)
                 {
                     requestStrings.Add(rule.RequestString);
-                    Debug.Log(rule.RequestString);
+                    //Debug.Log("Request rule string: " + rule.RequestString);
                 }
             }
 
@@ -55,12 +56,14 @@ namespace Assets.Scripts.Customers
                 foreach (var requiredItem in requiredItems)
                 {
                     requestStrings.Add("Required: " + requiredItem.displayName);
-                    Debug.Log("required");
+                    //Debug.Log("required");
                 }
             }
             foreach(var s in requestStrings){
-                Debug.Log("string " +  s);
+                //Debug.Log("string " +  s);
             }
+
+            Debug.Log("Request has " + requestStrings.Count + " strings that are: " + string.Join("\n", requestStrings));
             return requestStrings;
           
         }
