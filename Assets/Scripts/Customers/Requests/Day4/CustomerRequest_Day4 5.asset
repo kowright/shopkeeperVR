@@ -17,7 +17,7 @@ MonoBehaviour:
   hasRequiredType: 1
   requiredType: 2
   hasRequiredQuality: 0
-  minimumQuality: 1
+  minimumQuality: 5
   extraRules:
   - {fileID: 11400000, guid: 6925fb36a3a8c5c42b1d1376057066d0, type: 2}
   - {fileID: 11400000, guid: 2c03a82b64104aa45aafcda076d1dfe1, type: 2}

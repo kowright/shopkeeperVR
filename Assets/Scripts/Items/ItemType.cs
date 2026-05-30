@@ -7,6 +7,7 @@ namespace Assets.Scripts.Items
 	{
 		Food,
 		Weapon,
-		Accessory
+		Accessory,
+		None,
 	}
 }

@@ -15,9 +15,9 @@ MonoBehaviour:
   difficulty: 3
   requiredItems: []
   hasRequiredType: 0
-  requiredType: 0
+  requiredType: 3
   hasRequiredQuality: 0
-  minimumQuality: 3
+  minimumQuality: 5
   extraRules:
   - {fileID: 11400000, guid: e740fb8a401e7e14abcd3dd9fc4e09f4, type: 2}
   - {fileID: 11400000, guid: 2c03a82b64104aa45aafcda076d1dfe1, type: 2}

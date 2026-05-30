@@ -1,9 +1,6 @@
 ﻿using Assets.Scripts.Items;
 using System;
 using System.Collections.Generic;
-using System.Runtime.InteropServices.WindowsRuntime;
-using System.Text;
-using UnityEngine;
 
 namespace Assets.Scripts.Customers
 {
@@ -72,7 +69,7 @@ namespace Assets.Scripts.Customers
                     new List<CustomerType> { CustomerType.Minimalist, CustomerType.Average },
                     new List<CustomerType> { CustomerType.Diverse, CustomerType.Average, CustomerType.Indifferent },
                     new List<CustomerType> { CustomerType.Average, CustomerType.Impatient },
-                    new List<CustomerType> { CustomerType.Impatient, CustomerType.BigSpender },
+                    new List<CustomerType> { CustomerType.Impatient, CustomerType.Luxury },
                     new List<CustomerType> { CustomerType.Patient, CustomerType.Average, CustomerType.Indifferent },
                     new List<CustomerType> { CustomerType.Spontaneous, CustomerType.BigSpender, CustomerType.Demanding },
 
@@ -85,7 +82,7 @@ namespace Assets.Scripts.Customers
                     new List<CustomerType> { CustomerType.Minimalist, CustomerType.BigSpender, CustomerType.Bitter },
                     new List<CustomerType> { CustomerType.Diverse, CustomerType.Average },
                     new List<CustomerType> { CustomerType.Average, CustomerType.Impatient, CustomerType.Indifferent },
-                    new List<CustomerType> { CustomerType.Impatient, CustomerType.BigSpender },
+                    new List<CustomerType> { CustomerType.Impatient, CustomerType.Luxury },
                     new List<CustomerType> { CustomerType.Patient, CustomerType.Average, CustomerType.Demanding },
                     new List<CustomerType> { CustomerType.Spontaneous, CustomerType.Average },
 
@@ -107,7 +104,7 @@ namespace Assets.Scripts.Customers
              },
              { 8, new List<List<CustomerType>>
                  {
-                    new List<CustomerType> { CustomerType.Picky, CustomerType.Impatient, CustomerType.Maximalist },
+                    new List<CustomerType> { CustomerType.Picky, CustomerType.Impatient, CustomerType.Maximalist, CustomerType.Luxury },
                     new List<CustomerType> { CustomerType.Maximalist, CustomerType.Cheap, CustomerType.Spontaneous, CustomerType.Forgiving },
                     new List<CustomerType> { CustomerType.Minimalist, CustomerType.BigSpender, CustomerType.Picky },
                     new List<CustomerType> { CustomerType.Diverse, CustomerType.BigSpender, CustomerType.DebbyDowner },
@@ -129,7 +126,7 @@ namespace Assets.Scripts.Customers
                     new List<CustomerType> { CustomerType.Diverse, CustomerType.BigSpender, CustomerType.Patient, CustomerType.Forgiving },
                     new List<CustomerType> { CustomerType.Average, CustomerType.Impatient,CustomerType.Diverse },
                     new List<CustomerType> { CustomerType.Impatient, CustomerType.BigSpender, CustomerType.Diverse, CustomerType.DebbyDowner },
-                    new List<CustomerType> { CustomerType.Patient, CustomerType.Average, CustomerType.Bitter},
+                    new List<CustomerType> { CustomerType.Patient, CustomerType.Luxury, CustomerType.Bitter},
                     new List<CustomerType> { CustomerType.Spontaneous, CustomerType.Cheap, CustomerType.Diverse, CustomerType.Demanding },
 
                  }
@@ -139,16 +136,16 @@ namespace Assets.Scripts.Customers
                  {
                     new List<CustomerType> { CustomerType.Picky, CustomerType.Impatient, CustomerType.Maximalist, CustomerType.Bitter, CustomerType.Demanding },
                     new List<CustomerType> { CustomerType.Maximalist, CustomerType.Cheap, CustomerType.Picky, CustomerType.Bitter },
-                    new List<CustomerType> { CustomerType.Maximalist, CustomerType.Cheap, CustomerType.Picky, CustomerType.Impatient, CustomerType.Forgiving },
+                    new List<CustomerType> { CustomerType.Maximalist, CustomerType.Luxury, CustomerType.Picky, CustomerType.Impatient, CustomerType.Forgiving },
                     new List<CustomerType> { CustomerType.Maximalist, CustomerType.Average, CustomerType.Spontaneous },
-                    new List<CustomerType> { CustomerType.Minimalist, CustomerType.Cheap, CustomerType.Picky, CustomerType.Demanding },
+                    new List<CustomerType> { CustomerType.Minimalist, CustomerType.Luxury, CustomerType.Picky, CustomerType.Demanding },
                     new List<CustomerType> { CustomerType.Diverse, CustomerType.BigSpender, CustomerType.Patient, CustomerType.DebbyDowner },
                     new List<CustomerType> { CustomerType.BigSpender, CustomerType.Impatient,CustomerType.Diverse },
                     new List<CustomerType> { CustomerType.Impatient, CustomerType.BigSpender, CustomerType.Diverse, CustomerType.DebbyDowner },
-                    new List<CustomerType> { CustomerType.Patient, CustomerType.Average,  CustomerType.Spontaneous, CustomerType.Picky, CustomerType.Demanding},
-                    new List<CustomerType> { CustomerType.Spontaneous, CustomerType.Cheap, CustomerType.Diverse, CustomerType.Forgiving },
-                    new List<CustomerType> { CustomerType.Minimalist, CustomerType.Cheap, CustomerType.Impatient, CustomerType.DebbyDowner },
-                    new List<CustomerType> { CustomerType.Spontaneous, CustomerType.Cheap, CustomerType.Minimalist, CustomerType.Diverse, CustomerType.DebbyDowner },
+                    new List<CustomerType> { CustomerType.Patient, CustomerType.Luxury, CustomerType.Spontaneous, CustomerType.Picky, CustomerType.Demanding},
+                    new List<CustomerType> { CustomerType.Spontaneous, CustomerType.Luxury, CustomerType.Diverse, CustomerType.Forgiving },
+                    new List<CustomerType> { CustomerType.Minimalist, CustomerType.Luxury, CustomerType.Impatient, CustomerType.DebbyDowner },
+                    new List<CustomerType> { CustomerType.Spontaneous, CustomerType.Luxury, CustomerType.Minimalist, CustomerType.Diverse, CustomerType.DebbyDowner },
 
 
                  }
@@ -156,8 +153,6 @@ namespace Assets.Scripts.Customers
 
 
         };
-
-
 
         public Customer CreateCustomerData()
         {
@@ -178,11 +173,10 @@ namespace Assets.Scripts.Customers
 
             (int low, int high) baseRange = businessDay switch
             {
-                0 => (10, 20),
-                1 => (20, 100),
-                2 => (40, 200),
-                3 => (60, 300),
-                4 => (10, 500),
+                1 => (5, 15),
+                2 => (6, 15),
+                3 => (20, 40),
+                4 => (20, 300),
                 5 => (10, 800),
                 6 => (10, 1000),
                 7 => (300, 2250),
@@ -195,30 +189,8 @@ namespace Assets.Scripts.Customers
             (int adjustedLow, int adjustedHigh) = AdjustBudgetRange(baseRange.low, baseRange.high, customerTypes);
 
             return random.Next(adjustedLow, adjustedHigh);
-
-            //switch (businessDay)
-            //{
-            //    case 0:
-            //        int lowEnd;
-            //        int highEnd;
-            //        (lowEnd, highEnd) =  AdjustBudgetRange(10, 20, customerTypes);
-
-            //        budget = random.Next(lowEnd, highEnd);
-            //        return budget;
-            //    case 1: return random.Next(20, 100);
-            //    case 2: return random.Next(40, 200);
-            //    case 3: return random.Next(60, 300);
-            //    case 4: return random.Next(10, 500);
-            //    case 5: return random.Next(10, 800);
-            //    case 6: return random.Next(10, 1000);
-            //    case 7: return random.Next(300, 2250);
-            //    case 8: return random.Next(300, 4500);
-            //    case 9: return random.Next(300, 5000);
-            //    default:
-            //        return 0;
-        
-
         }
+
         private int GetCustomerPatience(List<CustomerType> customerTypes)
         {
             if (businessDay <= 2 && businessDay > 0)

@@ -21,6 +21,9 @@ namespace Assets.Scripts.Customers
         /// <summary>Spends under $100. Equals RequestTag MidRange.</summary>
         Average,
 
+        /// <summary>Spends under $500. Equals Request Tag HighRange.</summary>
+        Luxury,
+
         /// <summary>High spending customer. Equals Request Tag Expensive.</summary>
         BigSpender,
 
@@ -129,6 +132,9 @@ namespace Assets.Scripts.Customers
                         break;
                     case CustomerType.Average:
                         tags.Add(RequestTag.MidRange);
+                        break;
+                    case CustomerType.Luxury:
+                        tags.Add(RequestTag.HighRange);
                         break;
 
 

@@ -23,13 +23,13 @@ namespace Assets.Scripts.Customers
         public bool hasRequiredType;
     
         [ShowIf(nameof(hasRequiredType))]
-        public ItemType requiredType;
+        public ItemType requiredType = ItemType.None;
 
 
         public bool hasRequiredQuality;
 
         [ShowIf(nameof(hasRequiredQuality))]
-        public ItemQuality minimumQuality;
+        public ItemQuality minimumQuality = ItemQuality.None;
 
         // custom rules from other scriptable objects
         public List<RequestRule> extraRules;

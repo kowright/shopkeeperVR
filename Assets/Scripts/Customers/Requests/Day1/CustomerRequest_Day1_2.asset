@@ -19,6 +19,6 @@ MonoBehaviour:
   hasRequiredType: 1
   requiredType: 0
   hasRequiredQuality: 0
-  minimumQuality: 0
+  minimumQuality: 5
   extraRules: []
   Tags: 0000000008000000

@@ -26,15 +26,15 @@ namespace Assets.Scripts.Customers.Rules
 
             );
 
-            foreach (var r in database.allRequests)
-            {
-                bool difficultyPass = r.difficulty <= day;
-                bool tagPass = MatchesCustomer(r, customerTags, true);
+            //foreach (var r in database.allRequests)
+            //{
+            //    bool difficultyPass = r.difficulty <= day;
+            //    bool tagPass = MatchesCustomer(r, customerTags, true);
 
-                //Debug.Log(
-                //    $"{r.name} | diff={r.difficulty} pass={difficultyPass} | tags={tagPass}"
-                //);
-            }
+            //    Debug.Log(
+            //        $"{r.name} | diff={r.difficulty} pass={difficultyPass} | tags={tagPass}"
+            //    );
+            //}
 
             //foreach (CustomerRequest r in database.allRequests)
             //{
@@ -53,7 +53,7 @@ namespace Assets.Scripts.Customers.Rules
             {
                 Debug.LogWarning("No valid requests found for " + customer.customerName +", using soft match");
                 var validRequestsSoft = database.allRequests.FindAll(r =>
-                        r.difficulty <= day &&
+                        r.difficulty == day &&
                         MatchesCustomer(r, customerTags, strictMatch: false)
 
                 );
@@ -94,8 +94,8 @@ namespace Assets.Scripts.Customers.Rules
             if (request.Tags == null || request.Tags.Count == 0)
                 return false;
 
-            return strictMatch ? 
-                request.Tags.All(tag => tags.Contains(tag)) : request.Tags.Any(tag => tags.Contains(tag));
+            return strictMatch ?
+                 tags.All(tag => request.Tags.Contains(tag)) : request.Tags.Any(tag => tags.Contains(tag));
   
 
             //if (strictMatch)

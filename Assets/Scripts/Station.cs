@@ -15,19 +15,19 @@ public class Station : MonoBehaviour
     [SerializeField] private ItemRegistry accessoryRegistry;
     private ItemRegistry itemRegistry;
     [SerializeField] private List<CustomerComponent> customerComponents;
-    [SerializeField] private GameObject customerPrefab;
+    //[SerializeField] private GameObject customerPrefab;
 
     public ItemRegistry ItemRegistry => itemRegistry;
     [SerializeField] private Transform customerSpawnPoint;
     [SerializeField] private Transform customerCounterTriggerPoint;
 
-    public static Transform SpawnPoint { get; private set; }
-    public static Transform CounterPoint { get; private set; }
+    //public static Transform SpawnPoint { get; private set; }
+    //public static Transform CounterPoint { get; private set; }
 
     public static Action<Station> OnStationEnabled;
-    private CustomerManager customerManager;
-    private bool openForBusiness = false;
-    private Coroutine customerCreationCoroutine;
+    //private CustomerManager customerManager;
+    //private bool openForBusiness = false;
+    //private Coroutine customerCreationCoroutine;
 
     [SerializeField] private GameObject anotherShelfTable;
     [SerializeField] private Transform anotherShelfTableSecondaryPosition;
@@ -41,8 +41,8 @@ public class Station : MonoBehaviour
 
     private void Awake()
     {
-        SpawnPoint = customerSpawnPoint;
-        CounterPoint = customerCounterTriggerPoint;
+        //SpawnPoint = customerSpawnPoint;
+        //CounterPoint = customerCounterTriggerPoint;
 
 
         
@@ -51,31 +51,31 @@ public class Station : MonoBehaviour
     private void OnEnable()
     {
         OnStationEnabled?.Invoke(this);
-        customerManager = new CustomerManager();
-        ProfitBoard.OnBusinessDayStarted += DayStarted;
-        ProfitBoard.OnDayEnded += DayEnded;
+        //customerManager = new CustomerManager();
+        //ProfitBoard.OnBusinessDayStarted += DayStarted;
+        //ProfitBoard.OnDayEnded += DayEnded;
         ProfitBoard.OnNextDay += NextDay;
     }
 
     private void OnDisable()
     {
-        ProfitBoard.OnBusinessDayStarted -= DayStarted;
-        ProfitBoard.OnDayEnded -= DayEnded;
+        //ProfitBoard.OnBusinessDayStarted -= DayStarted;
+        //ProfitBoard.OnDayEnded -= DayEnded;
         ProfitBoard.OnNextDay -= NextDay;
     }
 
-    private void DayStarted()
-    {
-        openForBusiness = true;
-        customerCreationCoroutine = StartCoroutine(SpawnCustomers());
+    //private void DayStarted()
+    //{
+    //    //openForBusiness = true;
+    //    //customerCreationCoroutine = StartCoroutine(SpawnCustomers());
 
-    }
+    //}
 
-    private void DayEnded()
-    {
-        StopSpawningCustomers();
-        openForBusiness = false;
-    }
+    //private void DayEnded()
+    //{
+    //    //StopSpawningCustomers();
+    //    //openForBusiness = false;
+    //}
 
     private void NextDay()
     {
@@ -90,47 +90,47 @@ public class Station : MonoBehaviour
 
     }
 
-    private void StopSpawningCustomers()
-    {
-        StopCoroutine(customerCreationCoroutine);
-        customerCreationCoroutine = null;
-    }
+    //private void StopSpawningCustomers()
+    //{
+    //    StopCoroutine(customerCreationCoroutine);
+    //    customerCreationCoroutine = null;
+    //}
 
-    private System.Collections.IEnumerator SpawnCustomers()
-    {
-        SpawnCustomer();
-        while (openForBusiness) {  
-            yield return new WaitForSeconds(30f); // TODO: reduce spawn rate with higher levels
+    //private System.Collections.IEnumerator SpawnCustomers()
+    //{
+    //    SpawnCustomer();
+    //    while (openForBusiness) {  
+    //        yield return new WaitForSeconds(30f); // TODO: reduce spawn rate with higher levels
 
 
-            SpawnCustomer();
+    //        SpawnCustomer();
 
-        }
-    }
+    //    }
+    //}
 
-    public void SpawnCustomer()
-    {
-        Customer customerData = customerManager.CreateCustomerData();
+    //public void SpawnCustomer()
+    //{
+    //    Customer customerData = customerManager.CreateCustomerData();
 
-        GameObject prefab = Instantiate(
-            customerPrefab,
-            customerSpawnPoint.position,
-            Quaternion.identity
-        );
+    //    GameObject prefab = Instantiate(
+    //        customerPrefab,
+    //        customerSpawnPoint.position,
+    //        Quaternion.identity
+    //    );
 
-        CustomerComponent customerComponent = prefab.GetComponent<CustomerComponent>();
-        if (customerComponent != null)
-        {
+    //    CustomerComponent customerComponent = prefab.GetComponent<CustomerComponent>();
+    //    if (customerComponent != null)
+    //    {
     
-            customerComponent.Initialize(customerData);
-        }
+    //        customerComponent.Initialize(customerData);
+    //    }
 
-        //StartCoroutine(MoveToCounter(
-        //    prefab.transform,
-        //    customerCounterTriggerPoint.position,
-        //    5f
-        //));
-    }
+    //    //StartCoroutine(MoveToCounter(
+    //    //    prefab.transform,
+    //    //    customerCounterTriggerPoint.position,
+    //    //    5f
+    //    //));
+    //}
 
     public void AddNewShelf()
     {

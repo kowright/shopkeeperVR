@@ -17,7 +17,7 @@ MonoBehaviour:
   hasRequiredType: 1
   requiredType: 0
   hasRequiredQuality: 0
-  minimumQuality: 1
+  minimumQuality: 5
   extraRules:
   - {fileID: 11400000, guid: d05a5b43213659141b7205ea66fae148, type: 2}
   Tags: 0000000008000000

@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Items;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,6 +11,8 @@ namespace Assets.Scripts.SubmitTable
         public Customer currentCustomer;
         public CustomerComponent currentCustomerComponent;
         [SerializeField] private Station station;
+        public static Action<CustomerComponent> OnCustomerTriggerEnter;
+        //public static Action<CustomerComponent> OnCustomerTriggerExit;
 
         private void OnTriggerEnter(Collider other)
         {
@@ -19,8 +22,8 @@ namespace Assets.Scripts.SubmitTable
                 currentCustomer = customer.customer;
                 currentCustomerComponent = customer;
                 Debug.Log("Servicing: " + currentCustomer.customerName);
-                //turn on request ask
                 customer.StartPatienceTimer();
+                OnCustomerTriggerEnter?.Invoke(customer);
             }
         }
 
@@ -33,6 +36,8 @@ namespace Assets.Scripts.SubmitTable
                 Debug.Log("Bye: " + currentCustomer.customerName);
                 currentCustomer = null;
                 currentCustomerComponent = null;
+                //OnCustomerTriggerExit?.Invoke(customer);
+
             }
         }
     }

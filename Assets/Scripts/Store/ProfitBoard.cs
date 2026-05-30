@@ -177,6 +177,7 @@ public class ProfitBoard : MonoBehaviour
     public void AddShelf()
     {
         todayProfit -= shelfCost;
+        dayProfitText.text = $"Today's Profit: ${todayProfit}";
 
     }
 }

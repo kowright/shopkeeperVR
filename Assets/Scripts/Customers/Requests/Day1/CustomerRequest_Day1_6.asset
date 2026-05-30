@@ -15,7 +15,7 @@ MonoBehaviour:
   difficulty: 1
   requiredItems: []
   hasRequiredType: 0
-  requiredType: 0
+  requiredType: 3
   hasRequiredQuality: 1
   minimumQuality: 1
   extraRules: []

@@ -19,6 +19,7 @@ namespace Assets.Scripts.Customers.Rules
             Variety, // personality Diverse
             Group,
             MidRange, // personality Average
+            HighRange, // personality Luxurry
         }
     
 }

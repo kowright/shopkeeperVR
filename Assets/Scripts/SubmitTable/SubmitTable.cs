@@ -21,18 +21,20 @@ public class SubmitTable: MonoBehaviour
     private int customersMadeHappy = 0;
     private int currentTableCost = 0;
     public TextMeshProUGUI priceCountText;
+    public TextMeshProUGUI customerRequestText;
+    public TextMeshProUGUI itemRequestText;
     void Start()
     {
         ProfitBoard.OnDayEnded += SetBusinessClosedTable;
         ProfitBoard.OnNextDay += OnNextDay;
-
+        CustomerTriggerZone.OnCustomerTriggerEnter += NewCustomer;
     }
 
     private void OnDestroy()
     {
         ProfitBoard.OnDayEnded -= SetBusinessClosedTable;
         ProfitBoard.OnNextDay -= OnNextDay;
-
+        CustomerTriggerZone.OnCustomerTriggerEnter -= NewCustomer;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -48,12 +50,23 @@ public class SubmitTable: MonoBehaviour
         }
     }
 
+    private void NewCustomer(CustomerComponent customer)
+    {
+        customerRequestText.text = string.Join("\n", customer.request.requestString());
+    
+        string itemQualityText = customer.request.minimumQuality == ItemQuality.None ? "" : customer.request.minimumQuality.ToString();
+        string itemTypeText = customer.request.requiredType == ItemType.None ? "" : customer.request.requiredType.ToString();
+
+        itemRequestText.text = itemQualityText != "" ? "Min Item Quality: " + itemQualityText : "";
+        itemRequestText.text += itemTypeText != "" ? "\n\nReq Item Type: " + itemTypeText : "";
+    }
+
     private void SetTableCostText(float cost)
     {
-        priceCountText.text = "Current cost of items on table:" + cost.ToString();
+        priceCountText.text = "Current table cost:\n$" + cost.ToString();
         if (customerZone.currentCustomer != null)
         {
-            if (customerZone.currentCustomer.budget > currentTableCost)
+            if (customerZone.currentCustomer.budget >= currentTableCost)
             {
                 priceCountText.color = Color.green;
             }
@@ -83,8 +96,15 @@ public class SubmitTable: MonoBehaviour
 
     public void SubmitItemsForValidation()
     {
+        if (itemsOnTable.Count < 0) return;
         Debug.Log("SUBMIT" + itemsOnTable[0].itemData.displayName);
+        Debug.Log("customer component " + customerZone.currentCustomerComponent);
         customerZone.currentCustomerComponent.RequestFulfilled();
+
+        customerRequestText.text = "";
+        itemRequestText.text = "";
+
+
         var ( result, happinessReduction, moneyPaid) = ValidateSubmission(itemsOnTable, customerZone.currentCustomer);
       
         foreach (var item in itemsOnTable)
@@ -98,14 +118,19 @@ public class SubmitTable: MonoBehaviour
         CustomerHappiness finalHappiness = customerZone.currentCustomerComponent.ReduceHappiness(happinessReduction);
 
         float storeTip = 0;
+        bool isBigSpender = customerZone.currentCustomer.customerTypes.Contains(CustomerType.BigSpender);
         if(finalHappiness == CustomerHappiness.Fine)
         {
             storeTip = moneyPaid * 0.1f;
+            storeTip = isBigSpender ? storeTip * 2 : storeTip;
+            result.Add("Regular tip!");
             // maybe tip sound
         }
         else if (finalHappiness == CustomerHappiness.Happy)
         {
             storeTip = moneyPaid * 0.25f;
+            storeTip = isBigSpender ? storeTip * 4 : storeTip;
+            result.Add("Big tip!");
             customersMadeHappy += 1;
             // maybe tip sound
         }

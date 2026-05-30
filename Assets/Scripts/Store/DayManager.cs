@@ -1,6 +1,7 @@
-﻿using UnityEngine;
+﻿using System;
 using System.Collections;
-using System;
+using System.Collections.Generic;
+using UnityEngine;
 
 namespace Assets.Scripts.Store
 {
@@ -12,14 +13,17 @@ namespace Assets.Scripts.Store
 		/// <summary>
 		/// Get time in seconds of how long the day countdown is
 		/// </summary>
-		public int dayTime => (day * 60) + 180; // 2 mins to start, every extra day gives an extra minute
+		public int dayTime => ((day-1) * 60) + 180; // 2 mins to start, every extra day gives an extra minute
+
+        public static float daySpawnRate => getDaySpawnRate();
 
 		//public int daytime => 30; //debug
         public static Action OnDayEnded;
+        private static Dictionary<int, float> daySpawnRateDict = new Dictionary<int, float> {
+            { 1, 20 }, { 2, 15 }, { 3, 20 }, {4, 20 }, {5, 20 }, {6, 20 }, {7, 20 }, {8, 20 }, {9, 20 }, {10, 20 } };
 
-
-		// each day will cost rent rent = day * rent * 2 ; rent = $25
-		private int SetRent()
+        // each day will cost rent rent = day * rent * 2 ; rent = $25
+        private int SetRent()
 		{
 			return day * 25 * 2;
 		}
@@ -28,6 +32,16 @@ namespace Assets.Scripts.Store
 		{
 			day++;
 		}
+
+        private static float getDaySpawnRate()
+        {
+            if (daySpawnRateDict.TryGetValue(day, out float rate))
+            {
+                return rate;
+            }
+
+            return 20f;
+        }
 
         // Day Plan
 

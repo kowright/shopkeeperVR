@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: CustomerRequest_Day1_1
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Customers.CustomerRequest
   difficulty: 1
-  hasRequiredType: 1
-  requiredType: 0
   requiredItems:
   - {fileID: 11400000, guid: db46e26000a23664585577b91ffad722, type: 2}
+  hasRequiredType: 1
+  requiredType: 0
   hasRequiredQuality: 0
-  minimumQuality: 0
+  minimumQuality: 5
   extraRules:
   - {fileID: 11400000, guid: 2c03a82b64104aa45aafcda076d1dfe1, type: 2}
   Tags: 0800000000000000

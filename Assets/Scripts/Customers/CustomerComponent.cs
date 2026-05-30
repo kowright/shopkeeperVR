@@ -1,6 +1,8 @@
 using Assets.Scripts.Customers;
 using Assets.Scripts.Customers.Rules;
 using Assets.Scripts.Items;
+using Assets.Scripts.SubmitTable;
+using System;
 using System.Collections;
 using System.Runtime.CompilerServices;
 using TMPro;
@@ -14,11 +16,11 @@ public class CustomerComponent : MonoBehaviour
     public TextMeshProUGUI nameText;
     public TextMeshProUGUI budgetText;
     public TextMeshProUGUI typeText;
-    public TextMeshProUGUI requestText;
+    //public TextMeshProUGUI requestText;
     public TextMeshProUGUI happinessText;
     public TextMeshProUGUI patienceText;
-    public TextMeshProUGUI itemQualityText;
-    public TextMeshProUGUI itemTypeText;
+    //public TextMeshProUGUI itemQualityText;
+    //public TextMeshProUGUI itemTypeText;
     private float patience;
     private CustomerHappiness happiness;
     [SerializeField] private float happinessFloat;
@@ -26,8 +28,15 @@ public class CustomerComponent : MonoBehaviour
     private CustomerHappinessManager happinessManager;
     public RequestManager requestManager;
     public CustomerRequest request;
+    public Action OnRequestFulfilled;
+    //public string customerRequestText;
 
     [SerializeField] private Canvas textCanvas;
+
+    private Vector3 targetPosition;
+    private bool moving;
+    private float moveSpeed = 1f;
+    //private bool willBeDestroyed = false;
 
     private void Start()
     {
@@ -40,11 +49,22 @@ public class CustomerComponent : MonoBehaviour
         budgetText.text = "$" + customer.budget.ToString();
         typeText.text = string.Join("\n", customer.customerTypes);
 
-        itemQualityText.text = request.minimumQuality.ToString();
-        itemTypeText.text = request.requiredType.ToString();
+        //if(request.minimumQuality != ItemQuality.None)
+        //{
+        //    itemQualityText.text = request.minimumQuality.ToString();
+        //    itemTypeText.text = request.requiredType.ToString();
+        //}
+        //else
+        //{
+
+        //}
+        //itemQualityText.text = request.minimumQuality == ItemQuality.None ? "" : request.minimumQuality.ToString();
+        //itemTypeText.text = request.requiredType == ItemType.None ? "" : request.requiredType.ToString();
 
         //requestText.text = customer.request.requestString()[0]; //make new text mesh for each one?
-        requestText.text = string.Join("\n", request.requestString());
+        //requestText.text = string.Join("\n", request.requestString());
+        //customerRequestText = string.Join("\n", request.requestString());
+
         Debug.Log("Happiness START AT" + customer.happiness);
         patience = customer.patience;
         //patienceText.text = "Patience " + customer.patience.ToString();
@@ -56,45 +76,78 @@ public class CustomerComponent : MonoBehaviour
         //happinessText.text = initialHappiness.ToString();
         SetHappinessDisplay(initialHappiness);
 
-        StartCoroutine(MoveCustomerTo(
-            gameObject.transform,
-            Station.CounterPoint.position,
-            5f, 
-            false
-        ));
+        //StartCoroutine(MoveCustomerTo(
+        //    gameObject.transform,
+        //    Station.CounterPoint.position,
+        //    5f, 
+        //    false
+        //));
 
         ProfitBoard.OnDayEnded += DayEnded;
+        CustomerTriggerZone.OnCustomerTriggerEnter += HandleCustomerEnter;
+
 
     }
 
     private void OnDestroy()
     {
         ProfitBoard.OnDayEnded -= DayEnded;
+        CustomerTriggerZone.OnCustomerTriggerEnter -= HandleCustomerEnter;
+
 
     }
 
-
-    private IEnumerator MoveCustomerTo(Transform customer, Vector3 targetPos, float duration, bool destroyOnArrival)
+    private void Update()
     {
-        Vector3 startPos = customer.position;
-        float time = 0f;
+        if (!moving) return;
 
-        while (time < duration)
+        transform.position = Vector3.MoveTowards(
+            transform.position,
+            targetPosition,
+            moveSpeed * Time.deltaTime
+        );
+
+        if (Vector3.Distance(transform.position, targetPosition) < 0.05f)
         {
-            float t = time / duration;
-            customer.position = Vector3.Lerp(startPos, targetPos, t);
-
-            time += Time.deltaTime;
-            yield return null;
+            moving = false;
         }
+    }
+
+    private void HandleCustomerEnter(CustomerComponent customer)
+    {
+        if (customer != this)
+            return;
+
+        StartPatienceTimer();
+    }
+
+    //private IEnumerator MoveCustomerTo(Transform customer, Vector3 targetPos, float duration, bool destroyOnArrival)
+    //{
+    //    Vector3 startPos = customer.position;
+    //    float time = 0f;
+
+    //    while (time < duration)
+    //    {
+    //        float t = time / duration;
+    //        customer.position = Vector3.Lerp(startPos, targetPos, t);
+
+    //        time += Time.deltaTime;
+    //        yield return null;
+    //    }
 
 
-        customer.position = targetPos;
+    //    customer.position = targetPos;
 
-        if (destroyOnArrival)
-        {
-            Destroy(customer.gameObject);
-        }
+    //    if (destroyOnArrival)
+    //    {
+    //        Destroy(customer.gameObject);
+    //    }
+    //}
+
+    public void MoveTo(Vector3 target)
+    {
+        targetPosition = target;
+        moving = true;
     }
 
     public void Initialize(Customer data)
@@ -134,6 +187,7 @@ public class CustomerComponent : MonoBehaviour
         }
 
         Debug.Log("Customer ran out of patience!");
+        RequestFulfilled();
     }
 
     public CustomerHappiness ReduceHappiness(float reduction)
@@ -168,12 +222,16 @@ public class CustomerComponent : MonoBehaviour
     {
         StopPatienceTimer();
         textCanvas.enabled = false;
-        StartCoroutine(MoveCustomerTo(
-               gameObject.transform,
-               Station.SpawnPoint.position,
-               5f,
-               true
-           ));
+
+        OnRequestFulfilled?.Invoke();
+        //StartCoroutine(MoveCustomerTo(
+        //       gameObject.transform,
+        //       Station.SpawnPoint.position,
+        //       5f,
+        //       true
+        //   ));
+        
+   
     }
 
     private void DayEnded()
@@ -188,6 +246,18 @@ public class CustomerComponent : MonoBehaviour
 
     private void SetHappinessDisplay(CustomerHappiness happiness)
     {
-        happinessText.text = happiness.ToString();
+        if (happiness == CustomerHappiness.Happy)
+        {
+            happinessText.text = ": )";
+        }
+        else if (happiness == CustomerHappiness.Fine)
+        {
+            happinessText.text = ": |";
+        }
+        else
+        {
+            happinessText.text = ": (";
+        }
+        //happinessText.text = happiness.ToString();
     }
 }

@@ -17,8 +17,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: b895aadd2565efd44b1300cbb056544c, type: 2}
   - {fileID: 11400000, guid: e82fa0523e8449948b98f268f60cc194, type: 2}
   hasRequiredType: 0
-  requiredType: 0
+  requiredType: 3
   hasRequiredQuality: 0
-  minimumQuality: 3
+  minimumQuality: 5
   extraRules: []
   Tags: 0800000000000000
