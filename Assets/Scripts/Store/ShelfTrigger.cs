@@ -64,6 +64,7 @@ namespace Assets.Scripts.Store
                 {
                     unpaidShelfCost += spawner.SpawnerCost;
                     OnSpawnerPlaced?.Invoke(-1 * spawner.SpawnerCost);
+                    spawner.SetSpawnerAsPaid();
                 }
 
                 shelfCostText.text = "Shelf Unpaid Cost: $" + unpaidShelfCost.ToString();
@@ -94,16 +95,28 @@ namespace Assets.Scripts.Store
                     return;
                 }
 
-                //if (forPurchase) return;
-
-                if (!spawner.IsPaid)
+                if (!forPurchase)
                 {
-                    unpaidShelfCost -= spawner.SpawnerCost;
-                    OnSpawnerPlaced?.Invoke(spawner.SpawnerCost);
+                   // spawner.EnableInteraction();
 
+                    if (!spawner.IsPaid)
+                    {
+                        unpaidShelfCost += spawner.SpawnerCost;
+                        OnSpawnerPlaced?.Invoke(-1 * spawner.SpawnerCost);
+                    }
+
+                    shelfCostText.text =
+                        "Shelf Unpaid Cost: $" + unpaidShelfCost.ToString();
                 }
 
-                shelfCostText.text = "Shelf Unpaid Cost: $" + unpaidShelfCost.ToString();
+                //if (!spawner.IsPaid)
+                //{
+                //    unpaidShelfCost -= spawner.SpawnerCost;
+                //    OnSpawnerPlaced?.Invoke(spawner.SpawnerCost);
+                //    spawner.SpawnerPlaced(0);
+                //}
+
+                //shelfCostText.text = "Shelf Unpaid Cost: $" + unpaidShelfCost.ToString();
 
             }
         }

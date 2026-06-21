@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4502444fc7e9f4e409350b6571e8c060, type: 3}
-  m_Name: Rule_Description_BrokenTeethComb
+  m_Name: Rule_Description_Great_Fresh_Donut
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Customers.Rules.DescriptionRule
   acceptableItems:
-  - {fileID: 11400000, guid: d36341513f5d9f84bbf9c4aa10be8805, type: 2}
-  customRequestString: What has broken teeth?
-  customFailureString: That doesn't have broken teeth...
+  - {fileID: 11400000, guid: ff4dfe1a2c994fb4f80b2d7861b4f80a, type: 2}
+  customRequestString: Anything off the press?
+  customFailureString: That should go back on the press

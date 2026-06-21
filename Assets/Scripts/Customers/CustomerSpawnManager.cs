@@ -23,8 +23,11 @@ namespace Assets.Scripts.Customers
         private Coroutine customerCreationCoroutine;
         private bool openForBusiness = false;
         [SerializeField] private GameObject customerPrefab;
-        private float customerSpawnInterval => DayManager.daySpawnRate;
+        private float customerSpawnInterval => getDaySpawnRate();
         System.Random random = new System.Random();
+        private static Dictionary<int, float> daySpawnRateDict = new Dictionary<int, float> {
+            { 1, 20 }, { 2, 20 }, { 3, 15 }, {4, 15 }, {5, 15 }, {6, 15 }, {7, 10 }, {8, 10 }, {9, 10 }, {10, 10 } };
+
 
         private void Awake()
         {
@@ -54,6 +57,16 @@ namespace Assets.Scripts.Customers
             ProfitBoard.OnBusinessDayStarted -= DayStarted;
             ProfitBoard.OnDayEnded -= DayEnded;
  
+        }
+
+        private static float getDaySpawnRate()
+        {
+            if (daySpawnRateDict.TryGetValue(DayManager.day, out float rate))
+            {
+                return rate;
+            }
+
+            return 20f;
         }
 
         private void DayStarted()
@@ -138,15 +151,20 @@ namespace Assets.Scripts.Customers
 
         private void CustomerRequestFulfilled()
         {
-            StartCoroutine(HandleCustomerExit());
+           StartCoroutine(HandleCustomerExit());
+
         }
 
         private IEnumerator HandleCustomerExit()
         {
-            if (customerQueue[0] == null) yield break;
+            if (customerQueue == null || customerQueue.Count == 0)
+                yield break;
+
+            if (customerQueue[0] == null)
+                yield break;
 
             CustomerComponent frontCustomer = customerQueue[0];
-
+            Debug.Log("Handle Customer Exit " +  frontCustomer.name);
             customerQueue.RemoveAt(0);
 
             int index = random.Next(customerTurnAroundPoints.Count);
@@ -162,6 +180,7 @@ namespace Assets.Scripts.Customers
             UpdateQueuePositions();
 
             Destroy(frontCustomer.gameObject, 5f);
+      
         }
     }
 }

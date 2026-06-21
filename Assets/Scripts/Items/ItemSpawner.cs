@@ -21,27 +21,28 @@ namespace Assets.Scripts.Items
         public TextMeshProUGUI typeTextRight;
         public TextMeshProUGUI costText;
         public TextMeshProUGUI descriptionText;
-        public TextMeshProUGUI respawnTimerText;
+        public TextMeshProUGUI frontTimerText;
+        public TextMeshProUGUI topTimerText;
         public Transform itemSpawnLocation;
         public MeshRenderer meshRenderer;
         private ItemOutlineColorManager outlineColorManager = new ItemOutlineColorManager();
         private ItemRespawnManager respawnManager = new ItemRespawnManager();
         public BoxCollider baseSpawnerCollider;
-        [SerializeField] private bool isOutofPlace = false;
-        [SerializeField] private XRGrabInteractable grabInteractable;
+        [SerializeField] private bool isOnValidShelf = false;
+        [SerializeField] private XRGrabInteractable spawnerGrabInteractable;
         private ItemComponent currentItem;
         private bool openForBusiness;
         private Coroutine removalCoroutine;
         private float removalDelay = 5f;
-        public Action OnSpawnerConfirmedRemoval;
-        public Action<float> OnSpawnerRemoved;
+        // public Action OnSpawnerConfirmedRemoval;
+        //public Action<float> OnSpawnerRemoved;
         public Action OnSpawnerStopRemoval;
 
         public int SpawnerCost => item.cost * 10;
 
         public bool IsPaid { get; private set; } = false;
         public bool HasBeenPlacedByPlayer { get; private set; }
-
+        private bool isRespawning = false;
         public void MarkPlacedByPlayer()
         {
             HasBeenPlacedByPlayer = true;
@@ -52,6 +53,28 @@ namespace Assets.Scripts.Items
             HasBeenPlacedByPlayer = false;
         }
 
+        private void Awake()
+        {
+            spawnerGrabInteractable.selectExited.AddListener(OnReleasedSpawner);
+        }
+
+        private void OnReleasedSpawner(SelectExitEventArgs args)
+        {
+            //if (!openForBusiness)
+            //    return;
+
+            //if (IsPaid)
+            //    return;
+
+            if (isOnValidShelf)
+                return;
+
+            if (spawnerGrabInteractable.isSelected)
+                return;
+
+            Debug.Log("Item Spawner released somewhere not valid!");
+            removalCoroutine = StartCoroutine(RemovalCheck(true));
+        }
 
 
         private void OnValidate()
@@ -90,7 +113,8 @@ namespace Assets.Scripts.Items
             costText.text = '$' + item.cost.ToString();
             descriptionText.text = item.description;
             //itemPrefab = item?.itemPrefab;
-            respawnTimerText.text = "";
+            frontTimerText.text = "";
+            topTimerText.text = "";
             ItemComponent itemComponent = itemPrefab.GetComponent<ItemComponent>();
             Color materialColor = outlineColorManager.GetOutlineColorForQuality(item.itemQuality);
 
@@ -140,26 +164,28 @@ namespace Assets.Scripts.Items
             {
                 var shelf = other.GetComponent<ShelfTrigger>();
 
-                if (shelf && !shelf.ForPurchase)
+                if (shelf)
                 {
-                    isOutofPlace = false;
+                    
+                   
+                    isOnValidShelf = true;
 
-                    if (removalCoroutine != null)
+                    if (shelf.ForPurchase && removalCoroutine != null)
                     {
                         //StopCoroutine(removalCoroutine);
                         removalCoroutine = null;
                         OnSpawnerStopRemoval?.Invoke();
                     }
                 }
-       
-
             }
         }
+
+
         private void OnTriggerExit(Collider other)
         {
             if (other.GetComponent<ShelfTrigger>())
             {
-                isOutofPlace = true;
+                isOnValidShelf = false;
 
                 removalCoroutine = StartCoroutine(RemovalCheck());
 
@@ -171,12 +197,14 @@ namespace Assets.Scripts.Items
             //InstantiateItem();
             ProfitBoard.OnBusinessDayStarted += DayStarted;
             ProfitBoard.OnDayEnded += OnDayEnded;
+
         }
 
         private void OnDestroy()
         {
             ProfitBoard.OnBusinessDayStarted -= DayStarted;
             ProfitBoard.OnDayEnded -= OnDayEnded;
+
 
         }
 
@@ -224,7 +252,10 @@ namespace Assets.Scripts.Items
             XRGrabInteractable grab = currentItem.GetComponent<XRGrabInteractable>();
 
             //grab.interactionLayers = InteractionLayerMask.GetMask("None");
-            ToggleInteractionLayer(grab, openForBusiness, false);
+            Debug.Log(
+                $"InstantiateItem: openForBusiness={openForBusiness}, IsPaid={IsPaid}"
+            );
+            ToggleInteractionLayer(grab, IsPaid || openForBusiness, false);
 
             itemC.RefreshVisuals();
 
@@ -237,8 +268,6 @@ namespace Assets.Scripts.Items
             }
         
         }
-
-        private bool isRespawning = false;
 
 
 
@@ -275,7 +304,7 @@ namespace Assets.Scripts.Items
             InstantiateItem();
 
             isRespawning = false;
-            Debug.Log("respawn");
+         
         }
 
         private System.Collections.IEnumerator RespawnTimerDisplay(float wait)
@@ -286,18 +315,20 @@ namespace Assets.Scripts.Items
 
                 wait -= 1;
 
-                respawnTimerText.text = wait.ToString();
+                frontTimerText.text = wait.ToString();
             }
 
-            respawnTimerText.text = "";
+            frontTimerText.text = "";
 
         }
 
         public void SetSpawnerAsPaid()
         {
             IsPaid = true;
+            Debug.Log("Spawner is paid for");
             //XRGrabInteractable grab = currentItem.GetComponent<XRGrabInteractable>();
             //grab.interactionLayers = InteractionLayerMask.GetMask("Default");
+            if (!currentItem) return;
             ToggleInteractionLayer(currentItem.GetComponent<XRGrabInteractable>(), true, false);
 
         }
@@ -305,53 +336,57 @@ namespace Assets.Scripts.Items
         private void DayStarted()
         {
             openForBusiness = true;
-            ToggleGrabInteractivity();
-            if (isOutofPlace)
+            //ToggleGrabInteractivity();
+            if (!isOnValidShelf)
             {
                 Debug.Log("not in the right place " + item.displayName);
                 Destroy(gameObject);
             }
-            XRGrabInteractable grab = currentItem.GetComponent<XRGrabInteractable>();
+            //XRGrabInteractable grab = currentItem.GetComponent<XRGrabInteractable>();
 
-            if (!IsPaid && grab != null)
-            {
-                Debug.Log(item.displayName + " is now uninteractable");
+            //if (!IsPaid && grab != null)
+            //{
+            //    Debug.Log(item.displayName + " is now uninteractable");
 
-                //grab.interactionLayers = InteractionLayerMask.GetMask("None");
-                ToggleInteractionLayer(grab, false, false);
-            }
-            else
-            {
-                grab.interactionLayers = InteractionLayerMask.GetMask("Default");
-                ToggleInteractionLayer(grab, true, false);
-            }
+            //    //grab.interactionLayers = InteractionLayerMask.GetMask("None");
+            //    ToggleInteractionLayer(grab, false, false);
+            //}
+            //else
+            //{
+            //    grab.interactionLayers = InteractionLayerMask.GetMask("Default");
+            //    ToggleInteractionLayer(grab, true, false);
+            //}
         }
 
         private void OnDayEnded()
         {
             openForBusiness = false;
-            ToggleInteractionLayer(grabInteractable, false, true);
+            //ToggleInteractionLayer(spawnerGrabInteractable, false, true);
 
             
         }
 
-        private void ToggleGrabInteractivity()
-        {
-            //Debug.Log(" grab for " + item.displayName + " as " + !baseSpawnerCollider.enabled);
-            ToggleInteractionLayer(grabInteractable, false, true);
-            //if (grabInteractable.interactionLayers == InteractionLayerMask.GetMask("None"))
-            //{
-            //    grabInteractable.interactionLayers = InteractionLayerMask.GetMask("Default");
-            //}
-            //else
-            //{
-            //    grabInteractable.interactionLayers = InteractionLayerMask.GetMask("None");
-            //}
+        //public void EnableInteraction()
+        //{
+        //    Debug.Log("Item Spawner enable interaction");
+        //    ToggleInteractionLayer(spawnerGrabInteractable, true, false);
 
-        }
+        //    if (currentItem != null)
+        //    {
+        //        ToggleInteractionLayer(
+        //            currentItem.GetComponent<XRGrabInteractable>(),
+        //            true,
+        //            false
+        //        );
+        //    }
+        //}
 
         private void ToggleInteractionLayer(XRGrabInteractable interactable, bool toDefault = false, bool invert = false)
         {
+            Debug.Log(
+               $"Changing {interactable.gameObject.name} " +
+               $"toDefault={toDefault} invert={invert}"
+           );
             if (invert)
             {
                 if (interactable.interactionLayers == InteractionLayerMask.GetMask("None"))
@@ -375,25 +410,37 @@ namespace Assets.Scripts.Items
                 interactable.interactionLayers = InteractionLayerMask.GetMask("None");
             }
         }
-        private System.Collections.IEnumerator RemovalCheck()
+        private System.Collections.IEnumerator RemovalCheck(bool spawnerRemoval = false)
         {
+            Debug.Log("Item Spawner RemovalCheck Start");
+
+            if (spawnerRemoval)
+            {
+                Debug.Log("Item Spawner countdown for spawner out of place ");
+            }
+            Debug.Log("Item Spawner spawner grab interactable is Selected" + spawnerGrabInteractable.isSelected);
             // yield return new WaitForSeconds(removalDelay);
             float wait = removalDelay;
-            while (wait > 0)
+            while (wait > 0 && !spawnerGrabInteractable.isSelected)
             {
+                Debug.Log("Item Spawner RemovalCheck writing: " + wait);
                 yield return new WaitForSeconds(1f);
 
                 wait -= 1;
-
-                OnSpawnerRemoved?.Invoke(wait);
+               
+           
+                    topTimerText.text = wait.ToString();
+                
+                //OnSpawnerRemoved?.Invoke(wait);
             }
-            
+            topTimerText.text = "";
             // If STILL out of place after delay → confirm removal
-            if (isOutofPlace)
+            if (!isOnValidShelf && !spawnerGrabInteractable.isSelected)
             {
                 Debug.Log("Spawner confirmed removed after delay");
 
-                OnSpawnerConfirmedRemoval?.Invoke();
+                //OnSpawnerConfirmedRemoval?.Invoke();
+                Destroy(gameObject);
             }
 
             removalCoroutine = null;

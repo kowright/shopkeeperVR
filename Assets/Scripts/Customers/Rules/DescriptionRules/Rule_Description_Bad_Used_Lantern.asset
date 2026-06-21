@@ -10,13 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4502444fc7e9f4e409350b6571e8c060, type: 3}
-  m_Name: Rule_Description_Apple
+  m_Name: Rule_Description_Bad_Used_Lantern
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Customers.Rules.DescriptionRule
   acceptableItems:
   - {fileID: 11400000, guid: 8a4d54d467a6e72429392706c8876f17, type: 2}
-  - {fileID: 11400000, guid: 75cf4bcbc20165247a28fecf2355f1d7, type: 2}
-  - {fileID: 11400000, guid: 542279cefe149db44a013557b6a0a09c, type: 2}
-  - {fileID: 11400000, guid: 2a6b23bf68bda0f46922362dc0234b65, type: 2}
-  - {fileID: 11400000, guid: 92f02477179fa3a48978bd9085ad00c9, type: 2}
-  customRequestString: I can't see in the dark!
-  customFailureString: Am I blind?
+  customRequestString: I need just enough wax in a lantern for 5 minutes
+  customFailureString: That will not do!

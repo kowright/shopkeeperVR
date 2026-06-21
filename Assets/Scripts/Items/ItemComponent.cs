@@ -22,17 +22,17 @@ namespace Assets.Scripts.Items
             UpdateVisuals();
         }
 
-        public void ToggleInteractionLayer()
-        {
-            if (grabInteractable.interactionLayers == InteractionLayerMask.GetMask("None"))
-            {
-                grabInteractable.interactionLayers = InteractionLayerMask.GetMask("Default");
-            }
-            else
-            {
-                grabInteractable.interactionLayers = InteractionLayerMask.GetMask("None");
-            }
-        }
+        //public void ToggleInteractionLayer()
+        //{
+        //    if (grabInteractable.interactionLayers == InteractionLayerMask.GetMask("None"))
+        //    {
+        //        grabInteractable.interactionLayers = InteractionLayerMask.GetMask("Default");
+        //    }
+        //    else
+        //    {
+        //        grabInteractable.interactionLayers = InteractionLayerMask.GetMask("None");
+        //    }
+        //}
 
         private void InitializeOutline()
         {

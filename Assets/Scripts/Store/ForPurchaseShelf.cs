@@ -80,7 +80,7 @@ namespace Assets.Scripts.Store
             void Start()
             {
                 shelfSpots = new List<ShelfSpot>();
-                Debug.Log("PROFIT DAY " + ProfitBoard.day);
+           
                 for (int i = 0; i < allPlacements.Count; i++)
                 {
                     var spot = new ShelfSpot

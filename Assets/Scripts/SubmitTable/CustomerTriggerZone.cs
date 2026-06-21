@@ -22,7 +22,7 @@ namespace Assets.Scripts.SubmitTable
                 currentCustomer = customer.customer;
                 currentCustomerComponent = customer;
                 Debug.Log("Servicing: " + currentCustomer.customerName);
-                customer.StartPatienceTimer();
+                //customer.StartPatienceTimer();
                 OnCustomerTriggerEnter?.Invoke(customer);
             }
         }

@@ -10,17 +10,14 @@ namespace Assets.Scripts.Store
         public static int day { get; private set; } = 1;
 		public int rent => SetRent();
 
-		/// <summary>
-		/// Get time in seconds of how long the day countdown is
-		/// </summary>
-		public int dayTime => ((day-1) * 60) + 180; // 2 mins to start, every extra day gives an extra minute
+        /// <summary>
+        /// Get time in seconds of how long the day countdown is
+        /// </summary>
+        public int dayTime => ((day-1) * 60) + 180; // 2 mins to start, every extra day gives an extra minute
+        //public int dayTime => 10; //debug
 
-        public static float daySpawnRate => getDaySpawnRate();
-
-		//public int daytime => 30; //debug
         public static Action OnDayEnded;
-        private static Dictionary<int, float> daySpawnRateDict = new Dictionary<int, float> {
-            { 1, 20 }, { 2, 15 }, { 3, 20 }, {4, 20 }, {5, 20 }, {6, 20 }, {7, 20 }, {8, 20 }, {9, 20 }, {10, 20 } };
+
 
         // each day will cost rent rent = day * rent * 2 ; rent = $25
         private int SetRent()
@@ -32,16 +29,6 @@ namespace Assets.Scripts.Store
 		{
 			day++;
 		}
-
-        private static float getDaySpawnRate()
-        {
-            if (daySpawnRateDict.TryGetValue(day, out float rate))
-            {
-                return rate;
-            }
-
-            return 20f;
-        }
 
         // Day Plan
 
@@ -78,7 +65,7 @@ namespace Assets.Scripts.Store
         // - customer type: 2-3 type customers, big spenders come
         // - items: weapons
         // - quality: low-good 
-        // - requests: no duplicate types, surprise me type available
+        // - requests: no duplicate types, surprise me type available, introduce description rules
 
         // DAY 6:
         // - description: everyone is demanding
@@ -90,7 +77,7 @@ namespace Assets.Scripts.Store
         // DAY 7:
         // - description: people want various types of items for their quests! 
         // - customer type: 3 types
-        // - requests: description quests available
+        // - requests: description quests WIDELY available
         // - quality: low-good
         // - store: can buy a fourth shelf 
 

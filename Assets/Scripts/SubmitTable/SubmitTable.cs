@@ -23,11 +23,13 @@ public class SubmitTable: MonoBehaviour
     public TextMeshProUGUI priceCountText;
     public TextMeshProUGUI customerRequestText;
     public TextMeshProUGUI itemRequestText;
+    private bool isOpenForBusiness;
     void Start()
     {
         ProfitBoard.OnDayEnded += SetBusinessClosedTable;
         ProfitBoard.OnNextDay += OnNextDay;
         CustomerTriggerZone.OnCustomerTriggerEnter += NewCustomer;
+        ProfitBoard.OnBusinessDayStarted += OnDayStarted;
     }
 
     private void OnDestroy()
@@ -35,12 +37,13 @@ public class SubmitTable: MonoBehaviour
         ProfitBoard.OnDayEnded -= SetBusinessClosedTable;
         ProfitBoard.OnNextDay -= OnNextDay;
         CustomerTriggerZone.OnCustomerTriggerEnter -= NewCustomer;
+        ProfitBoard.OnBusinessDayStarted += OnDayStarted;
     }
 
     private void OnTriggerEnter(Collider other)
     {
         var item = other.GetComponentInParent<ItemComponent>();
-        if (item != null)
+        if (item != null && isOpenForBusiness)
         {
             itemsOnTable.Add(item);
             Debug.Log("Adding " + item.itemData.displayName);
@@ -96,13 +99,23 @@ public class SubmitTable: MonoBehaviour
 
     public void SubmitItemsForValidation()
     {
-        if (itemsOnTable.Count < 0) return;
-        Debug.Log("SUBMIT" + itemsOnTable[0].itemData.displayName);
-        Debug.Log("customer component " + customerZone.currentCustomerComponent);
+        if (itemsOnTable == null || itemsOnTable.Count <= 0) return;
+
+        if (!customerZone)
+        {
+            Debug.Log("SubmitItemsForValidation no customer zone");
+            return;
+        }
+        if (!customerZone.currentCustomerComponent)
+        {
+            Debug.Log("SubmitItemsForValidation no customer zone customer component");
+            return;
+        }
         customerZone.currentCustomerComponent.RequestFulfilled();
 
         customerRequestText.text = "";
         itemRequestText.text = "";
+        results.text = "";
 
 
         var ( result, happinessReduction, moneyPaid) = ValidateSubmission(itemsOnTable, customerZone.currentCustomer);
@@ -156,7 +169,8 @@ public class SubmitTable: MonoBehaviour
         customersServed += 1;
         priceCountText.color = Color.white;
         priceCountText.text = "";
-
+        currentTableCost = 0;
+        priceCountText.text = "";
         OnTableSubmitted?.Invoke(storeTip);
         StartClearResultsCountdown();
 
@@ -188,7 +202,7 @@ public class SubmitTable: MonoBehaviour
         List<string> results = new();
         if (customerMoneyLeft < 0)
         {
-            string result = $"Overbudget by -{customerMoneyLeft}";
+            string result = $"Overbudget by ${customerMoneyLeft}"; // TODO format correctly to be like -$2
             results.Add(result);
             return (results, -1.0f, 0);
             
@@ -285,7 +299,7 @@ public class SubmitTable: MonoBehaviour
     private void SetBusinessClosedTable()
     {
         Debug.Log("DAY IS DONE");
-
+        isOpenForBusiness = false;
         itemsOnTable.Clear();
         results.text = $"Station made: ${tableRevenue} \nCustomers served: {customersServed} \nCustomers made happy: {customersMadeHappy}";
         currentTableCost = 0;
@@ -312,6 +326,11 @@ public class SubmitTable: MonoBehaviour
         customersMadeHappy = 0;
         customersServed = 0;
         currentTableCost = 0;
+    }
+
+    private void OnDayStarted()
+    {
+        isOpenForBusiness = true;
     }
 }
 

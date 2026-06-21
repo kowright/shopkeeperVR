@@ -18,7 +18,7 @@ public class CustomerComponent : MonoBehaviour
     public TextMeshProUGUI typeText;
     //public TextMeshProUGUI requestText;
     public TextMeshProUGUI happinessText;
-    public TextMeshProUGUI patienceText;
+    [SerializeField] private TextMeshProUGUI patienceText;
     //public TextMeshProUGUI itemQualityText;
     //public TextMeshProUGUI itemTypeText;
     private float patience;
@@ -158,12 +158,13 @@ public class CustomerComponent : MonoBehaviour
 
     public void StartPatienceTimer()
     {
+        Debug.Log("StartPatienceTimer");
         patienceCoroutine = StartCoroutine(ReducePatience());
     }
 
     private System.Collections.IEnumerator ReducePatience()
     {
-        yield return new WaitForSeconds(1f);
+       // yield return new WaitForSeconds(1f);
         textCanvas.enabled = true;
         Debug.Log("reduce patience happiness " + happinessFloat);
         Debug.Log("reduce patience patience " + patience);
@@ -173,6 +174,7 @@ public class CustomerComponent : MonoBehaviour
             yield return new WaitForSeconds(1f);
 
             patience -= 1;
+            //Debug.Log("Reduce patience loop " + patience);
 
             //patienceText.text = "Patience " + patience.ToString();
             SetPatienceDisplay((int)patience);

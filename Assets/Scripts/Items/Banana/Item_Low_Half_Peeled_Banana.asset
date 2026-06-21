@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Item_Low_Half_Peeled_Banana
   m_EditorClassIdentifier: Assembly-CSharp::Item
   displayName: Half-Peeled Banana
-  description: can only peel of it for you
+  description: can only peel part of it for you
   cost: 3
   itemQuality: 1
   itemType: 0

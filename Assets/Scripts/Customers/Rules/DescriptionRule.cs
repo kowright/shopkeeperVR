@@ -20,6 +20,11 @@ namespace Assets.Scripts.Customers.Rules
 
         public override bool IsSatisfied(List<ItemComponent> items, Customer customer)
         {
+            if (acceptableItems.Count == 0)
+            {
+                // other rules will determine acceptance
+                return true; 
+            }
                 return items.Any(i => acceptableItems.Contains(i.itemData));
         }
 

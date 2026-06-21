@@ -15,6 +15,7 @@ public class ProfitBoard : MonoBehaviour
     public TextMeshProUGUI profitText;
     public TextMeshProUGUI countdownText;
     public TextMeshProUGUI dayText;
+    [SerializeField] private TextMeshProUGUI rentText;
     private int shelfCost = 500;
     public static int day => DayManager.day;
 
@@ -66,6 +67,7 @@ public class ProfitBoard : MonoBehaviour
         dayManager = new();
   
         dayText.text = "Day: " + day.ToString();
+        rentText.text = "Today's Rent: $" + dayManager.rent;
         isStoreOpen = false;
         Debug.Log("rent: " + dayManager.rent);
         storeProfit -= dayManager.rent;
@@ -88,14 +90,14 @@ public class ProfitBoard : MonoBehaviour
 
     private void AddOutsideBusinessHoursProfit(int amount)
     {
-        if (isStoreOpen)
-        {
-            Debug.Log("Can only add spawners outside work hours");
-            return;
-        }
+        //if (isStoreOpen)
+        //{
+        //    Debug.Log("Can only add spawners outside work hours");
+        //    return;
+        //}
 
-        Debug.Log("ADD SPAWNER COST:" + amount);
-        Debug.Log("previous store profit: " + storeProfit);
+       // Debug.Log("ADD SPAWNER COST:" + amount);
+        //Debug.Log("previous store profit: " + storeProfit);
         storeProfit += amount;
         profitText.text = $"Store Profit from last full day: ${storeProfit}";
     }
@@ -112,6 +114,7 @@ public class ProfitBoard : MonoBehaviour
         dayManager.SetNextDay();
         OnNextDay?.Invoke();
         dayText.text = "Day: " + day.ToString();
+        rentText.text = "Today's Rent: $" + dayManager.rent;
 
         dayProfitText.text = "";
         todayProfit = 0;
@@ -142,7 +145,7 @@ public class ProfitBoard : MonoBehaviour
     private System.Collections.IEnumerator OpenForBusinessCountdown()
     {
         int time = dayTime;
-
+        //Debug.Log("ProfitBoard OpenForBusinessCountdown");
         while (time > 0)
         {
 
