@@ -19,6 +19,7 @@ namespace Assets.Scripts.Customers.Rules
 
         public override string FailureString => "Too slow!";
         public override float FailureDeduction => -0.4f;
+        public override List<RequestTag> Tags => new List<RequestTag> {RequestTag.Fast };
 
     }
 }

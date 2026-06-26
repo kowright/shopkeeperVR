@@ -304,9 +304,11 @@ public class SubmitTable: MonoBehaviour
         results.text = $"Station made: ${tableRevenue} \nCustomers served: {customersServed} \nCustomers made happy: {customersMadeHappy}";
         currentTableCost = 0;
         priceCountText.text = "";
-    }
+        customerRequestText.text = "";
 
-    public void StartClearResultsCountdown()
+}
+
+public void StartClearResultsCountdown()
     {
         clearResultsCountdown = StartCoroutine(ClearResultsText());
     }

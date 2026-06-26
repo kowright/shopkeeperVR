@@ -67,7 +67,10 @@ namespace Assets.Scripts.Customers
         Forgiving,
 
         /// <summary>Has a short and low range of acceptable happiness.</summary>
-        Indifferent
+        Indifferent,
+
+        /// <summary> Prefers to have their budget standard followed. Equals RequestType Efficient.</summary>
+        Budgeter
     }
 
     public static class CustomerTypes
@@ -135,6 +138,9 @@ namespace Assets.Scripts.Customers
                         break;
                     case CustomerType.Luxury:
                         tags.Add(RequestTag.HighRange);
+                        break;
+                    case CustomerType.Budgeter:
+                        tags.Add(RequestTag.Efficient);
                         break;
 
 

@@ -26,6 +26,7 @@ namespace Assets.Scripts.Customers.Rules
         public override string FailureString => "Duplicate item types";
         public override float FailureDeduction => -0.3f;
 
+        public override List<RequestTag> Tags => new List<RequestTag> { RequestTag.Variety};
 
     }
 }

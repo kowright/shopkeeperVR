@@ -69,7 +69,7 @@ public class ProfitBoard : MonoBehaviour
         dayText.text = "Day: " + day.ToString();
         rentText.text = "Today's Rent: $" + dayManager.rent;
         isStoreOpen = false;
-        Debug.Log("rent: " + dayManager.rent);
+        //Debug.Log("rent: " + dayManager.rent);
         storeProfit -= dayManager.rent;
         dayProfitText.text = $"Today's Profit: ${storeProfit.ToString()}";
 
@@ -83,7 +83,7 @@ public class ProfitBoard : MonoBehaviour
             return;
         }
 
-        Debug.Log("ADD PROFIT");
+        //Debug.Log("ADD PROFIT");
         todayProfit += amount;
         dayProfitText.text = $"Today's Profit: ${todayProfit}";
     }
@@ -126,7 +126,7 @@ public class ProfitBoard : MonoBehaviour
 
     public void OpenForBusiness()
     {
-        Debug.Log("START THE DAY" + day);
+        //Debug.Log("START THE DAY" + day);
         isStoreOpen = true;
         countdownText.text = "Store open!";
         OnBusinessDayStarted?.Invoke();
@@ -173,7 +173,7 @@ public class ProfitBoard : MonoBehaviour
 
     private void StationChange(Station newStation)
     {
-        Debug.Log("Station Change");
+
         currentStation = newStation;
     }
 

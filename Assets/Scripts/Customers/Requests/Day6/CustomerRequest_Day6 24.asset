@@ -21,4 +21,5 @@ MonoBehaviour:
   extraRules:
   - {fileID: 11400000, guid: 86b1d6bca594d294eb8ee15264884413, type: 2}
   - {fileID: 11400000, guid: c312012a53aeccd4e83980d0b2ba6cb8, type: 2}
-  Tags: 080000000c000000
+  Tags: 0e0000000a000000
+  suggestedTags: 0e0000000a000000

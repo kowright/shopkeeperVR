@@ -51,7 +51,8 @@ namespace Assets.Scripts.Customers.Rules
 
             if (validRequests.Count == 0)
             {
-                Debug.LogWarning("No valid requests found for " + customer.customerName +", using soft match");
+                Debug.LogWarning("No valid requests found for " + customer.customerName + ", using soft match for tags:\n");
+                customerTags.ForEach(tag => Debug.LogWarning(tag));
                 var validRequestsSoft = database.allRequests.FindAll(r =>
                         r.difficulty == day &&
                         MatchesCustomer(r, customerTags, strictMatch: false)

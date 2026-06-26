@@ -83,6 +83,8 @@ public class Station : MonoBehaviour
         {
             anotherShelfTable.SetActive(true);
         }
+        Debug.Log("third shelf level " + thirdShelfAvailableDay + " >=" + day + " is it true? " + (secondShelf.activeSelf) + " " + (day >= thirdShelfAvailableDay)  );
+        
         if (secondShelf.activeSelf && day >= thirdShelfAvailableDay)
         {
             anotherShelfTable.SetActive(true);

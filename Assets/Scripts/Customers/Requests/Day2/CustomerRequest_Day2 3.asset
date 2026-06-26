@@ -20,4 +20,6 @@ MonoBehaviour:
   minimumQuality: 5
   extraRules:
   - {fileID: 11400000, guid: 178a723cf76c45340b83d8f2cd55c179, type: 2}
-  Tags: 0b000000
+  - {fileID: 11400000, guid: d40d21f8f73232741a0ea9dcda9ac901, type: 2}
+  Tags: 0d0000000b000000
+  suggestedTags: 0d0000000b000000

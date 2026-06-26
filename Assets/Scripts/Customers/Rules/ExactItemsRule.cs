@@ -22,6 +22,12 @@ namespace Assets.Scripts.Customers.Rules
         public override float FailureDeduction => -0.3f;
 
 
+        public override List<RequestTag> Tags => new List<RequestTag> { generateRequestTags() };
+
+        private RequestTag generateRequestTags()
+        {
+            return requiredItems > 1 ? RequestTag.MultipleItems : RequestTag.SingleItem;
+        }
 
     }
 }

@@ -21,6 +21,12 @@ namespace Assets.Scripts.Customers.Rules
             $"Less than {minItems} item{(minItems == 1 ? "" : "s")} {(minItems == 1 ? "was" : "were")} submitted";
         public override float FailureDeduction => -0.3f;
 
+        public override List<RequestTag> Tags => new List<RequestTag> { generateRequestTags() };
+
+        private RequestTag generateRequestTags()
+        {
+            return minItems > 1 ? RequestTag.MultipleItems : RequestTag.SingleItem;
+        }
 
 
     }

@@ -21,6 +21,9 @@ namespace Assets.Scripts.Customers.Rules
         public override string FailureString => $"Nothing was a {requiredGroup}...";
         public override float FailureDeduction => -0.3f;
 
+        public override List<RequestTag> Tags => new List<RequestTag> { RequestTag.Group };
+
+
     }
 
 }

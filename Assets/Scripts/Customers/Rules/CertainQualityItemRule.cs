@@ -1,6 +1,7 @@
 ﻿using Assets.Scripts.Items;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Tutorials.Core.Editor;
 using UnityEngine;
 
 namespace Assets.Scripts.Customers.Rules
@@ -19,7 +20,17 @@ namespace Assets.Scripts.Customers.Rules
 
         public override string FailureString => $"No item of required {requiredQuality} quality";
         public override float FailureDeduction => -0.3f;
-
+        public override List<RequestTag> Tags => generateRequestTags();
+        private List<RequestTag> generateRequestTags()
+        {
+            RequestTag? qualityTag = ItemUtils.GetRequestTagForItemQuality(requiredQuality);
+            List<RequestTag> tags = new List<RequestTag>();
+            if (qualityTag != null)
+            {
+                tags.Add(qualityTag.Value);
+            }
+            return tags;
+        }
     }
 
 }

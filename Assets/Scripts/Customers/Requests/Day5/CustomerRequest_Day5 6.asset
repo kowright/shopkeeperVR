@@ -20,4 +20,5 @@ MonoBehaviour:
   hasRequiredQuality: 0
   minimumQuality: 5
   extraRules: []
-  Tags: 0c0000000900000002000000
+  Tags: 010000000b000000
+  suggestedTags: 01000000

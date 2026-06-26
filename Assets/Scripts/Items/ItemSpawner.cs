@@ -36,22 +36,23 @@ namespace Assets.Scripts.Items
         private float removalDelay = 5f;
         // public Action OnSpawnerConfirmedRemoval;
         //public Action<float> OnSpawnerRemoved;
-        public Action OnSpawnerStopRemoval;
+        //public Action OnSpawnerStopRemoval;
+        //public Action OnSpawnerNeedsReplacement;
 
         public int SpawnerCost => item.cost * 10;
 
         public bool IsPaid { get; private set; } = false;
-        public bool HasBeenPlacedByPlayer { get; private set; }
+        //public bool HasBeenPlacedByPlayer { get; private set; }
         private bool isRespawning = false;
-        public void MarkPlacedByPlayer()
-        {
-            HasBeenPlacedByPlayer = true;
-        }
+        //public void MarkPlacedByPlayer()
+        //{
+        //    HasBeenPlacedByPlayer = true;
+        //}
 
-        public void UnmarkPlacedByPlayer()
-        {
-            HasBeenPlacedByPlayer = false;
-        }
+        //public void UnmarkPlacedByPlayer()
+        //{
+        //    HasBeenPlacedByPlayer = false;
+        //}
 
         private void Awake()
         {
@@ -72,7 +73,8 @@ namespace Assets.Scripts.Items
             if (spawnerGrabInteractable.isSelected)
                 return;
 
-            Debug.Log("Item Spawner released somewhere not valid!");
+            Debug.Log("Item Spawner released somewhere not valid! Start RemovalCheck on not grabbing it anymore!");
+            Debug.Log("Item Spawner is it already being removed (ONRELEASE)" + (removalCoroutine != null));
             removalCoroutine = StartCoroutine(RemovalCheck(true));
         }
 
@@ -103,7 +105,7 @@ namespace Assets.Scripts.Items
             //item = itemPrefab.GetComponent<ItemComponent>();
             if (item == null)
             {
-                Debug.LogWarning("ItemSpawner has no item assigned yet.");
+                Debug.LogWarning("Item Spawner has no item assigned yet.");
                 return;
             }
 
@@ -129,35 +131,6 @@ namespace Assets.Scripts.Items
             InstantiateItem();
         }
 
-        //private void Awake()
-        //{
-        //    //item = itemPrefab.GetComponent<ItemComponent>();
-        //    if (item == null)
-        //    {
-        //        Debug.LogWarning("ItemSpawner has no item assigned yet.");
-        //        return;
-        //    }
-
-        //    itemPrefab = item.itemPrefab;
-        //    nameText.text = item.displayName;
-        //    typeTextLeft.text = typeTextRight.text = item.itemType.ToString();
-        //    costText.text = '$' + item.cost.ToString();
-        //    descriptionText.text = item.description;
-        //    itemPrefab = item?.itemPrefab;
-        //    respawnTimerText.text = "";
-        //    Color materialColor = outlineColorManager.GetOutlineColorForQuality(item.itemQuality);
-
-
-
-        //    Material mat = new Material(meshRenderer.sharedMaterials[0]);
-        //    mat.color = materialColor;
-        //    Color color = mat.color;
-        //    color.a = 0.5f;
-        //    mat.color = color;
-        //    meshRenderer.material = mat;
-        //    //Instantiate(item, itemSpawnLocation);
-        //}
-
         private void OnTriggerEnter(Collider other)
         {
             if (other.GetComponent<ShelfTrigger>())
@@ -174,7 +147,7 @@ namespace Assets.Scripts.Items
                     {
                         //StopCoroutine(removalCoroutine);
                         removalCoroutine = null;
-                        OnSpawnerStopRemoval?.Invoke();
+                        //OnSpawnerStopRemoval?.Invoke();
                     }
                 }
             }
@@ -186,8 +159,9 @@ namespace Assets.Scripts.Items
             if (other.GetComponent<ShelfTrigger>())
             {
                 isOnValidShelf = false;
-
-                removalCoroutine = StartCoroutine(RemovalCheck());
+                Debug.Log("Item Spawner removed out of ShelfTrigger for " + item.name + " Start RemovalCheck?");
+                Debug.Log("Item Spawner is " + item.name + "already being removed? (LEFT SHELF TRIGGER)" + (removalCoroutine != null));
+               // removalCoroutine = StartCoroutine(RemovalCheck());
 
             }
         }
@@ -252,9 +226,7 @@ namespace Assets.Scripts.Items
             XRGrabInteractable grab = currentItem.GetComponent<XRGrabInteractable>();
 
             //grab.interactionLayers = InteractionLayerMask.GetMask("None");
-            Debug.Log(
-                $"InstantiateItem: openForBusiness={openForBusiness}, IsPaid={IsPaid}"
-            );
+
             ToggleInteractionLayer(grab, IsPaid || openForBusiness, false);
 
             itemC.RefreshVisuals();
@@ -339,7 +311,7 @@ namespace Assets.Scripts.Items
             //ToggleGrabInteractivity();
             if (!isOnValidShelf)
             {
-                Debug.Log("not in the right place " + item.displayName);
+                Debug.Log("Item Spawner not in the right place " + item.displayName);
                 Destroy(gameObject);
             }
             //XRGrabInteractable grab = currentItem.GetComponent<XRGrabInteractable>();
@@ -383,10 +355,10 @@ namespace Assets.Scripts.Items
 
         private void ToggleInteractionLayer(XRGrabInteractable interactable, bool toDefault = false, bool invert = false)
         {
-            Debug.Log(
-               $"Changing {interactable.gameObject.name} " +
-               $"toDefault={toDefault} invert={invert}"
-           );
+           // Debug.Log(
+           //    $"Changing {interactable.gameObject.name} " +
+           //    $"toDefault={toDefault} invert={invert}"
+           //);
             if (invert)
             {
                 if (interactable.interactionLayers == InteractionLayerMask.GetMask("None"))
@@ -410,20 +382,26 @@ namespace Assets.Scripts.Items
                 interactable.interactionLayers = InteractionLayerMask.GetMask("None");
             }
         }
+
+        /// <summary>
+        /// Determines if ItemSpawner should be destroyed.
+        /// </summary>
+        /// <param name="spawnerRemoval"></param>
+        /// <returns></returns>
         private System.Collections.IEnumerator RemovalCheck(bool spawnerRemoval = false)
         {
-            Debug.Log("Item Spawner RemovalCheck Start");
+            Debug.Log("Item Spawner RemovalCheck Start for " + item.name);
 
             if (spawnerRemoval)
             {
-                Debug.Log("Item Spawner countdown for spawner out of place ");
+                Debug.Log("Item Spawner countdown for spawner out of place for " + item.name);
             }
-            Debug.Log("Item Spawner spawner grab interactable is Selected" + spawnerGrabInteractable.isSelected);
+            Debug.Log("Item Spawner spawner grab interactable is Selected for " + item.name + "" + spawnerGrabInteractable.isSelected);
             // yield return new WaitForSeconds(removalDelay);
             float wait = removalDelay;
             while (wait > 0 && !spawnerGrabInteractable.isSelected)
             {
-                Debug.Log("Item Spawner RemovalCheck writing: " + wait);
+
                 yield return new WaitForSeconds(1f);
 
                 wait -= 1;
@@ -435,11 +413,14 @@ namespace Assets.Scripts.Items
             }
             topTimerText.text = "";
             // If STILL out of place after delay → confirm removal
+        
             if (!isOnValidShelf && !spawnerGrabInteractable.isSelected)
             {
-                Debug.Log("Spawner confirmed removed after delay");
-
+                Debug.Log("Item Spawner confirmed removed after delay for " + item.name);
+                Debug.Log("Item Spawner RemovalCheck, ensure it is replaced!");
                 //OnSpawnerConfirmedRemoval?.Invoke();
+                //OnSpawnerNeedsReplacement.Invoke();
+
                 Destroy(gameObject);
             }
 

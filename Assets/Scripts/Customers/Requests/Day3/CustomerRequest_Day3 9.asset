@@ -19,4 +19,5 @@ MonoBehaviour:
   hasRequiredQuality: 1
   minimumQuality: 2
   extraRules: []
-  Tags: 0c000000
+  Tags: 08000000
+  suggestedTags: 08000000

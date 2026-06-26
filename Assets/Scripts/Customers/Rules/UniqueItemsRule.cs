@@ -25,6 +25,13 @@ namespace Assets.Scripts.Customers.Rules
         public override string FailureString => "Not enough variety";
         public override float FailureDeduction => -0.3f;
 
+        public override List<RequestTag> Tags => new List<RequestTag> { generateRequestTags(), RequestTag.Variety };
+
+        private RequestTag generateRequestTags()
+        {
+            return minUnique > 1 ? RequestTag.MultipleItems : RequestTag.SingleItem;
+        }
+
 
     }
 

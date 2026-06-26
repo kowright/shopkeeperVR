@@ -30,8 +30,10 @@ namespace Assets.Scripts.Customers.Rules
 
         public override string FailureString => customRequestString;
         public override float FailureDeduction => -0.2f;
+        public override List<RequestTag> Tags => new List<RequestTag> { };
+
 
 
     }
-    
+
 }

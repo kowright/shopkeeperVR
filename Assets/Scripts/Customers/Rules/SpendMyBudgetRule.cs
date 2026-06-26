@@ -28,6 +28,9 @@ namespace Assets.Scripts.Customers.Rules
             $"Submitted items that were {difference} from the budget";
         public override float FailureDeduction => -0.2f;
 
+        public override List<RequestTag> Tags => new List<RequestTag> { RequestTag.Efficient };
+
+
 
 
     }

@@ -22,4 +22,5 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 4c4c07f8d967c9d4293a051593a714a4, type: 2}
   - {fileID: 11400000, guid: 6b6167e8cb3bdc94081f8dc6e5a42394, type: 2}
   - {fileID: 11400000, guid: 37386d24206abea4a918185b6dd2865d, type: 2}
-  Tags: 0b000000030000000c000000
+  Tags: 0a0000000d0000000c000000
+  suggestedTags: 0d0000000c0000000a000000

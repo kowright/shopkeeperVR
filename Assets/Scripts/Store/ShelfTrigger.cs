@@ -52,7 +52,7 @@ namespace Assets.Scripts.Store
 
                 if (forPurchase)
                 {
-                    if (!spawner.HasBeenPlacedByPlayer) return;
+                    //if (!spawner.HasBeenPlacedByPlayer) return;
 
                     Debug.Log("Spawner entered purchase shelf");
                     OnPurchaseShelfEnter?.Invoke(spawner);
@@ -73,23 +73,25 @@ namespace Assets.Scripts.Store
 
         private void OnTriggerExit(Collider other)
         {
-            Debug.Log("ShelfTrigger OnTriggerExit");
+            Debug.Log("ShelfTrigger OnTriggerExit " + other);
             var spawner = other.GetComponentInParent<ItemSpawner>();
             //Debug.Log("Spawner for " + spawner.item.displayName + " is listed? " + shelfSpawners.Contains(spawner));
+            Debug.Log("ShelfTrigger OnTriggerExit spawner? " + (spawner != null));
             if (spawner != null && shelfSpawners.Contains(spawner))
             {
-                if (!spawner.HasBeenPlacedByPlayer)
-                {
-                    Debug.Log("Spawner " + spawner.nameText + " is not being used by player");
-                    return;
-                }
+                Debug.Log("ShelfTrigger OnTriggerExit exit for " + spawner.item.name); 
+                //if (!spawner.HasBeenPlacedByPlayer)
+                //{
+                //    Debug.Log("Spawner OnTriggerExit " + spawner.nameText + " is not being used by player");
+                //    return;
+                //}
 
                 shelfSpawners.Remove(spawner);
-                Debug.Log("Removing spawner for item " + spawner.item.displayName);
+                Debug.Log("OnTriggerExit Removing spawner for item " + spawner.item.displayName);
 
                 if (forPurchase)
                 {
-                    Debug.Log("Spawner exited purchase shelf");
+                    Debug.Log(" OnTriggerExit Spawner exited purchase shelf " + spawner.item.displayName);
                     if (spawner.IsPaid) return;
                     OnPurchaseShelfExit?.Invoke(spawner);
                     return;

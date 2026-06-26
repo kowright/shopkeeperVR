@@ -36,6 +36,111 @@ namespace Assets.Scripts.Customers
 
         public List<RequestTag> Tags;
 
+        [ReadOnly]
+        public List<RequestTag> suggestedTags;
+
+        private RequestTag costTag = RequestTag.Cheap;
+
+        [ShowNativeProperty]
+        public float totalCostOfRequiredItems => costOfRequiredItems();
+
+        private void OnValidate()
+        {
+            suggestedTags = tagsFromRulesAndCost();
+            //if (costTag != null)
+            //{
+            //    suggestedTags.Add((RequestTag)_costTag);
+            //}
+        }
+
+        private int costOfRequiredItems()
+        {
+            int totalCost = 0;
+
+            foreach (var item in requiredItems)
+            {
+                totalCost += item.cost;
+            }
+
+            if (totalCost != 0)
+            {
+
+                if (totalCost <= 20)
+                {
+                    costTag = RequestTag.Cheap;
+                }
+                else if (totalCost <= 100)
+                {
+                    costTag = RequestTag.MidRange;
+                }
+                else if (totalCost <= 500)
+                {
+                    costTag = RequestTag.HighRange;
+                }
+                else
+                {
+                    costTag = RequestTag.Expensive;
+                }
+            }
+
+            return totalCost;
+        }
+
+        private List<RequestTag> tagsFromRulesAndCost()
+        {
+            List<RequestTag> tags = new List<RequestTag>();
+   
+            foreach (var rule in extraRules)
+            {
+                if (rule.Tags.Count > 0)
+                {
+                    foreach (var tag in rule.Tags)
+                    {
+                        if (!tags.Contains(tag))
+                        {
+                            tags.Add(tag);
+                        }
+                   
+                    }
+                }
+            }
+            
+            // cost tag
+            if (costOfRequiredItems() != 0)
+            {
+                if (!tags.Contains(costTag))
+                    tags.Add(costTag);
+            }
+
+            // quality tag
+            if (hasRequiredQuality)
+            {
+                RequestTag? qualityTag = ItemUtils.GetRequestTagForItemQuality(minimumQuality);
+                if(qualityTag != null)
+                {
+        
+                    if (!tags.Contains(qualityTag.Value)){
+                        tags.Add(qualityTag.Value);
+                    }
+                }
+            }
+            //    if (minimumQuality == ItemQuality.Great || minimumQuality == ItemQuality.Great)
+            //    {
+            //        if (!tags.Contains(RequestTag.HighQuality))
+            //            tags.Add(RequestTag.HighQuality);
+            //    }
+            //    else if (minimumQuality == ItemQuality.Good)
+            //    {
+            //        if (!tags.Contains(RequestTag.MidQuality))
+            //            tags.Add(RequestTag.MidQuality);
+            //    }
+
+            //}
+
+            return tags;
+        }
+
+
         public List<string> requestString()
         {
             List<string> requestStrings = new List<string>();

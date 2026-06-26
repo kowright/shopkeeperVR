@@ -21,6 +21,8 @@ namespace Assets.Scripts.Customers.Rules
         public override string FailureString => "Actually I don't like that one...";
         public override float FailureDeduction => -0.2f;
 
+        public override List<RequestTag> Tags => new List<RequestTag> { RequestTag.Risky };
+
 
     }
 }

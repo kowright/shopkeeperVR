@@ -15,6 +15,7 @@ namespace Assets.Scripts.Items
         None = 5,
 
     }
+
     public class ItemOutlineColorManager //TODO: rename
     {
         private Dictionary<ItemQuality, Color> itemQualityOutlineColorMap = new Dictionary<ItemQuality, Color>()
@@ -40,9 +41,9 @@ namespace Assets.Scripts.Items
         private Dictionary<ItemQuality, float> itemQualityRespawnTimeMap = new Dictionary<ItemQuality, float>()
         {
             { ItemQuality.Bad, 1},
-            { ItemQuality.Low, 3 },
-            { ItemQuality.Good, 5},
-            { ItemQuality.Great, 10 },
+            { ItemQuality.Low, 5 },
+            { ItemQuality.Good, 15},
+            { ItemQuality.Great, 30 },
             { ItemQuality.Top, 60 }
         };
         public float GetRespawnTimeForQuality(ItemQuality quality)

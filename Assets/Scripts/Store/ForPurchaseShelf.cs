@@ -7,6 +7,7 @@ namespace Assets.Scripts.Store
     
     using global::Assets.Scripts.Items;
     using System.Collections;
+    using System.Linq;
     using TMPro;
     using UnityEngine;
 
@@ -45,7 +46,8 @@ namespace Assets.Scripts.Store
             [SerializeField] private List<ItemRegistry> allItemRegistries;
             private List<ShelfSpot> shelfSpots;
             private Dictionary<ItemSpawner, ShelfSpot> spawnerToSpot = new Dictionary<ItemSpawner, ShelfSpot>();
-            private Coroutine removalCoroutine;
+            private Dictionary<ShelfSpot, Coroutine> spotToRespawnCoroutine = new Dictionary<ShelfSpot, Coroutine>();
+            //private Coroutine removalCoroutine;
             private float waitTime = 5f;
 
             private void Awake()
@@ -123,7 +125,7 @@ namespace Assets.Scripts.Store
 
             private void SpawnNextInSpot(ShelfSpot spot)
             {
-                Debug.Log("Spawn Next In Spot");
+                Debug.Log("Spawn Next In Spot for " + spot.registry.name);
 
                 if (spot.currentIndex >= spot.registry.Items.Count)
                 {
@@ -136,8 +138,6 @@ namespace Assets.Scripts.Store
                     return;
                 }
 
-
-
                 ItemSpawner spawner = Instantiate(
                     itemSpawnerPrefab,
                     spot.placement.position,
@@ -149,11 +149,32 @@ namespace Assets.Scripts.Store
           
                 spawner.Initialize(spot.registry.Items[spot.currentIndex]);
 
+                //spawner.OnSpawnerNeedsReplacement += () => HandleSpawnerReplacement(spot);
                 //spawner.OnSpawnerConfirmedRemoval += () => HandleSpawnerConfirmedRemoved(spot);
                 //spawner.OnSpawnerRemoved += (time) => HandleSpawnerInitialRemoval(spot, time);
                 //spawner.OnSpawnerStopRemoval += () => HandleSpawnerStopRemoval(spot);
 
                 spot.spawner = spawner;
+            }
+
+            private void HandleSpawnerReplacement(ShelfSpot shelfSpot)
+            {
+                Debug.Log("ForPurchaseShelf needs to replace!");
+                Debug.Log("shelf spot info " + shelfSpot.spawner + shelfSpot.currentIndex);
+         
+                ItemSpawner spawner = spawnerToSpot.FirstOrDefault(x => x.Value == shelfSpot).Key;
+
+
+                if (!spawner)
+                {
+                    Debug.Log("no spawner");
+                }
+                else
+                {
+                    Debug.Log("spawner is " + spawner);
+                    HandlePurchaseShelfExit(spawner);
+                }
+
             }
 
             private void HandleSpawnerConfirmedRemoved(ShelfSpot spot)
@@ -217,20 +238,27 @@ namespace Assets.Scripts.Store
             {
                 Debug.Log("ForPurchaseShelf HandlePurchaseShelfExit");
 
-                Debug.Log("Spawner to Spots: ");
-                foreach (var spawn in spawnerToSpot)
-                {
-                    Debug.Log("Spawner for item " + spawn.Key.item.displayName + " in spot " + spawn.Value);
-                }
+                //Debug.Log("Spawner to Spots: ");
+                //foreach (var spawn in spawnerToSpot)
+                //{
+                //    Debug.Log("Spawner for item " + spawn.Key.item.displayName + " in spot " + spawn.Value.ToString());
+                //}
                 if (!spawnerToSpot.TryGetValue(spawner, out var spot))
                 {
                     Debug.Log("Could not find spot for spawner with items: " + spawner.item.displayName);
                     return;
                 }
 
-                removalCoroutine = StartCoroutine(RemovalCheck(spot));
+                if (spotToRespawnCoroutine.ContainsKey(spot))
+                {
+                    StopCoroutine(spotToRespawnCoroutine[spot]);
+                    spotToRespawnCoroutine.Remove(spot);
+                }
+                spotToRespawnCoroutine[spot] = StartCoroutine(RemovalCheck(spot));
 
-                Debug.Log("ForPurchaseShelf HandlePurchaseExit Start Coroutine");
+                //removalCoroutine = StartCoroutine(RemovalCheck(spot));
+
+                Debug.Log("ForPurchaseShelf HandlePurchaseExit Start Coroutine to get a new item for item " + spawner.item.displayName);
                 // Mark spot empty
                // spot.spawner = null;
 
@@ -255,6 +283,7 @@ namespace Assets.Scripts.Store
             private System.Collections.IEnumerator RemovalCheck(ShelfSpot spot)
             {
                 // yield return new WaitForSeconds(removalDelay);
+                Debug.Log("RemovalCheck started for " + spot.placement.name);
                 float wait = waitTime;
                 spot.respawnText.gameObject.SetActive(true);
 
@@ -276,7 +305,7 @@ namespace Assets.Scripts.Store
 
                 // Remove mapping
                 Debug.Log("Spawner removed from spot: " + spot.placement.name);
-                Debug.Log("spot spawner " + spot.spawner);
+                Debug.Log("spot spawner " + spot.registry.name);
                 spawnerToSpot.Remove(spot.spawner);
 
                 spot.spawner = null;
@@ -297,13 +326,35 @@ namespace Assets.Scripts.Store
 
             private void HandlePurchaseShelfEnter(ItemSpawner spawner)
             {
-                Debug.Log("ForPurchaseShelf HandlePurhcaseShelfEnter");
-                if(removalCoroutine != null)
+                Debug.Log("ForPurchaseShelf HandlePurchaseShelfEnter" + spawner);
+
+                if (!spawnerToSpot.TryGetValue(spawner, out ShelfSpot spot))
                 {
-                    StopCoroutine(removalCoroutine);
-                    ShelfSpot spot = spawnerToSpot[spawner];
-                    spot.respawnText.gameObject.SetActive(false);
-                    spot.respawnText.text = waitTime.ToString();
+                    Debug.Log("Could not find spot for spawner with items: " + spawner.item.displayName);
+                    return;
+                }
+
+                if (spotToRespawnCoroutine.TryGetValue(spot, out var coroutine))
+
+                    if (coroutine != null)
+                    {
+                    //StopCoroutine(removalCoroutine);
+                    StopCoroutine(coroutine);
+
+                    if (spot != null)
+                    {
+           
+                        Debug.Log($"Found item: {spot}");
+                        spot.respawnText.gameObject.SetActive(false);
+                        spot.respawnText.text = waitTime.ToString();
+                    }
+                    else
+                    {
+                        Debug.LogWarning("PurchaseShelf Cannot find spawner for spot Error");
+                        return;
+                    }
+      
+                
                 }
                 else
                 {

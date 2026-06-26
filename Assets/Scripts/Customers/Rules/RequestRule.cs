@@ -16,5 +16,7 @@ namespace Assets.Scripts.Customers
         public abstract string FailureString {get; }
 
         public abstract float FailureDeduction { get; }
+
+        public abstract List<RequestTag> Tags { get; }
     }
 }

@@ -21,6 +21,13 @@ namespace Assets.Scripts.Customers.Rules
             $"Over {maxItems} item{(maxItems == 1 ? "" : "s")} {(maxItems == 1 ? "was" : "were")} submitted";
         public override float FailureDeduction => -0.3f;
 
+        public override List<RequestTag> Tags => new List<RequestTag> { generateRequestTags() }; 
+
+        private RequestTag generateRequestTags()
+        {
+            return maxItems > 1 ? RequestTag.MultipleItems : RequestTag.SingleItem;
+        }
+
 
 
     }
