@@ -12,7 +12,6 @@ namespace Assets.Scripts.Customers.Rules
         private int pricePoint => setRandomPricePoint();
 
         public override string RequestString => $"Use exactly ${pricePoint}%";
-        
 
         public override bool IsSatisfied(List<ItemComponent> items, Customer customer)
         {
@@ -25,15 +24,11 @@ namespace Assets.Scripts.Customers.Rules
 
         public override string FailureString => "Not the right price!";
         public override float FailureDeduction => -0.3f;
-
         public override List<RequestTag> Tags => new List<RequestTag> { RequestTag.Efficient };
 
         private int setRandomPricePoint()
         {
-
             System.Random random = new System.Random();
-
-
             int randomPricePoint = random.Next(1, CustomerBudget);
 
             return randomPricePoint;
