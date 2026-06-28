@@ -24,6 +24,7 @@ public class SubmitTable: MonoBehaviour
     public TextMeshProUGUI customerRequestText;
     public TextMeshProUGUI itemRequestText;
     private bool isOpenForBusiness;
+    [SerializeField] private ItemComponent test;
     void Start()
     {
         ProfitBoard.OnDayEnded += SetBusinessClosedTable;
@@ -96,6 +97,15 @@ public class SubmitTable: MonoBehaviour
     }
 
     public List<ItemComponent> GetItems() => itemsOnTable;
+
+    public void ManualUISubmitItemsForValidation()
+    {
+        itemsOnTable = new List<ItemComponent>
+        {
+            test
+        };
+        SubmitItemsForValidation();
+    }
 
     public void SubmitItemsForValidation()
     {
