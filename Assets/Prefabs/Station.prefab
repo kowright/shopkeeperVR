@@ -3837,6 +3837,7 @@ MonoBehaviour:
   priceCountText: {fileID: 3132797381032215588}
   customerRequestText: {fileID: 2528624559148796533}
   itemRequestText: {fileID: 6206916223668956114}
+  test: {fileID: 4425509657509312199, guid: 0e43afe72b9d90f4daf23beab9e880bf, type: 3}
 --- !u!1 &8782561982702862493
 GameObject:
   m_ObjectHideFlags: 0

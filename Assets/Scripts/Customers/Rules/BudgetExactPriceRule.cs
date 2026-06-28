@@ -11,7 +11,7 @@ namespace Assets.Scripts.Customers.Rules
     {
         private int pricePoint => setRandomPricePoint();
 
-        public override string RequestString => $"Use exactly ${pricePoint}%";
+        public override string RequestString => $"Use exactly ${pricePoint}";
 
         public override bool IsSatisfied(List<ItemComponent> items, Customer customer)
         {
