@@ -77,8 +77,9 @@ namespace Assets.Scripts.Customers.Rules
             else
             {
                 Debug.Log(validRequests.Count + " to choose from [STRICT]");
-                return validRequests[Random.Range(0, validRequests.Count)];
-
+                CustomerRequest chosenRequest = validRequests[Random.Range(0, validRequests.Count)];
+                chosenRequest.Initialize(customer);
+                return chosenRequest;
             }
         }
 

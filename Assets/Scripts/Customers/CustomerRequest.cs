@@ -44,6 +44,18 @@ namespace Assets.Scripts.Customers
         [ShowNativeProperty]
         public float totalCostOfRequiredItems => costOfRequiredItems();
 
+        private int _customerBudget;
+        public int customerBudget => _customerBudget;
+
+        public void Initialize(Customer customer)
+        {
+            _customerBudget = customer.budget;
+            foreach(var rule in extraRules)
+            {
+                rule.SetCustomerBudget = customer.budget;
+            }
+        }
+
         private void OnValidate()
         {
             suggestedTags = tagsFromRulesAndCost();

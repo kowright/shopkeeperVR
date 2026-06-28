@@ -45,6 +45,7 @@ namespace Assets.Scripts.Customers
                     new List<CustomerType> { CustomerType.Average, CustomerType.Forgiving },
                     new List<CustomerType> { CustomerType.Impatient, CustomerType.Demanding },
                     new List<CustomerType> { CustomerType.Specific, CustomerType.Minimalist },
+                    new List<CustomerType> { CustomerType.Budgeter },
                  }
              },
              { 4, new List<List<CustomerType>>
@@ -89,6 +90,7 @@ namespace Assets.Scripts.Customers
                     new List<CustomerType> { CustomerType.Luxury, CustomerType.Patient, CustomerType.Minimalist },
                     new List<CustomerType> { CustomerType.Maximalist, CustomerType.Luxury },
                     new List<CustomerType> { CustomerType.Cheap, CustomerType.Minimalist },
+                    new List<CustomerType> { CustomerType.Budgeter, CustomerType.Maximalist },
 
                  }
              },
