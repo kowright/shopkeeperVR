@@ -10,14 +10,6 @@ namespace Assets.Scripts.Customers
      */
     public abstract class RequestRule : ScriptableObject
     {
-        private int customerBudget;
-
-        public int SetCustomerBudget
-        {
-            set { customerBudget = value; }
-        }
-        protected int CustomerBudget => customerBudget;
-
         public abstract bool IsSatisfied(List<ItemComponent> items, Customer customer);
         public abstract string RequestString { get; }
 

@@ -26,29 +26,6 @@ namespace Assets.Scripts.Customers.Rules
 
             );
 
-            //foreach (var r in database.allRequests)
-            //{
-            //    bool difficultyPass = r.difficulty <= day;
-            //    bool tagPass = MatchesCustomer(r, customerTags, true);
-
-            //    Debug.Log(
-            //        $"{r.name} | diff={r.difficulty} pass={difficultyPass} | tags={tagPass}"
-            //    );
-            //}
-
-            //foreach (CustomerRequest r in database.allRequests)
-            //{
-        
-            //    foreach(RequestTag rt in r.Tags)
-            //    {
-            //        if(r.difficulty == 2)
-            //        {
-            //            Debug.Log("request tags " + r.name);
-            //            Debug.Log("tag: " + rt);
-            //        }
-            //    }
-            //}
-
             if (validRequests.Count == 0)
             {
                 Debug.LogWarning("No valid requests found for " + customer.customerName + ", using soft match for tags:\n");
@@ -77,9 +54,7 @@ namespace Assets.Scripts.Customers.Rules
             else
             {
                 Debug.Log(validRequests.Count + " to choose from [STRICT]");
-                CustomerRequest chosenRequest = validRequests[Random.Range(0, validRequests.Count)];
-                chosenRequest.Initialize(customer);
-                return chosenRequest;
+                return validRequests[Random.Range(0, validRequests.Count)];
             }
         }
 
