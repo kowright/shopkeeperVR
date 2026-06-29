@@ -9,8 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f34abfb546c2252499cc41a58fdfed61, type: 3}
-  m_Name: Rule_BudgetRange40to90
-  m_EditorClassIdentifier: Assembly-CSharp::BudgetPercentageRangeRule
-  maxBudgetUsage: 0.9
-  minBudgetUsage: 0.4
+  m_Script: {fileID: 11500000, guid: f7e9bf1ca089a564f8d723a352a50434, type: 3}
+  m_Name: Rule_QualityRange_GoodtoGreat
+  m_EditorClassIdentifier: Assembly-CSharp::QualityRangeRule
+  minItemQuality: 2
+  maxItemQuality: 3

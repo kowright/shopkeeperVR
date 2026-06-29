@@ -37,7 +37,6 @@ namespace Assets.Scripts.Customers
              // ---
              { 3, new List<List<CustomerType>>
                  {
-
                     new List<CustomerType> { CustomerType.Picky, CustomerType.Indifferent },
                     new List<CustomerType> { CustomerType.Maximalist, CustomerType.Cheap },
                     new List<CustomerType> { CustomerType.Minimalist, CustomerType.Cheap },
@@ -46,6 +45,8 @@ namespace Assets.Scripts.Customers
                     new List<CustomerType> { CustomerType.Impatient, CustomerType.Demanding },
                     new List<CustomerType> { CustomerType.Specific, CustomerType.Minimalist },
                     new List<CustomerType> { CustomerType.Budgeter },
+                    new List<CustomerType> { CustomerType.Picky, CustomerType.Forgiving },
+                    new List<CustomerType> { CustomerType.Picky, CustomerType.Cheap },
                  }
              },
              { 4, new List<List<CustomerType>>
@@ -91,7 +92,8 @@ namespace Assets.Scripts.Customers
                     new List<CustomerType> { CustomerType.Maximalist, CustomerType.Luxury },
                     new List<CustomerType> { CustomerType.Cheap, CustomerType.Minimalist },
                     new List<CustomerType> { CustomerType.Budgeter, CustomerType.Maximalist },
-
+                    new List<CustomerType> { CustomerType.Picky, CustomerType.Forgiving },
+                     new List<CustomerType> { CustomerType.Picky, CustomerType.Average },
                  }
              },
              { 6, new List<List<CustomerType>>
@@ -126,6 +128,8 @@ namespace Assets.Scripts.Customers
                     new List<CustomerType> { CustomerType.Minimalist, CustomerType.Cheap, CustomerType.Impatient},
                     new List<CustomerType> { CustomerType.Budgeter, CustomerType.Impatient},
                     new List<CustomerType> { CustomerType.Budgeter, CustomerType.Diverse, },
+                    new List<CustomerType> { CustomerType.Picky, CustomerType.Average },
+                    new List<CustomerType> { CustomerType.Picky, CustomerType.Impatient },
                  }
              },
              // --- GO CRAZY - +3 types!
@@ -168,7 +172,9 @@ namespace Assets.Scripts.Customers
                     new List<CustomerType> { CustomerType.Specific, CustomerType.Average, CustomerType.Forgiving },
                     new List<CustomerType> { CustomerType.Practical, CustomerType.Patient, CustomerType.Budgeter },
                     new List<CustomerType> { CustomerType.Cheap, CustomerType.DebbyDowner, CustomerType.Maximalist },
-
+                    new List<CustomerType> { CustomerType.Picky, CustomerType.DebbyDowner, CustomerType.Indifferent },
+                    new List<CustomerType> { CustomerType.Picky, CustomerType.BigSpender, CustomerType.Maximalist },
+                    new List<CustomerType> { CustomerType.Picky, CustomerType.Average, CustomerType.Patient },
                  }
              },
              { 8, new List<List<CustomerType>> // mood + cost + patience + (risky, speed, items, group, budget, quality)  
