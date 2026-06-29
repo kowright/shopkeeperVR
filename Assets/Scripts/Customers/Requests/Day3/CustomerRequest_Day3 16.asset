@@ -20,5 +20,5 @@ MonoBehaviour:
   minimumQuality: 5
   extraRules:
   - {fileID: 11400000, guid: 2c90f50c63546ac48825629b4b241fda, type: 2}
-  Tags: 08000000
+  Tags: 080000000e000000
   suggestedTags: 

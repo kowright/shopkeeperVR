@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f34abfb546c2252499cc41a58fdfed61, type: 3}
   m_Name: Rule_BudgetRange40to90
   m_EditorClassIdentifier: Assembly-CSharp::BudgetPercentageRangeRule
-  maxBudgetUsage: 0.4
-  minBudgetUsage: 0.9
+  maxBudgetUsage: 0.9
+  minBudgetUsage: 0.4
