@@ -36,7 +36,7 @@ namespace Assets.Scripts.Customers
         /// <summary>Wants results in under 30 seconds.</summary>
         Impatient,
 
-        /// <summary>Willing to wait up to 120 seconds.</summary>
+        /// <summary>Willing to wait up to 120 seconds. Equals RequestTag Slow.</summary>
         Patient,
 
         /// <summary>Prefers 1 item.  Equals RequestTag SingleItem.</summary>
