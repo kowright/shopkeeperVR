@@ -187,23 +187,48 @@ namespace Assets.Scripts.Customers
                     new List<CustomerType> { CustomerType.Maximalist, CustomerType.BigSpender, CustomerType.Diverse },
                  }
              },
-             { 8, new List<List<CustomerType>> // mood + cost + patience + (risky, speed, items, group, budget, quality)  
+             { 8, new List<List<CustomerType>> // mood + cost + patience + (risky, speed, # of items, group, budget, quality)  
              // mood - bitter, debbydowner, demanding, forgiving, indifferent
+             // 3-4 types, aim for 22 requests
                  {
                     new List<CustomerType> { CustomerType.Picky, CustomerType.Impatient, CustomerType.Maximalist, CustomerType.Luxury },
                     new List<CustomerType> { CustomerType.Maximalist, CustomerType.Cheap, CustomerType.Spontaneous, CustomerType.Forgiving },
-                    new List<CustomerType> { CustomerType.Minimalist, CustomerType.BigSpender, CustomerType.Picky },
-                    new List<CustomerType> { CustomerType.Diverse, CustomerType.BigSpender, CustomerType.DebbyDowner },
+                    new List<CustomerType> { CustomerType.Minimalist, CustomerType.BigSpender, CustomerType.Picky, CustomerType.Specific },
+                    new List<CustomerType> { CustomerType.Diverse, CustomerType.BigSpender, CustomerType.DebbyDowner, CustomerType.Budgeter },
                     new List<CustomerType> { CustomerType.Average, CustomerType.Impatient,CustomerType.Diverse, CustomerType.Demanding },
-                    new List<CustomerType> { CustomerType.Impatient, CustomerType.BigSpender, CustomerType.Picky },
+                    new List<CustomerType> { CustomerType.Impatient, CustomerType.BigSpender, CustomerType.Picky, CustomerType.Minimalist  },
                     new List<CustomerType> { CustomerType.Patient, CustomerType.Average, CustomerType.DebbyDowner, CustomerType.Indifferent },
-                    new List<CustomerType> { CustomerType.Spontaneous, CustomerType.Average, CustomerType.Diverse },
-
+                    new List<CustomerType> { CustomerType.Spontaneous, CustomerType.Average, CustomerType.Diverse, CustomerType.Impatient },
+                    new List<CustomerType> { CustomerType.Bitter, CustomerType.BigSpender, CustomerType.Patient, CustomerType.Spontaneous },
+                    new List<CustomerType> { CustomerType.Demanding, CustomerType.Cheap, CustomerType.Practical, CustomerType.Impatient },
+                    new List<CustomerType> { CustomerType.Luxury, CustomerType.Picky, CustomerType.Forgiving, CustomerType.Minimalist },
+                    new List<CustomerType> { CustomerType.Luxury, CustomerType.BigSpender, CustomerType.Diverse, CustomerType.Maximalist },
+                    new List<CustomerType> { CustomerType.DebbyDowner, CustomerType.Cheap, CustomerType.Budgeter, CustomerType.Diverse },
+                    new List<CustomerType> { CustomerType.Indifferent, CustomerType.Average, CustomerType.Spontaneous, CustomerType.Minimalist },
+                    new List<CustomerType> { CustomerType.Indifferent, CustomerType.Cheap, CustomerType.Specific, CustomerType.Impatient },
+                    new List<CustomerType> { CustomerType.Spontaneous, CustomerType.DebbyDowner, CustomerType.Diverse, CustomerType.Luxury },
+                    new List<CustomerType> { CustomerType.Average, CustomerType.Budgeter, CustomerType.Specific, CustomerType.Patient },
+                    new List<CustomerType> { CustomerType.Minimalist, CustomerType.BigSpender, CustomerType.Diverse, CustomerType.Bitter },
+                    new List<CustomerType> { CustomerType.Indifferent, CustomerType.Cheap, CustomerType.Specific, CustomerType.Impatient },
+                    new List<CustomerType> { CustomerType.Budgeter, CustomerType.Cheap, CustomerType.Picky },
+                    new List<CustomerType> { CustomerType.Budgeter, CustomerType.Practical, CustomerType.Minimalist },
+                    new List<CustomerType> { CustomerType.Specific, CustomerType.Patient, CustomerType.Maximalist },
+                    new List<CustomerType> { CustomerType.Specific, CustomerType.Impatient, CustomerType.Minimalist, CustomerType.Spontaneous },
+                    new List<CustomerType> { CustomerType.Budgeter, CustomerType.Maximalist, CustomerType.Cheap, CustomerType.Patient },
+                    new List<CustomerType> { CustomerType.Luxury, CustomerType.Diverse, CustomerType.Maximalist },
+                    new List<CustomerType> { CustomerType.Luxury, CustomerType.Diverse, CustomerType.Patient },
+                    new List<CustomerType> { CustomerType.Spontaneous, CustomerType.Impatient, CustomerType.Minimalist },
+                    new List<CustomerType> { CustomerType.Specific, CustomerType.Diverse, CustomerType.Cheap, CustomerType.Impatient },
+                    new List<CustomerType> { CustomerType.Specific, CustomerType.Diverse, CustomerType.Average, CustomerType.Patient },
+                    new List<CustomerType> { CustomerType.Specific, CustomerType.Diverse, CustomerType.BigSpender, CustomerType.Luxury },
+                    new List<CustomerType> { CustomerType.Specific, CustomerType.Diverse, CustomerType.Cheap, CustomerType.Picky },
+                    new List<CustomerType> { CustomerType.Specific, CustomerType.Diverse, CustomerType.Average, CustomerType.Budgeter },
                  }
              },
              // getting unreasonable
 
              { 9, new List<List<CustomerType>>
+             // 4 types, aim for 24 requests
                  {
                     new List<CustomerType> { CustomerType.Picky, CustomerType.Impatient, CustomerType.Maximalist, CustomerType.DebbyDowner },
                     new List<CustomerType> { CustomerType.Maximalist, CustomerType.Cheap, CustomerType.Picky, CustomerType.Indifferent },
@@ -219,6 +244,7 @@ namespace Assets.Scripts.Customers
              },
 
              { 10, new List<List<CustomerType>>
+             // 5 types, aim for 26 requests
                  {
                     new List<CustomerType> { CustomerType.Picky, CustomerType.Impatient, CustomerType.Maximalist, CustomerType.Bitter, CustomerType.Demanding },
                     new List<CustomerType> { CustomerType.Maximalist, CustomerType.Cheap, CustomerType.Picky, CustomerType.Bitter },
