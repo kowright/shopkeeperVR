@@ -13,7 +13,7 @@ namespace Assets.Scripts.Store
         /// <summary>
         /// Get time in seconds of how long the day countdown is
         /// </summary>
-        public int dayTime => ((day-1) * 60) + 180; // 2 mins to start, every extra day gives an extra minute
+        public int dayTime => ((day-1) * 30) + 120; // 2 mins to start, every extra day gives an extra minute
         //public int dayTime => 10; //debug
 
         public static Action OnDayEnded;
