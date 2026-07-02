@@ -19,8 +19,9 @@ MonoBehaviour:
   hasRequiredQuality: 0
   minimumQuality: 5
   extraRules:
+  - {fileID: 11400000, guid: 72dee927ddeba004ab5c7a1518cde86f, type: 2}
+  - {fileID: 11400000, guid: 6925fb36a3a8c5c42b1d1376057066d0, type: 2}
   - {fileID: 11400000, guid: 0817ded826f1f3e429ab66905cfecdb3, type: 2}
-  - {fileID: 11400000, guid: 9e8787e6ab5393040bf96870bcf4eddb, type: 2}
-  - {fileID: 11400000, guid: d40d21f8f73232741a0ea9dcda9ac901, type: 2}
-  Tags: 0d0000000b0000000400000009000000
-  suggestedTags: 090000000d000000040000000b000000
+  - {fileID: 11400000, guid: 3e9c366a0c117d846ac2ba0c0c6f2609, type: 2}
+  Tags: 00000000050000000c0000000a000000090000000d0000000e000000
+  suggestedTags: 0a0000000c000000090000000d0000000e000000
