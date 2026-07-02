@@ -11,7 +11,7 @@ namespace Assets.Scripts.Customers.Rules
         /// <summary>High spending customer. Equals CustomerType BigSpender.</summary>
         Expensive,
         Fast,
-        Slow,
+        Slow,  /// <summary>Customer is willing to wait. Equals CustomerType Patient.</summary>
         Combo,
         HighQuality,
         MidQuality, // personality Practical

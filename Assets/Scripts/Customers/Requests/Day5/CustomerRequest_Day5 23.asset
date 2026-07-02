@@ -19,7 +19,7 @@ MonoBehaviour:
   hasRequiredQuality: 0
   minimumQuality: 5
   extraRules:
-  - {fileID: 11400000, guid: 3b8f5ed80f42c5e4082578d0bb66bd65, type: 2}
+  - {fileID: 11400000, guid: 31bcb05498843ac42b5f528506e2555b, type: 2}
   - {fileID: 11400000, guid: 44aed81ac618c644e8c9075a3ebee2f5, type: 2}
   Tags: 0e0000000a000000
   suggestedTags: 0e0000000a000000
