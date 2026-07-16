@@ -10,16 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 576e2cd0ee088ea438d828ed64a916e9, type: 3}
-  m_Name: CustomerRequest_Day8
+  m_Name: CustomerRequest_Day8 6
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Customers.CustomerRequest
   difficulty: 8
-  requiredItems:
-  - {fileID: 11400000, guid: 5c06924b945841743aaa94251f8417d1, type: 2}
+  requiredItems: []
   hasRequiredType: 0
   requiredType: 3
   hasRequiredQuality: 0
   minimumQuality: 5
   extraRules:
-  - {fileID: 11400000, guid: d40d21f8f73232741a0ea9dcda9ac901, type: 2}
-  Tags: 03000000070000000b000000
-  suggestedTags: 0b00000003000000
+  - {fileID: 11400000, guid: b7452b7be97b7684da9518d2cda195b6, type: 2}
+  - {fileID: 11400000, guid: e03d8e7f74e9533458e8edbc5c132086, type: 2}
+  - {fileID: 11400000, guid: 5dcf306be2d9b6d4dafe2806a07c23a7, type: 2}
+  - {fileID: 11400000, guid: 44aed81ac618c644e8c9075a3ebee2f5, type: 2}
+  Tags: 0d0000000e000000030000000a000000
+  suggestedTags: 0d0000000e0000000a000000

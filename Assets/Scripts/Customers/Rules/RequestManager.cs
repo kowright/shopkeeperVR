@@ -15,9 +15,10 @@ namespace Assets.Scripts.Customers.Rules
         {
             Debug.Log("GET REQUEST for " + customer.customerName);
             List<RequestTag> customerTags = CustomerTypes.GetPreferredTags(customer);
+            Debug.Log("customer tag count " + customerTags.Count);
             foreach (RequestTag tag in customerTags)
             {
-                Debug.Log("Preferred tag: " + tag);
+                Debug.Log("Preferred Request tag: " + tag);
             }
 
             var validRequests = database.allRequests.FindAll(r =>
@@ -58,21 +59,16 @@ namespace Assets.Scripts.Customers.Rules
             }
         }
 
-        private bool MatchesCustomer(CustomerRequest request, List<RequestTag> tags, bool strictMatch = false)
+        private bool MatchesCustomer(CustomerRequest request, List<RequestTag> customerTags, bool strictMatch = false)
         {
+           // TODO: maybe change not strict match to be find a request that matches customerTags.Count-1, if failure then -2 
 
-            // Example: picky customers want high quality
-            //if (customer.customerType == CustomerType.Picky)
 
-            //    return request.tags.Contains(RequestTag.HighQuality);
-
-            //Debug.Log("Customer tags: " + string.Join(", ", tags));
-            //Debug.Log("Request tags: " + string.Join(", ", request.Tags));
             if (request.Tags == null || request.Tags.Count == 0)
                 return false;
-
+            // strict: does request have every customer tag
             return strictMatch ?
-                 tags.All(tag => request.Tags.Contains(tag)) : request.Tags.Any(tag => tags.Contains(tag));
+                 customerTags.All(tag => request.Tags.Contains(tag)) : request.Tags.Any(tag => customerTags.Contains(tag));
   
 
             //if (strictMatch)

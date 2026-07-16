@@ -118,6 +118,7 @@ public class SubmitTable: MonoBehaviour
         }
         if (!customerZone.currentCustomerComponent)
         {
+            Debug.Log("SubmitItemsForValidation" + customerZone.currentCustomer);
             Debug.Log("SubmitItemsForValidation no customer zone customer component");
             return;
         }
