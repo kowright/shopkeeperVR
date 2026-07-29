@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4502444fc7e9f4e409350b6571e8c060, type: 3}
-  m_Name: Rule_Description_Rotten_Food
+  m_Name: Rule_Description_Food_Knives_All
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Customers.Rules.DescriptionRule
   acceptableItems:
-  - {fileID: 11400000, guid: aadca69daf4aa2a469d60841fbed1410, type: 2}
-  - {fileID: 11400000, guid: f7649e6fe12fe954083df3b519d95838, type: 2}
-  - {fileID: 11400000, guid: b895aadd2565efd44b1300cbb056544c, type: 2}
-  customRequestString: Gimme everything that went bad and rotten
-  customFailureString: That's not it
+  - {fileID: 11400000, guid: fe7e488280244ed4caf197fcf11bd987, type: 2}
+  - {fileID: 11400000, guid: 1b8721c1814ce5f459a129ca0406dfd0, type: 2}
+  - {fileID: 11400000, guid: df074ad272dc229429e294d5c0651ba4, type: 2}
+  customRequestString: I forgot my utentils at home so I can't eat my food!
+  customFailureString: Might as well throw my food away...

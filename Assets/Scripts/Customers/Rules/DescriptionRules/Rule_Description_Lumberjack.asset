@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4502444fc7e9f4e409350b6571e8c060, type: 3}
+  m_Name: Rule_Description_Lumberjack
+  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Customers.Rules.DescriptionRule
+  acceptableItems:
+  - {fileID: 11400000, guid: 3bae89b4438f9194d9ab4ad63e135066, type: 2}
+  - {fileID: 11400000, guid: 9022df4143ed9d84a97d5fb4baca1819, type: 2}
+  - {fileID: 11400000, guid: 77a9edd7c493896458276c63a6512db8, type: 2}
+  - {fileID: 11400000, guid: 30a06fe4d5f41484eaa30747d45758df, type: 2}
+  - {fileID: 11400000, guid: 5d24fe8b02407f24193919a5f5fc9e90, type: 2}
+  customRequestString: I'm a lumberjack- anything you would recommend?
+  customFailureString: Why did I even axe...

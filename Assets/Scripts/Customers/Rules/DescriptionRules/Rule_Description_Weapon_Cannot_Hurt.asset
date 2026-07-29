@@ -10,8 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4502444fc7e9f4e409350b6571e8c060, type: 3}
-  m_Name: Rule_Description_Travelling
+  m_Name: Rule_Description_Weapon_Cannot_Hurt
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Customers.Rules.DescriptionRule
-  acceptableItems: []
-  customRequestString: I am traveling soon, what do I need?
-  customFailureString: 
+  acceptableItems:
+  - {fileID: 11400000, guid: fe7e488280244ed4caf197fcf11bd987, type: 2}
+  customRequestString: Do you have a weapon that can't hurt anyone?
+  customFailureString: 'That could hurt someone! '

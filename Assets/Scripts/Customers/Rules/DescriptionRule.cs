@@ -13,8 +13,10 @@ namespace Assets.Scripts.Customers.Rules
     public class DescriptionRule : RequestRule
     {
         public List<Item> acceptableItems;
+        public bool isAll;
         public string customRequestString;
         public string customFailureString;
+
         public override string RequestString => customRequestString;
 
 
@@ -25,7 +27,10 @@ namespace Assets.Scripts.Customers.Rules
                 // other rules will determine acceptance
                 return true; 
             }
-                return items.Any(i => acceptableItems.Contains(i.itemData));
+
+            if (isAll) return items.All(i => acceptableItems.Contains(i.itemData));
+
+            return items.Any(i => acceptableItems.Contains(i.itemData));
         }
 
         public override string FailureString => customRequestString;
