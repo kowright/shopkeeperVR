@@ -10,12 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4502444fc7e9f4e409350b6571e8c060, type: 3}
-  m_Name: Rule_Description_Food_Knives_All
+  m_Name: Rule_Description_Every_Knife
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Customers.Rules.DescriptionRule
   acceptableItems:
   - {fileID: 11400000, guid: fe7e488280244ed4caf197fcf11bd987, type: 2}
-  - {fileID: 11400000, guid: 1b8721c1814ce5f459a129ca0406dfd0, type: 2}
+  - {fileID: 11400000, guid: ba1b9344fbeab9147a767d3c3e7e68fa, type: 2}
   - {fileID: 11400000, guid: df074ad272dc229429e294d5c0651ba4, type: 2}
+  - {fileID: 11400000, guid: 1b8721c1814ce5f459a129ca0406dfd0, type: 2}
+  - {fileID: 11400000, guid: 46530092743a2b24bb8e1edf3576bd18, type: 2}
   isAll: 1
-  customRequestString: I forgot my utentils at home so I can't eat my food!
-  customFailureString: Might as well throw my food away...
+  customRequestString: Give me every knife you got!
+  customFailureString: That wasn't every knife!
+  suggestedTag: 0

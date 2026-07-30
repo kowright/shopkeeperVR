@@ -16,5 +16,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 973ab0de7715a954d9b65c05039b9e6b, type: 2}
   - {fileID: 11400000, guid: 88a34c04df98e0946b38d8bc9abd543d, type: 2}
   - {fileID: 11400000, guid: d5078dc07ea77aa459a91cfb3e4a1068, type: 2}
+  isAll: 1
   customRequestString: I only eat organic and locally sourced and unprocessed food
   customFailureString: That's not good for me

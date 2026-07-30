@@ -10,11 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4502444fc7e9f4e409350b6571e8c060, type: 3}
-  m_Name: Rule_Description_Japan
+  m_Name: Rule_Description_Every_Donut
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Customers.Rules.DescriptionRule
   acceptableItems:
-  - {fileID: 11400000, guid: edd2b8dfc53c0d248b060e2cd2b4dbfb, type: 2}
+  - {fileID: 11400000, guid: f29c437f9cebbee4f98ea657acdeefb7, type: 2}
+  - {fileID: 11400000, guid: 2424ff358a92f6248b3b3390c5e9a66f, type: 2}
   - {fileID: 11400000, guid: 344cf69130ad58b478645c8116a1578f, type: 2}
+  - {fileID: 11400000, guid: 03484dab142d3894284c551945e575e4, type: 2}
+  - {fileID: 11400000, guid: b895aadd2565efd44b1300cbb056544c, type: 2}
   isAll: 1
-  customRequestString: Got anything from Japan?
-  customFailureString: Arigatou!
+  customRequestString: Give me every donut you got!
+  customFailureString: That wasn't every donut!
+  _suggestedTag: 1

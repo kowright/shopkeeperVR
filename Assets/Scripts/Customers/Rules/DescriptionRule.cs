@@ -37,6 +37,54 @@ namespace Assets.Scripts.Customers.Rules
         public override float FailureDeduction => -0.2f;
         public override List<RequestTag> Tags => new List<RequestTag> { };
 
+        private void OnValidate()
+        {
+            costOfRequiredItems();
+        }
+
+        [SerializeField]
+        private RequestTag _suggestedTag;
+
+        public RequestTag SuggestedTag
+        {
+            get => _suggestedTag;
+            private set => _suggestedTag = value;
+        }
+
+        public float TotalCostOfRequiredItems => costOfRequiredItems(); // TODO make util somewhere- it's also used in CustomerRequest
+
+        private int costOfRequiredItems()
+        {
+            int totalCost = 0;
+
+            foreach (var item in acceptableItems)
+            {
+                totalCost += item.cost;
+            }
+
+            if (totalCost != 0)
+            {
+
+                if (totalCost <= 20)
+                {
+                    SuggestedTag = RequestTag.Cheap;
+                }
+                else if (totalCost <= 100)
+                {
+                    SuggestedTag = RequestTag.MidRange;
+                }
+                else if (totalCost <= 500)
+                {
+                    SuggestedTag = RequestTag.HighRange;
+                }
+                else
+                {
+                    SuggestedTag = RequestTag.Expensive;
+                }
+            }
+
+            return totalCost;
+        }
 
 
     }

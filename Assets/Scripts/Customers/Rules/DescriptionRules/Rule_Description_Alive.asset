@@ -23,6 +23,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ff4dfe1a2c994fb4f80b2d7861b4f80a, type: 2}
   - {fileID: 11400000, guid: db46e26000a23664585577b91ffad722, type: 2}
   - {fileID: 11400000, guid: 5d24fe8b02407f24193919a5f5fc9e90, type: 2}
-  - {fileID: 11400000, guid: 5d24fe8b02407f24193919a5f5fc9e90, type: 2}
+  - {fileID: 11400000, guid: 3bae89b4438f9194d9ab4ad63e135066, type: 2}
+  isAll: 0
   customRequestString: Anything that was alive once upon a time?
   customFailureString: That was always dead!
