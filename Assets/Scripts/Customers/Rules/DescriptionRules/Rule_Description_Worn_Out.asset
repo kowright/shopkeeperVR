@@ -19,7 +19,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: db46e26000a23664585577b91ffad722, type: 2}
   - {fileID: 11400000, guid: e82fa0523e8449948b98f268f60cc194, type: 2}
   - {fileID: 11400000, guid: d21eaa06afe5da149b9300e171968508, type: 2}
-  - {fileID: 11400000, guid: d21eaa06afe5da149b9300e171968508, type: 2}
   isAll: 0
   customRequestString: Got anything worn out?
   customFailureString: That wasn't used up
+  _suggestedTag: 1

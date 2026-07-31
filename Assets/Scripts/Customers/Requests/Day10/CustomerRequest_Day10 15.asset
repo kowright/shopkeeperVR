@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 576e2cd0ee088ea438d828ed64a916e9, type: 3}
+  m_Name: CustomerRequest_Day10 15
+  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Customers.CustomerRequest
+  difficulty: 1
+  requiredItems: []
+  hasRequiredType: 0
+  requiredType: 3
+  hasRequiredQuality: 0
+  minimumQuality: 3
+  extraRules:
+  - {fileID: 11400000, guid: 82078ee69ad43fb44b0255ec5126422e, type: 2}
+  - {fileID: 11400000, guid: 4e078887657d4894992e01db48e5470c, type: 2}
+  Tags: 0a000000070000000c00000003000000
+  suggestedTags: 0a0000000c000000

@@ -33,7 +33,7 @@ namespace Assets.Scripts.Customers.Rules
             return items.Any(i => acceptableItems.Contains(i.itemData));
         }
 
-        public override string FailureString => customRequestString;
+        public override string FailureString => customRequestString; // TODO could possibly give which item wasn't given 
         public override float FailureDeduction => -0.2f;
         public override List<RequestTag> Tags => new List<RequestTag> { };
 

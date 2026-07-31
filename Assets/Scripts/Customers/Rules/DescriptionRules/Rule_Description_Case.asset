@@ -23,5 +23,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 788847405805ecd4c965f89253bbec3b, type: 2}
   - {fileID: 11400000, guid: d21eaa06afe5da149b9300e171968508, type: 2}
   - {fileID: 11400000, guid: 2754e2fe56a7979418d282aa9fbbfc55, type: 2}
-  customRequestString: Do you have anything that comes in a case?
+  isAll: 0
+  customRequestString: Do you have anything that comes in or has a case?
   customFailureString: That's not a case!
+  _suggestedTag: 3

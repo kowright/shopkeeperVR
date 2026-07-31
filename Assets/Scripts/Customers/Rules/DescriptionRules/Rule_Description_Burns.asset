@@ -17,5 +17,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2a6b23bf68bda0f46922362dc0234b65, type: 2}
   - {fileID: 11400000, guid: 542279cefe149db44a013557b6a0a09c, type: 2}
   - {fileID: 11400000, guid: 92f02477179fa3a48978bd9085ad00c9, type: 2}
+  isAll: 0
   customRequestString: Do you have anything that burns?
-  customFailureString: No burns for me
+  customFailureString: I feel nothing
+  _suggestedTag: 1
