@@ -15,5 +15,6 @@ MonoBehaviour:
   acceptableItems:
   - {fileID: 11400000, guid: 3e9b180e447da534e9194e01de084e20, type: 2}
   - {fileID: 11400000, guid: d21eaa06afe5da149b9300e171968508, type: 2}
+  isAll: 1
   customRequestString: I want to prank my brother with a suitcase!
   customFailureString: This will be a hard prank to pull off...

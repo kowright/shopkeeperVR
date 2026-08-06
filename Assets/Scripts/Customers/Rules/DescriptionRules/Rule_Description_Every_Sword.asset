@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4502444fc7e9f4e409350b6571e8c060, type: 3}
+  m_Name: Rule_Description_Every_Sword
+  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Customers.Rules.DescriptionRule
+  acceptableItems:
+  - {fileID: 11400000, guid: 1db5f4b9c56cc274194960a656b77da3, type: 2}
+  - {fileID: 11400000, guid: edd2b8dfc53c0d248b060e2cd2b4dbfb, type: 2}
+  - {fileID: 11400000, guid: 5fa9898ecf7de864a8335c715908b696, type: 2}
+  - {fileID: 11400000, guid: 2aaec2a8d7e076749b7308b5ba7fae92, type: 2}
+  - {fileID: 11400000, guid: 5c06924b945841743aaa94251f8417d1, type: 2}
+  isAll: 1
+  customRequestString: Give me every sword you got!
+  customFailureString: That wasn't every sword!
+  _suggestedTag: 3

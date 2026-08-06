@@ -15,5 +15,7 @@ MonoBehaviour:
   acceptableItems:
   - {fileID: 11400000, guid: aadca69daf4aa2a469d60841fbed1410, type: 2}
   - {fileID: 11400000, guid: f7649e6fe12fe954083df3b519d95838, type: 2}
+  - {fileID: 11400000, guid: b895aadd2565efd44b1300cbb056544c, type: 2}
+  isAll: 1
   customRequestString: Gimme everything that went bad and rotten
   customFailureString: That's not it

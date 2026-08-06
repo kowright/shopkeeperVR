@@ -16,5 +16,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: fe7e488280244ed4caf197fcf11bd987, type: 2}
   - {fileID: 11400000, guid: 1b8721c1814ce5f459a129ca0406dfd0, type: 2}
   - {fileID: 11400000, guid: df074ad272dc229429e294d5c0651ba4, type: 2}
+  isAll: 0
   customRequestString: I forgot my utentils at home so I can't eat my food!
   customFailureString: Might as well throw my food away...
+  _suggestedTag: 1
