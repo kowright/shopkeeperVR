@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 576e2cd0ee088ea438d828ed64a916e9, type: 3}
   m_Name: CustomerRequest_Day10 23
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Customers.CustomerRequest
-  difficulty: 1
+  difficulty: 10
   requiredItems: []
-  hasRequiredType: 0
-  requiredType: 3
+  hasRequiredType: 1
+  requiredType: 2
   hasRequiredQuality: 0
   minimumQuality: 3
   extraRules:
-  - {fileID: 11400000, guid: 0f9dcd678b938744fb04db5ad913d02f, type: 2}
-  Tags: 0a000000010000000c000000
+  - {fileID: 11400000, guid: 1c3090e1a42131b4491c591d301b1ab5, type: 2}
+  Tags: 0a000000030000000c000000
   suggestedTags: 
