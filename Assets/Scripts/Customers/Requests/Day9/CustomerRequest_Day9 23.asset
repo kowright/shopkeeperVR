@@ -16,10 +16,10 @@ MonoBehaviour:
   requiredItems: []
   hasRequiredType: 0
   requiredType: 3
-  hasRequiredQuality: 1
-  minimumQuality: 3
+  hasRequiredQuality: 0
+  minimumQuality: 5
   extraRules:
   - {fileID: 11400000, guid: 7fbb2d5704c356b4aa98f6f19980e4c6, type: 2}
   - {fileID: 11400000, guid: c312012a53aeccd4e83980d0b2ba6cb8, type: 2}
-  Tags: 0a000000020000000c0000000300000007000000
-  suggestedTags: 0a00000007000000
+  Tags: 0a000000020000000c00000003000000
+  suggestedTags: 0a000000
